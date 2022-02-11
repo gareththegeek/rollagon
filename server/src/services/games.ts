@@ -27,8 +27,10 @@ export const getOne = async (id: string): Promise<Result<Game>> => {
 export const add = async (game: Partial<Game>): Promise<Result<Game>> => {
     const valid = {
         ...game,
+        id: nanoid(),
         createdOn: moment().utc().toISOString(),
-        id: nanoid()
+        contests: [],
+        players: []
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
