@@ -8,8 +8,16 @@ const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
 
 const nextSort = (game: Game): number => Math.max(...Object.values(game.contests).map(x => x.sort)) + 1
 
-export const getOne = async (gameId: string, contestId: string): Promise<Result<Contest>> => {
-    const gameQuery = await gameService.getOne(gameId)
+interface GetManyParams {
+    gameId: string
+}
+
+interface GetOneParams extends GetManyParams {
+    contestId: string
+}
+
+export const getOne = async ({ gameId, contestId }: GetOneParams): Promise<Result<Contest>> => {
+    const gameQuery = await gameService.getOne({ gameId })
     if (isError(gameQuery)) {
         return gameQuery
     }
@@ -29,8 +37,8 @@ export const getOne = async (gameId: string, contestId: string): Promise<Result<
     }
 }
 
-export const add = async (gameId: string): Promise<Result<Contest>> => {
-    const gameQuery = await gameService.getOne(gameId)
+export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> => {
+    const gameQuery = await gameService.getOne({ gameId })
     if (isError(gameQuery)) {
         return gameQuery
     }
@@ -53,10 +61,11 @@ export const add = async (gameId: string): Promise<Result<Contest>> => {
         contestants: {}
     }
 
+    const contestId = contest.id
     const repo = getRepository(GAME_COLLECTION_NAME)
-    await repo.updateNested(gameId, `contests.${contest.id}`, contest)
+    await repo.updateNested(gameId, `contests.${contestId}`, contest)
 
-    const result = await getOne(gameId, contest.id)
+    const result = await getOne({ gameId, contestId })
     if (isError(gameQuery)) {
         return {
             status: 500,
@@ -67,8 +76,8 @@ export const add = async (gameId: string): Promise<Result<Contest>> => {
     return result
 }
 
-export const remove = async (gameId: string, contestId: string): Promise<Result<{}>> => {
-    const gameQuery = await gameService.getOne(gameId)
+export const remove = async ({ gameId, contestId }: GetOneParams): Promise<Result<{}>> => {
+    const gameQuery = await gameService.getOne({ gameId })
     if (isError(gameQuery)) {
         return gameQuery
     }
@@ -76,7 +85,7 @@ export const remove = async (gameId: string, contestId: string): Promise<Result<
     const repo = getRepository(GAME_COLLECTION_NAME)
     await repo.updateNested(gameId, `contests.${contestId}`, undefined)
 
-    const result = await getOne(gameId, contestId)
+    const result = await getOne({ gameId, contestId })
     if (!isError(result)) {
         return {
             status: 500,

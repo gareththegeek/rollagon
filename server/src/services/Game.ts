@@ -34,6 +34,7 @@ export interface Contest {
 }
 
 export interface Player {
+    id: string
     name: string
 }
 
@@ -42,5 +43,5 @@ export interface Game {
     name: string
     createdOn: string
     contests: { [id: string]: Contest }
-    players: Player[]
+    players: { [id: string]: Player }
 }
