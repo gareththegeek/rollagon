@@ -1,14 +1,15 @@
 import { Request, Response } from 'express'
-import { insertSchema, idSchema } from '../schema/game'
+import { insertSchema } from '../schema/game'
+import { idSchema } from '../schema/general'
 import { wrapAsync } from './errors'
 import * as service from '../services/games'
 import { Game } from '../services/Game'
 
 export const getOne = wrapAsync(
-    async ({ params: { id } }: Request, res: Response): Promise<Response | void> => {
+    async ({ params: { gameId } }: Request, res: Response): Promise<Response | void> => {
         const validationResult = idSchema
             .label('game id')
-            .validate(id)
+            .validate(gameId)
         if (!!validationResult?.error) {
             return res
                 .status(400)
@@ -39,10 +40,10 @@ export const add = wrapAsync(
 )
 
 export const remove = wrapAsync(
-    async ({ params: { id } }: Request, res: Response): Promise<Response | void> => {
+    async ({ params: { gameId } }: Request, res: Response): Promise<Response | void> => {
         const validationResult = idSchema
             .label('game id')
-            .validate(id, { abortEarly: false })
+            .validate(gameId, { abortEarly: false })
         if (!!validationResult.error) {
             return res
                 .status(400)

@@ -90,6 +90,12 @@ export class Repository implements IRepository {
         })
     }
 
+    async updateNested<T extends Document>(id: string, path: string, data: T | undefined): Promise<void> {
+        await this.execute(async (collection) => {
+            await collection.updateOne({ id }, { '$set': { [path]: data } })
+        })
+    }
+
     async delete(id: string): Promise<void> {
         await this.execute(async (collection) => collection.deleteOne({ id }))
     }

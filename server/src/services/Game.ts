@@ -1,4 +1,4 @@
-export type ContestState = 'new' | 'targetSet' | 'complete'
+export type ContestStatusType = 'new' | 'targetSet' | 'complete'
 export type DiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12'
 export type HarmTagType = 'sacred' | 'perilous' | 'mythic' | 'epic'
 
@@ -9,7 +9,7 @@ export interface Dice {
 
 export interface DicePool {
     rolled: boolean
-    score: number
+    score: number | undefined
     dice: Dice[]
 }
 
@@ -18,14 +18,19 @@ export interface Contestant {
     dicePool: DicePool
 }
 
-export interface Contest {
-    sort: number
-    state: ContestState
+export interface Strife {
     strifeLevel: number
     dicePool: DicePool
     harmTags: HarmTagType[]
-    targetNumber: number
-    contestants: Contestant[]
+    targetNumber: number | undefined
+}
+
+export interface Contest {
+    id: string
+    sort: number
+    status: ContestStatusType
+    strife: Strife
+    contestants: { [name: string]: Contestant }
 }
 
 export interface Player {
@@ -36,6 +41,6 @@ export interface Game {
     id: string
     name: string
     createdOn: string
-    contests: Contest[]
+    contests: { [id: string]: Contest }
     players: Player[]
 }

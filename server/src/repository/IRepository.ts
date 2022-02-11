@@ -6,6 +6,7 @@ export interface IRepository {
     getOneBy<T extends Document>(filter: Filter<Document>): Promise<WithId<T> | null>
     getManyBy<T extends Document>(filter: Filter<Document>): Promise<WithId<T>[]>
     insert<T extends Document>(data: T): Promise<string | undefined>
+    updateNested<T extends Document>(id: string, path: string, data: T | undefined): Promise<void>
     upsert<T extends Document>(data: T): Promise<void>
     delete(id: string): Promise<void>
 }

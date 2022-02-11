@@ -2,7 +2,7 @@ import moment from 'moment'
 import { nanoid } from 'nanoid'
 import { getRepository } from '../repository/factory'
 import { Game } from './Game'
-import { Result } from './Result'
+import { isError, Result } from './Result'
 
 const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
 
@@ -43,39 +43,33 @@ export const add = async (game: Partial<Game>): Promise<Result<Game>> => {
         }
     }
 
-    const { status, value } = await getOne(id)
-    if (status !== 200) {
+    const result = await getOne(id)
+    if (isError(result)) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
         }
     }
 
-    return {
-        status: 200,
-        value
-    }
+    return result
 }
 
 export const remove = async (id: string): Promise<Result<{}>> => {
     const existing = await getOne(id)
-    if (existing.status !== 200) {
+    if (isError(existing)) {
         return existing
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
     await repo.delete(id)
 
-    const { status, value } = await getOne(id)
-    if (status !== 200) {
+    const result = await getOne(id)
+    if (isError(result)) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to delete data from database' }
         }
     }
 
-    return {
-        status: 200,
-        value
-    }
+    return result
 }
