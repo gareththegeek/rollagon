@@ -48,24 +48,29 @@ export const getMany = async ({ gameId }: GetManyParams): Promise<Result<Player[
 
     return {
         status: 200,
-        value: Object.values(gameQuery.value.players)
+        value: Object.values(gameQuery.value.players).filter(x => x !== null)
     }
 }
 
 export const add = async ({ gameId }: GetManyParams, { name }: AddBody): Promise<Result<Player>> => {
     const repo = getRepository(GAME_COLLECTION_NAME)
-    const playerId = nanoid()
-    await repo.updateNested(gameId, `players.${playerId}`, { name })
+    const player: Player = {
+        id: nanoid(),
+        name
+    }
+    const result = await repo.updateNested(gameId, `players.${player.id}`, player)
 
-    const result = await getOne({ gameId, playerId })
-    if (isError(result)) {
+    if (!result) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
         }
     }
 
-    return result
+    return {
+        status: 200,
+        value: player
+    }
 }
 
 export const remove = async ({ gameId, playerId }: GetOneParams): Promise<Result<{}>> => {
@@ -75,10 +80,8 @@ export const remove = async ({ gameId, playerId }: GetOneParams): Promise<Result
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
-    repo.updateNested(gameId, `players.${playerId}`, undefined)
-
-    const result = await getOne({ gameId, playerId })
-    if (isError(result)) {
+    const result = repo.deleteNested(gameId, `players.${playerId}`)
+    if (!result) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to delete data from database' }

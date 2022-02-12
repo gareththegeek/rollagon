@@ -1,0 +1,299 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "rollagon",
+    "dateExported": "2022-02-12T12:18:32.556Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "containerId": "",
+            "sortNum": 10000,
+            "name": "games",
+            "_id": "5c7eb6f8-fe74-4db5-a93e-30708846d317",
+            "created": "2022-02-12T10:50:07.292Z"
+        },
+        {
+            "containerId": "",
+            "sortNum": 20000,
+            "name": "contests",
+            "_id": "15b75ee9-c3d5-4db9-a46d-4e006665610d",
+            "created": "2022-02-12T11:45:32.221Z"
+        },
+        {
+            "containerId": "",
+            "sortNum": 30000,
+            "name": "players",
+            "_id": "2ebacc9a-4f8f-4522-9d18-327353e5102f",
+            "created": "2022-02-12T12:13:48.199Z"
+        }
+    ],
+    "requests": [
+        {
+            "containerId": "2ebacc9a-4f8f-4522-9d18-327353e5102f",
+            "sortNum": 10000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "getOne",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/players/6llzMLRsnV2w-8YxWjPcg",
+            "method": "GET",
+            "modified": "2022-02-12T12:15:53.033Z",
+            "created": "2022-02-12T12:13:48.199Z",
+            "_id": "15466b3c-8310-4733-b95d-8c4504b80f94",
+            "params": [],
+            "tests": []
+        },
+        {
+            "containerId": "5c7eb6f8-fe74-4db5-a93e-30708846d317",
+            "sortNum": 10000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "getOne",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx",
+            "method": "GET",
+            "modified": "2022-02-12T12:11:43.089Z",
+            "created": "2022-02-12T10:50:16.372Z",
+            "_id": "475cb8f5-5779-434e-89d5-8ef917b2c1a7",
+            "params": [],
+            "tests": []
+        },
+        {
+            "containerId": "15b75ee9-c3d5-4db9-a46d-4e006665610d",
+            "sortNum": 10000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "getOne",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/contests/OfNMY4sOkrqjdvEE62Hn4",
+            "method": "GET",
+            "modified": "2022-02-12T12:12:23.661Z",
+            "created": "2022-02-12T11:45:32.221Z",
+            "_id": "c7511781-f6a2-42d9-b07c-1e6d5c6f62e1",
+            "params": [],
+            "tests": []
+        },
+        {
+            "containerId": "2ebacc9a-4f8f-4522-9d18-327353e5102f",
+            "sortNum": 15000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "getMany",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/players",
+            "method": "GET",
+            "modified": "2022-02-12T12:14:11.070Z",
+            "created": "2022-02-12T12:13:48.199Z",
+            "_id": "463b7a59-2a2d-40c0-96ff-747c6bd90907",
+            "params": [],
+            "tests": []
+        },
+        {
+            "containerId": "15b75ee9-c3d5-4db9-a46d-4e006665610d",
+            "sortNum": 15000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "getMany",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/contests",
+            "method": "GET",
+            "modified": "2022-02-12T12:11:54.454Z",
+            "created": "2022-02-12T12:03:57.195Z",
+            "_id": "465ddfa8-98e8-42df-bc45-f772a995ea1c",
+            "params": [],
+            "tests": []
+        },
+        {
+            "containerId": "2ebacc9a-4f8f-4522-9d18-327353e5102f",
+            "sortNum": 20000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "add",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/players",
+            "method": "POST",
+            "modified": "2022-02-12T12:16:08.586Z",
+            "created": "2022-02-12T12:13:48.199Z",
+            "_id": "0f944a84-f6fc-4c70-8237-4bffe92ef1a9",
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"Someone (they/them)\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "containerId": "15b75ee9-c3d5-4db9-a46d-4e006665610d",
+            "sortNum": 20000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "add",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/contests",
+            "method": "POST",
+            "modified": "2022-02-12T12:12:14.661Z",
+            "created": "2022-02-12T11:45:32.221Z",
+            "_id": "dbdb43eb-4626-4163-93dc-c3ca6d5a77d5",
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "containerId": "5c7eb6f8-fe74-4db5-a93e-30708846d317",
+            "sortNum": 20000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "add",
+            "url": "http://localhost:8080/api/games",
+            "method": "POST",
+            "modified": "2022-02-12T10:58:02.851Z",
+            "created": "2022-02-12T10:57:02.346Z",
+            "_id": "f8251fb0-32dd-4dad-a721-0ae18628e748",
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"name\": \"First Agon game!\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "containerId": "15b75ee9-c3d5-4db9-a46d-4e006665610d",
+            "sortNum": 30000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "delete",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/contests/COW-TJ-tXBdmSGwlry0pV",
+            "method": "DELETE",
+            "modified": "2022-02-12T12:13:21.994Z",
+            "created": "2022-02-12T11:45:32.221Z",
+            "_id": "2a973137-0b3a-44bc-b533-334485e34892",
+            "params": [],
+            "tests": []
+        },
+        {
+            "containerId": "2ebacc9a-4f8f-4522-9d18-327353e5102f",
+            "sortNum": 30000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "delete",
+            "url": "http://localhost:8080/api/games/mo3WB_zHIyRphi4nZgSWx/players/cdBt0bzyXhaPcV57Q9kSd",
+            "method": "DELETE",
+            "modified": "2022-02-12T12:16:35.977Z",
+            "created": "2022-02-12T12:13:48.199Z",
+            "_id": "6a0155ed-896d-4806-bbd3-5c4af4a30a0e",
+            "params": [],
+            "tests": []
+        },
+        {
+            "containerId": "5c7eb6f8-fe74-4db5-a93e-30708846d317",
+            "sortNum": 30000,
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "*/*"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.com)"
+                }
+            ],
+            "colId": "5727adfe-b210-4236-b1a9-d7b9a322499c",
+            "name": "delete",
+            "url": "http://localhost:8080/api/games/Lou3wu-d2A4OgRrjagYvm",
+            "method": "DELETE",
+            "modified": "2022-02-12T12:11:21.131Z",
+            "created": "2022-02-12T11:42:44.764Z",
+            "_id": "d46e0f45-cf43-4ffb-8f1f-9bcea379fe9b",
+            "params": [],
+            "tests": []
+        }
+    ]
+}

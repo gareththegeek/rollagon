@@ -1,4 +1,4 @@
-import { ObjectId, MongoClient, Filter, WithId, Document, Collection } from 'mongodb'
+import { MongoClient, Filter, WithId, Document, Collection, ObjectId } from 'mongodb'
 import { IRepository } from './IRepository'
 
 export interface ConnectionConfig {
@@ -56,7 +56,7 @@ export class Repository implements IRepository {
 
     async getById<T extends Document>(id: string): Promise<WithId<T> | null> {
         return this.execute(
-            async (collection) => collection.findOne({ id: new ObjectId(id) }) as Promise<WithId<T> | null>
+            async (collection) => collection.findOne({ id }) as Promise<WithId<T> | null>
         )
     }
 
@@ -72,31 +72,42 @@ export class Repository implements IRepository {
         )
     }
 
-    async insert<T extends Document>(data: T): Promise<string | undefined> {
+    async insert<T extends Document>(data: T): Promise<ObjectId | undefined> {
         return await this.execute(async (collection) => {
             const { insertedId } = await collection.insertOne(data)
-            return insertedId?.toString()
+            return insertedId
         })
     }
 
-    async upsert<T extends Document>(data: T): Promise<void> {
-        await this.execute(async (collection) => {
+    async upsert<T extends Document>(data: T): Promise<ObjectId | undefined> {
+        return await this.execute(async (collection) => {
             const existing = await collection.findOne({ id: data['id'] })
             if (!existing) {
-                await collection.insertOne(data)
+                const insertResult = await collection.insertOne(data)
+                return insertResult.insertedId
             } else {
-                await collection.updateOne({ id: data['id'] }, { $set: data })
+                const updateResult = await collection.updateOne({ id: data['id'] }, { $set: data })
+                return updateResult.modifiedCount === 1 ? data['id'] : undefined
             }
         })
     }
 
-    async updateNested<T extends Document>(id: string, path: string, data: T | undefined): Promise<void> {
-        await this.execute(async (collection) => {
+    async updateNested<T extends Document>(id: string, path: string, data: T | undefined): Promise<boolean> {
+        const result = await this.execute(async (collection) =>
             await collection.updateOne({ id }, { '$set': { [path]: data } })
-        })
+        )
+        return result.modifiedCount === 1
     }
 
-    async delete(id: string): Promise<void> {
-        await this.execute(async (collection) => collection.deleteOne({ id }))
+    async delete(id: string): Promise<boolean> {
+        const result = await this.execute(async (collection) => collection.deleteOne({ id }))
+        return result.deletedCount === 1
+    }
+
+    async deleteNested(id: string, path: string): Promise<boolean> {
+        const result = await this.execute(async (collection) =>
+            await collection.updateOne({ id }, { '$unset': { [path]: 1 } })
+        )
+        return result.modifiedCount === 1
     }
 }

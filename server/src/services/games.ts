@@ -14,7 +14,6 @@ export const getOne = async ({ gameId }: GetOneParams): Promise<Result<Game>> =>
     const repo = getRepository(GAME_COLLECTION_NAME)
 
     const game = await repo.getById<Game>(gameId)
-
     if (game === undefined || game === null) {
         return {
             status: 404,
@@ -22,40 +21,36 @@ export const getOne = async ({ gameId }: GetOneParams): Promise<Result<Game>> =>
         }
     }
 
+    const { _id, ...noId } = game
+
     return {
         status: 200,
-        value: game
+        value: noId
     }
 }
 
 export const add = async (_: unknown, game: Partial<Game>): Promise<Result<Game>> => {
-    const valid = {
-        ...game,
+    const valid: Game = {
+        name: game.name!,
         id: nanoid(),
         createdOn: moment().utc().toISOString(),
-        contests: [],
-        players: []
+        contests: {},
+        players: {}
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
-    const gameId = await repo.insert(valid)
-
-    if (gameId === undefined || gameId === null) {
+    const dbId = await repo.insert(valid)
+    if (dbId === undefined || dbId === null) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to persist data into database' }
         }
     }
 
-    const result = await getOne({ gameId })
-    if (isError(result)) {
-        return {
-            status: 500,
-            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
-        }
+    return {
+        status: 200,
+        value: valid
     }
-
-    return result
 }
 
 export const remove = async ({ gameId }: GetOneParams): Promise<Result<{}>> => {
@@ -65,15 +60,16 @@ export const remove = async ({ gameId }: GetOneParams): Promise<Result<{}>> => {
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
-    await repo.delete(gameId)
-
-    const result = await getOne({ gameId })
-    if (isError(result)) {
+    const result = await repo.delete(gameId)
+    if (!result) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to delete data from database' }
         }
     }
 
-    return result
+    return {
+        status: 200,
+        value: {}
+    }
 }

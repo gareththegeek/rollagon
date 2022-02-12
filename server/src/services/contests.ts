@@ -6,7 +6,10 @@ import * as gameService from './games'
 
 const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
 
-const nextSort = (game: Game): number => Math.max(...Object.values(game.contests).map(x => x.sort)) + 1
+const currentSort = (game: Game): number =>
+    Math.max(0, ...Object.values(game.contests).map(x => x.sort))
+
+const nextSort = (game: Game): number => currentSort(game) + 1
 
 interface GetManyParams {
     gameId: string
@@ -37,6 +40,18 @@ export const getOne = async ({ gameId, contestId }: GetOneParams): Promise<Resul
     }
 }
 
+export const getMany = async ({ gameId }: GetManyParams): Promise<Result<Contest[]>> => {
+    const gameQuery = await gameService.getOne({ gameId })
+    if (isError(gameQuery)) {
+        return gameQuery
+    }
+
+    return {
+        status: 200,
+        value: Object.values(gameQuery.value.contests).filter(x => x !== null)
+    }
+}
+
 export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> => {
     const gameQuery = await gameService.getOne({ gameId })
     if (isError(gameQuery)) {
@@ -63,30 +78,30 @@ export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> =
 
     const contestId = contest.id
     const repo = getRepository(GAME_COLLECTION_NAME)
-    await repo.updateNested(gameId, `contests.${contestId}`, contest)
+    const result = await repo.updateNested(gameId, `contests.${contestId}`, contest)
 
-    const result = await getOne({ gameId, contestId })
-    if (isError(gameQuery)) {
+    if (!result) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
         }
     }
 
-    return result
+    return {
+        status: 200,
+        value: contest
+    }
 }
 
 export const remove = async ({ gameId, contestId }: GetOneParams): Promise<Result<{}>> => {
-    const gameQuery = await gameService.getOne({ gameId })
-    if (isError(gameQuery)) {
-        return gameQuery
+    const contestQuery = await getOne({ gameId, contestId })
+    if (isError(contestQuery)) {
+        return contestQuery
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
-    await repo.updateNested(gameId, `contests.${contestId}`, undefined)
-
-    const result = await getOne({ gameId, contestId })
-    if (!isError(result)) {
+    const result = await repo.deleteNested(gameId, `contests.${contestId}`)
+    if (!result) {
         return {
             status: 500,
             value: { message: 'Unexpectedly failed to delete data from database' }

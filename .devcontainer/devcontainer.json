@@ -4,6 +4,7 @@
   },
   "extensions": [
     "ms-dotnettools.vscode-dotnet-runtime",
-    "ms-azuretools.vscode-bicep"
+    "ms-azuretools.vscode-bicep",
+    "rangav.vscode-thunder-client"
   ]
 }

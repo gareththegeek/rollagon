@@ -4,18 +4,22 @@ import { idSchema } from './general'
 import * as service from '../services/contests'
 import { Contest } from '../services/Game'
 
-export const getOneParamSchema = Joi.object({
+export const getOneParamsSchema = Joi.object({
     gameId: idSchema.label('game id'),
     contestId: idSchema.label('contest id')
 })
 
-export const getManyParamSchema = Joi.object({
+export const getManyParamsSchema = Joi.object({
     gameId: idSchema.label('game id')
 })
 
+export const addSchema = Joi.object({})
+
 export const controllerConfig: ControllerConfig<Contest> = {
     service,
-    getOneParamsSchema: getOneParamSchema,
-    addParamsSchema: getManyParamSchema,
-    removeParamsSchema: getOneParamSchema
+    getOneParamsSchema,
+    getManyParamsSchema,
+    addParamsSchema: getManyParamsSchema,
+    addSchema,
+    removeParamsSchema: getOneParamsSchema
 }
