@@ -1,3 +1,9 @@
 {
-  "image": "mcr.microsoft.com/vscode/devcontainers/typescript-node:14"
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "extensions": [
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-azuretools.vscode-bicep"
+  ]
 }
