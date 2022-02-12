@@ -4,7 +4,7 @@ export type HarmTagType = 'sacred' | 'perilous' | 'mythic' | 'epic'
 
 export interface Dice {
     type: DiceType
-    roll: number
+    roll: number | undefined
 }
 
 export interface DicePool {

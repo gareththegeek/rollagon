@@ -66,6 +66,35 @@ export const bind = <T>(config: ControllerConfig<T>) => {
         }
     )
 
+    const update = wrapAsync(
+        async ({ params, body }: Request, res: Response): Promise<Response | void> => {
+            const paramsValidationResult = config
+                .updateParamsSchema!
+                .validate(params, { abortEarly: false })
+            if (!!paramsValidationResult.error) {
+                return res
+                    .status(400)
+                    .send({ message: paramsValidationResult.error.details.map(x => x.message) })
+            }
+
+            const validationResult = config
+                .updateSchema!
+                .validate(body, { abortEarly: false })
+            if (!!validationResult.error) {
+                return res
+                    .status(400)
+                    .send({ message: validationResult.error.details.map(x => x.message) })
+            }
+
+            const { status, value } = await config.service.update!(
+                paramsValidationResult.value,
+                validationResult.value
+            )
+
+            res.status(status).send(value)
+        }
+    )
+
     const remove = wrapAsync(
         async ({ params }: Request, res: Response): Promise<Response | void> => {
             const validationResult = config
@@ -87,6 +116,7 @@ export const bind = <T>(config: ControllerConfig<T>) => {
         getOne,
         getMany,
         add,
+        update,
         remove
     }
 }

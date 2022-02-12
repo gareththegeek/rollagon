@@ -7,5 +7,7 @@ export interface ControllerConfig<T> {
     getManyParamsSchema?: Joi.ObjectSchema
     addParamsSchema?: Joi.ObjectSchema
     addSchema?: Joi.ObjectSchema
+    updateParamsSchema?: Joi.ObjectSchema
+    updateSchema?: Joi.ObjectSchema
     removeParamsSchema?: Joi.ObjectSchema
 }

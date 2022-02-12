@@ -87,7 +87,9 @@ export class Repository implements IRepository {
                 return insertResult.insertedId
             } else {
                 const updateResult = await collection.updateOne({ id: data['id'] }, { $set: data })
-                return updateResult.modifiedCount === 1 ? data['id'] : undefined
+                return (updateResult.modifiedCount === 1 || updateResult.matchedCount === 1)
+                    ? data['id']
+                    : undefined
             }
         })
     }
@@ -96,7 +98,7 @@ export class Repository implements IRepository {
         const result = await this.execute(async (collection) =>
             await collection.updateOne({ id }, { '$set': { [path]: data } })
         )
-        return result.modifiedCount === 1
+        return result.modifiedCount === 1 || result.matchedCount === 1
     }
 
     async delete(id: string): Promise<boolean> {
