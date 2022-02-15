@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/express-mongo-sanitize": "^2.1.0",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.4.0",
     "@types/joi": "^17.2.3",
@@ -45,6 +46,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "express-mongo-sanitize": "^2.2.0",
     "http": "0.0.1-security",
     "joi": "^17.6.0",
     "moment": "^2.29.1",
