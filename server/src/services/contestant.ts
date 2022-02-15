@@ -11,6 +11,15 @@ interface GetOneParams {
     playerId: string
 }
 
+interface GetManyParams {
+    gameId: string
+    contestId: string
+}
+
+interface AddContestantBody {
+    playerId: string
+}
+
 interface ContestantBody {
     ready: boolean
     dicePool: {
@@ -38,6 +47,40 @@ export const getOne = async ({ gameId, contestId, playerId }: GetOneParams): Pro
     return {
         status: 200,
         value
+    }
+}
+
+export const add = async (params: GetManyParams, body: AddContestantBody): Promise<Result<Contestant>> => {
+    const contestQuery = await contestService.getOne(params)
+    if (isError(contestQuery)) {
+        return contestQuery
+    }
+
+    const { gameId, contestId } = params
+    const { playerId } = body
+    const contestant = {
+        playerId,
+        ready: false,
+        dicePool: {
+            rolled: false,
+            score: undefined,
+            dice: []
+        }
+    }
+
+    const repo = getRepository(GAME_COLLECTION_NAME)
+    const result = await repo.updateNested(gameId, `contests.${contestId}.contestants.${playerId}`, contestant)
+
+    if (!result) {
+        return {
+            status: 500,
+            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
+        }
+    }
+
+    return {
+        status: 200,
+        value: contestant
     }
 }
 
@@ -79,5 +122,26 @@ export const update = async (params: GetOneParams, body: ContestantBody): Promis
     return {
         status: 200,
         value: next
+    }
+}
+
+export const remove = async ({ gameId, contestId, playerId }: GetOneParams): Promise<Result<{}>> => {
+    const contestantQuery = await getOne({ gameId, contestId, playerId })
+    if (isError(contestantQuery)) {
+        return contestantQuery
+    }
+
+    const repo = getRepository(GAME_COLLECTION_NAME)
+    const result = await repo.deleteNested(gameId, `contests.${contestId}.contestants.${playerId}`)
+    if (!result) {
+        return {
+            status: 500,
+            value: { message: 'Unexpectedly failed to delete data from database' }
+        }
+    }
+
+    return {
+        status: 200,
+        value: {}
     }
 }

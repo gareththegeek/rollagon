@@ -2,7 +2,6 @@ import { getRepository } from '../repository/factory'
 import { DiceType, HarmTagType, Strife } from './Game'
 import { isError, Result } from './Result'
 import * as contestService from './contests'
-import { rollStrife } from '../model'
 
 const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
 
@@ -14,7 +13,6 @@ interface GetOneParams {
 interface StrifeBody {
     strifeLevel: number
     dicePool: {
-        rolled: boolean
         dice: {
             type: DiceType
         }[]
@@ -49,7 +47,7 @@ export const update = async (params: GetOneParams, body: StrifeBody): Promise<Re
         }
     }
 
-    const merged: Strife = {
+    const next: Strife = {
         ...strife,
         ...body,
         dicePool: {
@@ -61,10 +59,6 @@ export const update = async (params: GetOneParams, body: StrifeBody): Promise<Re
             }))
         }
     }
-
-    const next = body.dicePool.rolled
-        ? rollStrife(merged)
-        : merged
 
     const { gameId, contestId } = params
     const repo = getRepository(GAME_COLLECTION_NAME)

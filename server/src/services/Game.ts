@@ -14,6 +14,7 @@ export interface DicePool {
 }
 
 export interface Contestant {
+    playerId: string
     ready: boolean
     dicePool: DicePool
 }

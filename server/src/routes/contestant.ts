@@ -1,16 +1,20 @@
 import { Express } from 'express'
 import controllers from '../controllers'
 
-const routePrefix = '/api/games/:gameId/contests/:contestId/contestants/:playerId'
+const routePrefix = '/api/games/:gameId/contests/:contestId/contestants'
 
 const bind = (app: Express): void => {
     const {
         getOne,
-        update
+        add,
+        update,
+        remove
     } = controllers.contestants
 
-    app.get(routePrefix, getOne)
-    app.put(routePrefix, update)
+    app.get(`${routePrefix}/:playerId`, getOne)
+    app.post(routePrefix, add)
+    app.put(`${routePrefix}/:playerId`, update)
+    app.delete(`${routePrefix}/:playerId`, remove)
 }
 
 export default bind

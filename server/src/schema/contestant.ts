@@ -11,6 +11,15 @@ export const getOneParamsSchema = Joi.object({
     playerId: idSchema.label('player id')
 })
 
+export const getManyParamsSchema = Joi.object({
+    gameId: idSchema.label('game id'),
+    contestId: idSchema.label('contest id')
+})
+
+export const addSchema = Joi.object({
+    playerId: idSchema.label('player id')
+})
+
 export const updateSchema = Joi.object({
     ready: Joi.boolean().required(),
     dicePool: dicePoolSchema.required()
@@ -19,6 +28,9 @@ export const updateSchema = Joi.object({
 export const controllerConfig: ControllerConfig<Contestant> = {
     service,
     getOneParamsSchema,
+    addParamsSchema: getManyParamsSchema,
+    addSchema,
     updateParamsSchema: getOneParamsSchema,
-    updateSchema
+    updateSchema,
+    removeParamsSchema: getOneParamsSchema
 }
