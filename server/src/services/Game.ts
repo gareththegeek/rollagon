@@ -14,7 +14,7 @@ export interface DicePool {
 }
 
 export interface Contestant {
-    playerName: string
+    ready: boolean
     dicePool: DicePool
 }
 
@@ -30,7 +30,7 @@ export interface Contest {
     sort: number
     status: ContestStatusType
     strife: Strife
-    contestants: { [name: string]: Contestant }
+    contestants: { [id: string]: Contestant }
 }
 
 export interface Player {
