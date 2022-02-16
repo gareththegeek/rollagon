@@ -44,6 +44,10 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
           name: 'GAME_COLLECTION_NAME'
           value: 'games'
         }
+        {
+          name: 'CORS_ORIGIN'
+          value: '${appName}.azurewebsites.net'
+        }
       ]
     }
   }
