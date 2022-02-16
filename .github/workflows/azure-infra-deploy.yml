@@ -29,4 +29,4 @@ jobs:
       with:
         azcliversion: 2.33.0
         inlineScript: |
-          az deployment group create -g rollagon -f ./infra/bicep/webapp.bicep
+          az deployment group create -g rollagon -f ./infra/bicep/webapp.bicep --parameters cosmosAccountName=gjwcosmosaccount appServicePlanId=beastie-book-asp appServicePlanReosurceGroupName=ftd-beastie-book

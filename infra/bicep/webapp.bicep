@@ -1,4 +1,5 @@
 param location string = resourceGroup().location
+param appServicePlanResourceGroupName string
 param appServicePlanId string
 param cosmosAccountName string
 
@@ -14,7 +15,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
   name: appName
   location: location
   properties: {
-    serverFarmId: appServicePlanId
+    serverFarmId: resourceId(appServicePlanResourceGroupName, 'Microsoft.Web/serverfarms', appServicePlanId)
     httpsOnly: true
     siteConfig: {
       minTlsVersion: '1.2'
