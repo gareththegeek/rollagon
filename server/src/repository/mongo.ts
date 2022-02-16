@@ -1,6 +1,9 @@
 import { MongoClient, Filter, WithId, Document, Collection, ObjectId } from 'mongodb'
 import { IRepository } from './IRepository'
 
+const THIRTY_DAYS = 60 * 60 * 24 * 30
+const COSMOS_DATA_TTL = parseInt(process.env['COSMOS_DATA_TTL'] ?? THIRTY_DAYS.toString())
+
 export interface ConnectionConfig {
     connectionString: string
     databaseName: string
@@ -41,6 +44,10 @@ export class Repository implements IRepository {
             const { databaseName, collectionName } = this.config
             const database = client.db(databaseName)
             const collection = database.collection(collectionName)
+            await collection.createIndex(
+                { _ts: 1 },
+                { expireAfterSeconds: COSMOS_DATA_TTL }
+            )
 
             return await operation(collection)
         } finally {

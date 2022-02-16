@@ -41,6 +41,10 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
           value: 'rollagon'
         }
         {
+          name: 'COSMOS_DATA_TTL'
+          value: '2592000'
+        }
+        {
           name: 'GAME_COLLECTION_NAME'
           value: 'games'
         }
