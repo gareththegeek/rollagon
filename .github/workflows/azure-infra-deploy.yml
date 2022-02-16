@@ -30,24 +30,3 @@ jobs:
         azcliversion: 2.33.0
         inlineScript: |
           az deployment group create -g rollagon -f ./infra/bicep/webapp.bicep --parameters cosmosAccountName=gjwcosmosaccount cosmosResourceGroupName=database appServicePlanId=beastie-book-asp appServicePlanResourceGroupName=ftd-beastie-book
-
-    - name: 'Checkout Github Action' 
-      uses: actions/checkout@master
-
-    - name: Setup Node 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14.x'
-
-    - name: 'npm install, build, and test'
-      run: |
-        cd server
-        npm install
-        npm run build
-        #npm run test
-
-    - name: 'Run Azure webapp deploy action using publish profile credentials'
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: rollagon
-        package: ./server/dist
