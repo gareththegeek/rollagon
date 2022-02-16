@@ -23,6 +23,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
       minTlsVersion: '1.2'
       appCommandLine: 'npm start'
       webSocketsEnabled: true
+      linuxFxVersion: 'NODE|14-lts'
       appSettings: [
         {
           name: 'NODE_ENV'
