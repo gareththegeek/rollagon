@@ -9,5 +9,6 @@ if (!fs.existsSync(dir)) {
 
 //fse.copySync(path.join(__dirname, `../../client/build`), path.join(__dirname, `../dist/public`))
 fs.copyFileSync(path.join(__dirname, `../package.json`), path.join(__dirname, `../dist/package.json`))
+fs.copyFileSync(path.join(__dirname, `../web.config`), path.join(__dirname, `../dist/web.config`))
 
 console.log('Done 🏁')
