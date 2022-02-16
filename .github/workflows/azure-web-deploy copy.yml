@@ -35,7 +35,7 @@ jobs:
         cd dist
         npm install --only=production
 
-    - name: 'Run Azure webapp deploy action using publish profile credentials'
+    - name: 'Run Azure webapp deploy action'
       uses: azure/webapps-deploy@v2
       with:
         app-name: rollagon
