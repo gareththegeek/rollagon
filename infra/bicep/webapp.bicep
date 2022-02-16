@@ -23,8 +23,11 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
       minTlsVersion: '1.2'
       appCommandLine: 'npm start'
       webSocketsEnabled: true
-      windowsFxVersion: 'NODE|14-lts'
       appSettings: [
+        {
+          name: 'WEBSITE_NODE_DEFAULT_VERSION'
+          value: '14.18.1'
+        }
         {
           name: 'NODE_ENV'
           value: 'production'
