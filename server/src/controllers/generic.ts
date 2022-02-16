@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { Socket } from '../websockets'
 import { wrapAsync } from './errors'
 import { ControllerConfig } from './ControllerConfig'
 
@@ -62,6 +63,10 @@ export const bind = <T>(config: ControllerConfig<T>) => {
                 validationResult.value
             )
 
+            if (status === 200) {
+                Socket.send(`${config.topic}.add`, { params, value })
+            }
+
             res.status(status).send(value)
         }
     )
@@ -91,6 +96,10 @@ export const bind = <T>(config: ControllerConfig<T>) => {
                 validationResult.value
             )
 
+            if (status === 200) {
+                Socket.send(`${config.topic}.update`, { params, value })
+            }
+
             res.status(status).send(value)
         }
     )
@@ -107,6 +116,10 @@ export const bind = <T>(config: ControllerConfig<T>) => {
             }
 
             const { status, value } = await config.service.remove!(validationResult.value)
+
+            if (status === 200) {
+                Socket.send(`${config.topic}.remove`, { params })
+            }
 
             res.status(status).send(value)
         }

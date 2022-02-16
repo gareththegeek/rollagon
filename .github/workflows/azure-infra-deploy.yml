@@ -22,4 +22,11 @@ jobs:
       with:
         azcliversion: 2.33.0
         inlineScript: |
-          az deployment group create -g database -f ./infra/bicep/main.bicep
+          az deployment group create -g database -f ./infra/bicep/cosmos.bicep
+
+    - name: Deploy Web App Infrastructure
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.33.0
+        inlineScript: |
+          az deployment group create -g rollagon -f ./infra/bicep/webapp.bicep

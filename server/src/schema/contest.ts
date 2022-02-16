@@ -22,6 +22,7 @@ export const updateSchema = Joi.object({
 })
 
 export const controllerConfig: ControllerConfig<Contest> = {
+    topic: 'contests',
     service,
     getOneParamsSchema,
     getManyParamsSchema,

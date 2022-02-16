@@ -22,6 +22,7 @@ export const updateSchema = Joi.object({
 })
 
 export const controllerConfig: ControllerConfig<Strife> = {
+    topic: 'strife',
     service,
     getOneParamsSchema,
     updateParamsSchema: getOneParamsSchema,

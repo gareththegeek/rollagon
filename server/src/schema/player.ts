@@ -22,6 +22,7 @@ export const addSchema = Joi.object({
 })
 
 export const controllerConfig: ControllerConfig<Player> = {
+    topic: 'players',
     service,
     getOneParamsSchema,
     getManyParamsSchema,

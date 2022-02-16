@@ -2,6 +2,7 @@ import Joi from 'joi'
 import { Service } from '../services/Service'
 
 export interface ControllerConfig<T> {
+    topic: string
     service: Service<T>
     getOneParamsSchema?: Joi.ObjectSchema
     getManyParamsSchema?: Joi.ObjectSchema
