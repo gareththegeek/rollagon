@@ -2,11 +2,13 @@ param location string = resourceGroup().location
 param appServicePlanResourceGroupName string
 param appServicePlanId string
 param cosmosAccountName string
+param cosmosResourceGroupName string
 
 var appName = 'rollagon'
 
 resource cosmosAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' existing = {
   name: cosmosAccountName
+  scope: resourceGroup(cosmosResourceGroupName)
 }
 
 var connectionString = listConnectionStrings(cosmosAccount.id, '2021-10-15').connectionStrings[0].connectionString
