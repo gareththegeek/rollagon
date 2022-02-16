@@ -57,4 +57,10 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
   }
 }
 
+resource stagingslot 'Microsoft.Web/sites/slots@2021-03-01' = {
+  parent: appService
+  name: '${appName}-staging'
+  location: location
+}
+
 output appServiceName string = appService.name
