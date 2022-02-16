@@ -33,7 +33,7 @@ jobs:
         #npm run test
         npm run build
 
-    - name: 'npm install, build, and test'
+    - name: 'Server - npm install, build, and test'
       run: |
         cd server
         npm install
@@ -45,5 +45,6 @@ jobs:
     - name: 'Run Azure webapp deploy action'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: rollagon-staging
+        app-name: rollagon
+        slot-name: staging
         package: ./server/dist

@@ -28,11 +28,9 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
-    "@types/express-mongo-sanitize": "^2.1.0",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.4.0",
     "@types/joi": "^17.2.3",
-    "@types/moment": "^2.13.0",
     "@types/mongodb": "^4.0.7",
     "@types/node": "^17.0.17",
     "@types/socket.io": "^3.0.2",
