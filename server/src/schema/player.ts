@@ -27,5 +27,7 @@ export const controllerConfig: ControllerConfig<Player> = {
     getManyParamsSchema,
     addParamsSchema: getManyParamsSchema,
     addSchema,
+    updateParamsSchema: getOneParamsSchema,
+    updateSchema: addSchema,
     removeParamsSchema: getOneParamsSchema
 }

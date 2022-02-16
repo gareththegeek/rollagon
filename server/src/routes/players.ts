@@ -8,12 +8,14 @@ const bind = (app: Express): void => {
         getMany,
         getOne,
         add,
+        update,
         remove
     } = controllers.players
 
     app.get(`${routePrefix}/:playerId`, getOne)
     app.get(routePrefix, getMany)
     app.post(routePrefix, add)
+    app.put(`${routePrefix}/:playerId`, update)
     app.delete(`${routePrefix}/:playerId`, remove)
 }
 

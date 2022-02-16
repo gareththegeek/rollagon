@@ -66,7 +66,7 @@ export const update = async (params: GetOneParams, body: StrifeBody): Promise<Re
     if (!result) {
         return {
             status: 500,
-            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
+            value: { message: 'Unexpectedly failed to persist data to database' }
         }
     }
 

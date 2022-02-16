@@ -24,7 +24,6 @@ interface AddContestantBody {
 interface ContestantBody {
     ready: boolean
     dicePool: {
-        rolled: boolean
         dice: {
             type: DiceType
         }[]
@@ -89,6 +88,7 @@ export const add = async ({ gameId, contestId }: GetManyParams, body: AddContest
     const contestant = {
         playerId,
         ready: false,
+        prevail: false,
         dicePool: {
             rolled: false,
             score: undefined,
@@ -102,7 +102,7 @@ export const add = async ({ gameId, contestId }: GetManyParams, body: AddContest
     if (!result) {
         return {
             status: 500,
-            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
+            value: { message: 'Unexpectedly failed to persist data to database' }
         }
     }
 
@@ -119,6 +119,15 @@ export const update = async (params: GetOneParams, body: ContestantBody): Promis
     }
 
     const contestant = contestantQuery.value
+
+    if (body.ready) {
+        if (body.dicePool.dice.filter(x => x.type !== 'd4').length < 2) {
+            return {
+                status: 400,
+                value: { message: 'Cannot set ready unless at least two dice (d6-d12) are included in the dice pool' }
+            }
+        }
+    }
 
     const next: Contestant = {
         ...contestant,
@@ -143,7 +152,7 @@ export const update = async (params: GetOneParams, body: ContestantBody): Promis
     if (!result) {
         return {
             status: 500,
-            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
+            value: { message: 'Unexpectedly failed to persist data to database' }
         }
     }
 

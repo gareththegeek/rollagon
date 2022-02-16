@@ -3,7 +3,7 @@ import { getRepository } from '../repository/factory'
 import { Contest, ContestStatusType, Game } from './Game'
 import { isError, Result } from './Result'
 import * as gameService from './games'
-import { rollStrife } from '../model'
+import { rollContest, rollStrife } from '../model'
 
 const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
 
@@ -88,7 +88,7 @@ export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> =
     if (!result) {
         return {
             status: 500,
-            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
+            value: { message: 'Unexpectedly failed to persist data to database' }
         }
     }
 
@@ -98,7 +98,7 @@ export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> =
     }
 }
 
-const setTarget = async (params: GetOneParams, contest: Contest): Promise<Result<Contest>> => {
+const setTarget = async ({ gameId, contestId }: GetOneParams, contest: Contest): Promise<Result<Contest>> => {
     const nextStrife = rollStrife(contest.strife)
     const next: Contest = {
         ...contest,
@@ -108,13 +108,12 @@ const setTarget = async (params: GetOneParams, contest: Contest): Promise<Result
         }
     }
 
-    const { gameId, contestId } = params
     const repo = getRepository(GAME_COLLECTION_NAME)
     const result = await repo.updateNested(gameId, `contests.${contestId}`, next)
     if (!result) {
         return {
             status: 500,
-            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
+            value: { message: 'Unexpectedly failed to persist data to database' }
         }
     }
 
@@ -124,14 +123,35 @@ const setTarget = async (params: GetOneParams, contest: Contest): Promise<Result
     }
 }
 
-const completeContest = async (_params: GetOneParams, _contest: Contest): Promise<Result<Contest>> => {
-    // TODO
-    // Check all players ready
-    // Roll all players dice pools and calculate results
-    // Update contest in database
-    // Return new contest
-    throw new Error('not implemented')
+const completeContest = async ({ gameId, contestId }: GetOneParams, contest: Contest): Promise<Result<Contest>> => {
+    if (Object.values(contest.contestants).some(x => !x.ready)) {
+        return {
+            status: 400,
+            value: { message: 'All players must be ready before contest can be rolled' }
+        }
+    }
+
+    const next = rollContest(contest)
+
+    const repo = getRepository(GAME_COLLECTION_NAME)
+    const result = await repo.updateNested(gameId, `contests.${contestId}`, next)
+    if (!result) {
+        return {
+            status: 500,
+            value: { message: 'Unexpectedly failed to persist data to database' }
+        }
+    }
+
+    return {
+        status: 200,
+        value: next
+    }
 }
+
+const validStateChanges: { from: ContestStatusType, to: ContestStatusType }[] = [
+    { from: 'new', to: 'targetSet' },
+    { from: 'targetSet', to: 'complete' }
+]
 
 export const update = async (params: GetOneParams, body: ContestBody): Promise<Result<Contest>> => {
     const contestQuery = await getOne(params)
@@ -139,27 +159,17 @@ export const update = async (params: GetOneParams, body: ContestBody): Promise<R
         return contestQuery
     }
 
-    if (contestQuery.value.status === 'complete') {
+    const from = contestQuery.value.status
+    const to = body.status
+    if (!validStateChanges.some(x => x.from === from && x.to === to)) {
         return {
             status: 400,
-            value: { message: 'Cannot update contest which is already complete' }
+            value: { message: `Cannot change contest state from '${from}' to '${to}'` }
         }
     }
 
     switch (body.status) {
-        case 'new': {
-            return {
-                status: 400,
-                value: { message: 'Cannot update contest to status new' }
-            }
-        }
         case 'targetSet': {
-            if (contestQuery.value.status === 'targetSet') {
-                return {
-                    status: 400,
-                    value: { message: 'Cannot set target of contest for which target has already been set' }
-                }
-            }
             return await setTarget(params, contestQuery.value)
         }
         case 'complete': {

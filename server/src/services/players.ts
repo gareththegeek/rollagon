@@ -63,13 +63,40 @@ export const add = async ({ gameId }: GetManyParams, { name }: AddBody): Promise
     if (!result) {
         return {
             status: 500,
-            value: { message: 'Unexpectedly failed to retrieve persisted data from database' }
+            value: { message: 'Unexpectedly failed to persist data to database' }
         }
     }
 
     return {
         status: 200,
         value: player
+    }
+}
+
+export const update = async (params: GetOneParams, { name }: AddBody): Promise<Result<Player>> => {
+    const playerQuery = await getOne(params)
+    if (isError(playerQuery)) {
+        return playerQuery
+    }
+
+    const repo = getRepository(GAME_COLLECTION_NAME)
+    const { id } = playerQuery.value
+    const { gameId } = params
+    const next = {
+        id,
+        name
+    }
+    const result = await repo.updateNested(gameId, `players.${id}`, next)
+    if (!result) {
+        return {
+            status: 500,
+            value: { message: 'Unexpectedly failed to persist data to database' }
+        }
+    }
+
+    return {
+        status: 200,
+        value: next
     }
 }
 

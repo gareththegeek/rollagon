@@ -16,6 +16,7 @@ export interface DicePool {
 export interface Contestant {
     playerId: string
     ready: boolean
+    prevail: boolean
     dicePool: DicePool
 }
 
