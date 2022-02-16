@@ -25,6 +25,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '14.x'
+    
+    - name: 'Client - npm install, build, and test'
+      run: |
+        cd client
+        npm install
+        #npm run test
+        npm run build
 
     - name: 'npm install, build, and test'
       run: |
