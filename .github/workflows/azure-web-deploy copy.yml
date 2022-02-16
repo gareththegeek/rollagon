@@ -45,5 +45,5 @@ jobs:
     - name: 'Run Azure webapp deploy action'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: rollagon
+        app-name: rollagon-staging
         package: ./server/dist
