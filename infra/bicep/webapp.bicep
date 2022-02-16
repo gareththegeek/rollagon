@@ -21,7 +21,6 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
     httpsOnly: true
     siteConfig: {
       minTlsVersion: '1.2'
-      linuxFxVersion: 'node|14-lts'
       appCommandLine: 'npm start'
       webSocketsEnabled: true
       appSettings: [
