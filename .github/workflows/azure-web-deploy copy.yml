@@ -30,8 +30,10 @@ jobs:
       run: |
         cd server
         npm install
-        npm run build
         #npm run test
+        npm run build
+        cd dist
+        npm install --only=production
 
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
