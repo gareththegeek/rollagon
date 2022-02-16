@@ -8,12 +8,14 @@ const bind = (app: Express): void => {
         getOne,
         getMany,
         add,
+        update,
         remove
     } = controllers.contests
 
     app.get(`${routePrefix}/:contestId`, getOne)
     app.get(`${routePrefix}`, getMany)
     app.post(routePrefix, add)
+    app.put(`${routePrefix}/:contestId`, update)
     app.delete(`${routePrefix}/:contestId`, remove)
 }
 

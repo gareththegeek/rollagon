@@ -15,11 +15,19 @@ export const getManyParamsSchema = Joi.object({
 
 export const addSchema = Joi.object({})
 
+export const updateSchema = Joi.object({
+    status: Joi.string()
+        .valid('new', 'targetSet', 'complete')
+        .required()
+})
+
 export const controllerConfig: ControllerConfig<Contest> = {
     service,
     getOneParamsSchema,
     getManyParamsSchema,
     addParamsSchema: getManyParamsSchema,
     addSchema,
+    updateParamsSchema: getOneParamsSchema,
+    updateSchema: updateSchema,
     removeParamsSchema: getOneParamsSchema
 }

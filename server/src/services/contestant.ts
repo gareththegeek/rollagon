@@ -1,6 +1,7 @@
 import { getRepository } from '../repository/factory'
 import { Contestant, DiceType } from './Game'
 import { isError, Result } from './Result'
+import * as gameService from './games'
 import * as contestService from './contests'
 
 const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
@@ -50,14 +51,41 @@ export const getOne = async ({ gameId, contestId, playerId }: GetOneParams): Pro
     }
 }
 
-export const add = async (params: GetManyParams, body: AddContestantBody): Promise<Result<Contestant>> => {
-    const contestQuery = await contestService.getOne(params)
+export const getMany = async ({ gameId, contestId }: GetOneParams): Promise<Result<Contestant[]>> => {
+    const contestQuery = await contestService.getOne({ gameId, contestId })
     if (isError(contestQuery)) {
         return contestQuery
     }
 
-    const { gameId, contestId } = params
+    const contestants = Object.values(contestQuery.value.contestants)
+    return {
+        status: 200,
+        value: contestants
+    }
+}
+
+export const add = async ({ gameId, contestId }: GetManyParams, body: AddContestantBody): Promise<Result<Contestant>> => {
+    const gameQuery = await gameService.getOne({ gameId })
+    if (isError(gameQuery)) {
+        return gameQuery
+    }
+    const game = gameQuery.value
+    const contest = game.contests[contestId]
+    if (contest === undefined || contest === null) {
+        return {
+            status: 404,
+            value: { message: `Unable to find contest with id '${contestId}'` }
+        }
+    }
+
     const { playerId } = body
+    if (!Object.keys(game.players).includes(playerId)) {
+        return {
+            status: 400,
+            value: { message: `No player with id '${playerId}' found in the current game` }
+        }
+    }
+
     const contestant = {
         playerId,
         ready: false,

@@ -110,7 +110,7 @@ const setTarget = async (params: GetOneParams, contest: Contest): Promise<Result
 
     const { gameId, contestId } = params
     const repo = getRepository(GAME_COLLECTION_NAME)
-    const result = await repo.updateNested(gameId, `contests.${contestId}.strife`, next)
+    const result = await repo.updateNested(gameId, `contests.${contestId}`, next)
     if (!result) {
         return {
             status: 500,
@@ -139,6 +139,13 @@ export const update = async (params: GetOneParams, body: ContestBody): Promise<R
         return contestQuery
     }
 
+    if (contestQuery.value.status === 'complete') {
+        return {
+            status: 400,
+            value: { message: 'Cannot update contest which is already complete' }
+        }
+    }
+
     switch (body.status) {
         case 'new': {
             return {
@@ -147,6 +154,12 @@ export const update = async (params: GetOneParams, body: ContestBody): Promise<R
             }
         }
         case 'targetSet': {
+            if (contestQuery.value.status === 'targetSet') {
+                return {
+                    status: 400,
+                    value: { message: 'Cannot set target of contest for which target has already been set' }
+                }
+            }
             return await setTarget(params, contestQuery.value)
         }
         case 'complete': {

@@ -28,6 +28,7 @@ export const updateSchema = Joi.object({
 export const controllerConfig: ControllerConfig<Contestant> = {
     service,
     getOneParamsSchema,
+    getManyParamsSchema,
     addParamsSchema: getManyParamsSchema,
     addSchema,
     updateParamsSchema: getOneParamsSchema,
