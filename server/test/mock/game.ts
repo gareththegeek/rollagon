@@ -1,5 +1,6 @@
-import { Game, Player } from '../../src/services/Game'
+import { Contest, Game, Player } from '../../src/services/Game'
 import { mockPlayer } from './player'
+import { mockContest } from './contest'
 
 export const mockGame = (id: string): Game => ({
     name: 'Some random game name',
@@ -15,4 +16,12 @@ export const mockGameWithPlayers = (gameId: string, playerIds: string[]): Game =
         a[id] = mockPlayer(id)
         return a
     }, {} as { [id: string]: Player })
+})
+
+export const mockGameWithContests = (gameId: string, contestIds: string[]): Game => ({
+    ...mockGame(gameId),
+    contests: contestIds.reduce((a, id, i) => {
+        a[id] = mockContest(id, i + 1)
+        return a
+    }, {} as { [id: string]: Contest })
 })
