@@ -107,7 +107,7 @@ export const remove = async ({ gameId, playerId }: GetOneParams): Promise<Result
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
-    const result = repo.deleteNested(gameId, `players.${playerId}`)
+    const result = await repo.deleteNested(gameId, `players.${playerId}`)
     if (!result) {
         return {
             status: 500,

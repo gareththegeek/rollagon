@@ -1,24 +1,22 @@
 import { mockRepo, MockRepository } from '../mock/repo'
 import { mockGenerateId } from '../mock/generateId'
-import { mockGetTimestamp } from '../mock/getTimestamp'
 import { mockSocket, MockServer } from '../mock/socket'
 import { mockGame } from '../mock/game'
+import { mockPlayer } from '../mock/player'
 import request from 'supertest'
 import app from '../../src/server'
-import { ObjectId } from 'mongodb'
 
-describe('POST /api/games', () => {
+describe('POST /api/games/:gameId/players', () => {
     let repo: MockRepository
     let generateId: jest.SpyInstance<string, []>
-    let getTimestamp: jest.SpyInstance<string, []>
     let socket: MockServer
 
     const gameId = "1234567890ABCDEfghijk"
+    const playerId = "123123123123123123123"
 
     beforeEach(() => {
         repo = mockRepo()
         generateId = mockGenerateId()
-        getTimestamp = mockGetTimestamp()
         socket = mockSocket()
     })
 
@@ -26,82 +24,87 @@ describe('POST /api/games', () => {
         jest.resetAllMocks()
     })
 
-    it('returns a new game with specified name', (done) => {
-        const expected = mockGame(gameId)
-        getTimestamp.mockReturnValue(expected.createdOn)
-        generateId.mockReturnValue(gameId)
+    it('returns a new player with specified name', (done) => {
+        const game = mockGame(gameId)
+        const expected = mockPlayer(playerId)
+
+        generateId.mockReturnValue(playerId)
         const body = {
             name: expected.name
         }
 
-        repo.getById.mockResolvedValue(expected)
-        repo.insert.mockResolvedValue(new ObjectId("123456789012345678901234"))
+        repo.getById.mockResolvedValue(game)
+        repo.updateNested.mockResolvedValue(true)
 
         request(app)
-            .post(`/api/games`)
+            .post(`/api/games/${encodeURI(gameId)}/players`)
             .send(body)
             .expect(200, expected)
             .expect(() => {
-                expect(repo.insert).toHaveBeenCalledWith(expected)
+                expect(repo.updateNested).toHaveBeenCalledWith(gameId, `players.${playerId}`, expected)
             })
             .end(done)
     })
 
-    it('sends the new game via web socket', (done) => {
-        const expected = mockGame(gameId)
-        getTimestamp.mockReturnValue(expected.createdOn)
-        generateId.mockReturnValue(gameId)
+    it('sends the new player via web socket', (done) => {
+        const game = mockGame(gameId)
+        const expected = mockPlayer(playerId)
+
+        generateId.mockReturnValue(playerId)
         const body = {
             name: expected.name
         }
 
-        repo.getById.mockResolvedValue(expected)
-        repo.insert.mockResolvedValue(new ObjectId("123456789012345678901234"))
+        repo.getById.mockResolvedValue(game)
+        repo.updateNested.mockResolvedValue(true)
 
         request(app)
-            .post(`/api/games`)
+            .post(`/api/games/${encodeURI(gameId)}/players`)
             .send(body)
             .expect(() => {
-                expect(socket.send).toHaveBeenCalledWith('games.add', { params: {}, value: expected })
+                expect(socket.send).toHaveBeenCalledWith('players.add', { params: { gameId }, value: expected })
             })
             .end(done)
     })
 
     it('trims whitespace from specified name', (done) => {
-        const expected = mockGame(gameId)
-        getTimestamp.mockReturnValue(expected.createdOn)
-        generateId.mockReturnValue(gameId)
+        const game = mockGame(gameId)
+        const expected = mockPlayer(playerId)
+
+        generateId.mockReturnValue(playerId)
         const body = {
             name: ` ${expected.name} `
         }
 
-        repo.getById.mockResolvedValue(expected)
-        repo.insert.mockResolvedValue(new ObjectId("123456789012345678901234"))
+        repo.getById.mockResolvedValue(game)
+        repo.updateNested.mockResolvedValue(true)
 
         request(app)
-            .post(`/api/games`)
+            .post(`/api/games/${encodeURI(gameId)}/players`)
             .send(body)
             .expect(200, expected)
             .expect(() => {
-                expect(repo.insert).toHaveBeenCalledWith(expected)
+                expect(repo.updateNested).toHaveBeenCalledWith(gameId, `players.${playerId}`, expected)
             })
             .end(done)
     })
 
-    it('returns 500 error if game fails to persist', (done) => {
-        const expected = mockGame(gameId)
-        generateId.mockReturnValue(gameId)
+    it('returns 500 error if player fails to persist', (done) => {
+        const game = mockGame(gameId)
+        const expected = mockPlayer(playerId)
+
+        generateId.mockReturnValue(playerId)
         const body = {
-            name: expected.name
+            name: ` ${expected.name} `
         }
 
-        repo.getById.mockResolvedValue(expected)
+        repo.getById.mockResolvedValue(game)
         repo.insert.mockResolvedValue(undefined)
 
         request(app)
-            .post(`/api/games`)
+            .post(`/api/games/${encodeURI(gameId)}/players`)
             .send(body)
-            .expect(500, { message: 'Unexpectedly failed to persist data into database' })
+            .expect(500, { message: 'Unexpectedly failed to persist data to database' })
             .end(done)
     });
 
@@ -110,7 +113,7 @@ describe('POST /api/games', () => {
             const body = { name }
 
             request(app)
-                .post('/api/games')
+                .post(`/api/games/${encodeURI(gameId)}/players`)
                 .send(body)
                 .expect(400, {
                     message: [
@@ -125,7 +128,7 @@ describe('POST /api/games', () => {
         const body = {}
 
         request(app)
-            .post('/api/games')
+            .post(`/api/games/${encodeURI(gameId)}/players`)
             .send(body)
             .expect(400, { message: ['"name" is required'] })
             .end(done)
