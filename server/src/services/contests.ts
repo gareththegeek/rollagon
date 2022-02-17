@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid'
+import { generateId } from '../factories/generateId'
 import { getRepository } from '../repository/factory'
 import { Contest, ContestStatusType, Game } from './Game'
 import { isError, Result } from './Result'
@@ -65,7 +65,7 @@ export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> =
 
     const { value: game } = gameQuery
     const contest: Contest = {
-        id: nanoid(),
+        id: generateId(),
         sort: nextSort(game),
         status: 'new',
         strife: {

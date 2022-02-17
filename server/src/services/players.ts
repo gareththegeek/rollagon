@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid'
+import { generateId } from '../factories/generateId'
 import { getRepository } from '../repository/factory'
 import { isError, Result } from './Result'
 import * as gameService from './games'
@@ -55,7 +55,7 @@ export const getMany = async ({ gameId }: GetManyParams): Promise<Result<Player[
 export const add = async ({ gameId }: GetManyParams, { name }: AddBody): Promise<Result<Player>> => {
     const repo = getRepository(GAME_COLLECTION_NAME)
     const player: Player = {
-        id: nanoid(),
+        id: generateId(),
         name
     }
     const result = await repo.updateNested(gameId, `players.${player.id}`, player)

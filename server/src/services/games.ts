@@ -1,5 +1,5 @@
-import moment from 'moment'
-import { nanoid } from 'nanoid'
+import { getTimestamp } from '../factories/getTimestamp'
+import { generateId } from '../factories/generateId'
 import { getRepository } from '../repository/factory'
 import { Game } from './Game'
 import { isError, Result } from './Result'
@@ -32,8 +32,8 @@ export const getOne = async ({ gameId }: GetOneParams): Promise<Result<Game>> =>
 export const add = async (_: unknown, game: Partial<Game>): Promise<Result<Game>> => {
     const valid: Game = {
         name: game.name!,
-        id: nanoid(),
-        createdOn: moment().utc().toISOString(),
+        id: generateId(),
+        createdOn: getTimestamp(),
         contests: {},
         players: {}
     }
