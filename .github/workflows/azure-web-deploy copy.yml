@@ -37,7 +37,7 @@ jobs:
       run: |
         cd server
         npm install
-        npm run test
+        npm test
         npm run build
         cd dist
         npm install --only=production
