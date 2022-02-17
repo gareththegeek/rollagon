@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "ts-node src/index.ts",
     "start": "node index.js",
-    "build": "tsc&&ts-node src/build.ts",
+    "build": "tsc -p tsconfig-build.json&&ts-node src/build.ts",
     "test": "jest"
   },
   "repository": {

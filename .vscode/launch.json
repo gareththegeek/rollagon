@@ -20,6 +20,21 @@
                 "<node_internals>/**",
                 "node_modules/**"
             ]
+        },
+        {
+            "name": "Debug Server Tests",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/server",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceRoot}/server/node_modules/jest/bin/jest.js",
+                "--runInBand",
+                "--coverage",
+                "false"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }
