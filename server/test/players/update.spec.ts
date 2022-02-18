@@ -9,8 +9,8 @@ describe('PUT /api/games/:gameId/players/:playerId', () => {
     let repo: MockRepository
     let socket: MockServer
 
-    const gameId = "1234567890ABCDEfghijk"
-    const playerId = "123123123123123123123"
+    const gameId = '1234567890ABCDEfghijk'
+    const playerId = '123123123123123123123'
 
     beforeEach(() => {
         repo = mockRepo()

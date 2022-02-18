@@ -13,7 +13,7 @@ describe('POST /api/games', () => {
     let getTimestamp: jest.SpyInstance<string, []>
     let socket: MockServer
 
-    const gameId = "1234567890ABCDEfghijk"
+    const gameId = '1234567890ABCDEfghijk'
 
     beforeEach(() => {
         repo = mockRepo()

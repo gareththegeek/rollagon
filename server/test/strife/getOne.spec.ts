@@ -8,8 +8,8 @@ import { removeOptional } from '../removeOptional'
 describe('GET /api/games/:gameId/contests/:contestId/strife', () => {
     let repo: MockRepository
 
-    const gameId = "1234567890ABCDEfghijk"
-    const contestId = "333333333333333333333"
+    const gameId = '1234567890ABCDEfghijk'
+    const contestId = '333333333333333333333'
 
     beforeEach(() => {
         repo = mockRepo()

@@ -11,8 +11,8 @@ describe('POST /api/games/:gameId/players', () => {
     let generateId: jest.SpyInstance<string, []>
     let socket: MockServer
 
-    const gameId = "1234567890ABCDEfghijk"
-    const playerId = "123123123123123123123"
+    const gameId = '1234567890ABCDEfghijk'
+    const playerId = '123123123123123123123'
 
     beforeEach(() => {
         repo = mockRepo()
@@ -131,6 +131,18 @@ describe('POST /api/games/:gameId/players', () => {
             .post(`/api/games/${encodeURI(gameId)}/players`)
             .send(body)
             .expect(400, { message: ['"name" is required'] })
+            .end(done)
+    })
+
+    it('returns 404 if no game found with specified id', (done) => {
+        const body = { name: 'hello' }
+
+        repo.getById.mockResolvedValue(undefined)
+
+        request(app)
+            .post(`/api/games/${encodeURI(gameId)}/players`)
+            .send(body)
+            .expect(404, { message: `Could not find game with id '${gameId}'` })
             .end(done)
     })
 })

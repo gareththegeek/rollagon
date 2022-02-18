@@ -54,6 +54,11 @@ export const getMany = async ({ gameId }: GetManyParams): Promise<Result<Player[
 
 export const add = async ({ gameId }: GetManyParams, { name }: AddBody): Promise<Result<Player>> => {
     const repo = getRepository(GAME_COLLECTION_NAME)
+    const gameQuery = await gameService.getOne({ gameId })
+    if (isError(gameQuery)) {
+        return gameQuery
+    }
+
     const player: Player = {
         id: generateId(),
         name

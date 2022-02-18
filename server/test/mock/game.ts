@@ -25,3 +25,11 @@ export const mockGameWithContests = (gameId: string, contestIds: string[]): Game
         return a
     }, {} as { [id: string]: Contest })
 })
+
+export const mockGameWithContestsAndPlayers = (gameId: string, contestIds: string[], playerIds: string[]): Game => ({
+    ...mockGameWithPlayers(gameId, playerIds),
+    contests: contestIds.reduce((a, id, i) => {
+        a[id] = mockContest(id, i + 1)
+        return a
+    }, {} as { [id: string]: Contest })
+})

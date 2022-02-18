@@ -7,7 +7,7 @@ import app from '../../src/server'
 import { removeOptional } from '../removeOptional'
 import { ContestStatusType, DicePool } from '../../src/services/Game'
 
-describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
+describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId', () => {
     let repo: MockRepository
     let socket: MockServer
 

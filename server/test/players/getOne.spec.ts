@@ -6,9 +6,9 @@ import { mockGame, mockGameWithPlayers } from '../mock/game'
 describe('GET /api/games/:gameId/players/:playerId', () => {
     let repo: MockRepository
 
-    const gameId = "1234567890ABCDEfghijk"
-    const playerId1 = "111111111111111111111"
-    const playerId2 = "222222222222222222222"
+    const gameId = '1234567890ABCDEfghijk'
+    const playerId1 = '111111111111111111111'
+    const playerId2 = '222222222222222222222'
 
     beforeEach(() => {
         repo = mockRepo()

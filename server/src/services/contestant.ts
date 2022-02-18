@@ -88,7 +88,7 @@ export const add = async ({ gameId, contestId }: GetManyParams, body: AddContest
     const contestant = {
         playerId,
         ready: false,
-        prevail: false,
+        prevail: undefined,
         dicePool: {
             rolled: false,
             score: undefined,
