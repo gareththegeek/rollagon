@@ -1,4 +1,5 @@
 import { mockRepo, MockRepository } from '../mock/repo'
+import { removeOptional } from '../removeOptional'
 import request from 'supertest'
 import app from '../../src/server'
 import { mockGameWithContests } from '../mock/game'
@@ -26,7 +27,7 @@ describe('GET /api/games/:gameId/contests', () => {
 
         request(app)
             .get(`/api/games/${encodeURI(gameId)}/contests`)
-            .expect(200, JSON.parse(JSON.stringify(expected)))
+            .expect(200, removeOptional(expected))
             .expect(() => {
                 expect(repo.getById).toHaveBeenCalledWith(gameId)
             })

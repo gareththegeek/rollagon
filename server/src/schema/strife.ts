@@ -19,6 +19,7 @@ export const updateSchema = Joi.object({
             Joi.string()
             .valid('sacred', 'perilous', 'mythic', 'epic')
         )
+        .unique()
 })
 
 export const controllerConfig: ControllerConfig<Strife> = {

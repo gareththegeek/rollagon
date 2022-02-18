@@ -38,7 +38,15 @@ export const update = async (params: GetOneParams, body: StrifeBody): Promise<Re
         return contestQuery
     }
 
+    const contest = contestQuery.value
     const { strife } = contestQuery.value
+
+    if (contest.status !== 'new') {
+        return {
+            status: 400,
+            value: { message: 'Cannot modify strife as target number has already been set' }
+        }
+    }
 
     if (strife.dicePool.rolled) {
         return {

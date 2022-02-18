@@ -1,15 +1,15 @@
 import { mockRepo, MockRepository } from '../mock/repo'
-import { removeOptional } from '../removeOptional'
 import request from 'supertest'
 import app from '../../src/server'
 import { mockGame, mockGameWithContests } from '../mock/game'
+import { mockStrife } from '../mock/strife'
+import { removeOptional } from '../removeOptional'
 
-describe('GET /api/games/:gameId/contests/:contestId', () => {
+describe('GET /api/games/:gameId/contests/:contestId/strife', () => {
     let repo: MockRepository
 
     const gameId = "1234567890ABCDEfghijk"
-    const contestId1 = "111111111111111111111"
-    const contestId2 = "222222222222222222222"
+    const contestId = "333333333333333333333"
 
     beforeEach(() => {
         repo = mockRepo()
@@ -19,14 +19,15 @@ describe('GET /api/games/:gameId/contests/:contestId', () => {
         jest.resetAllMocks()
     })
 
-    it('returns contest with specified id from specified game', (done) => {
-        const game = mockGameWithContests(gameId, [contestId1, contestId2])
-        const expected = game.contests[contestId2]!
+    it('returns strife for contest with specified id from specified game', (done) => {
+        const game = mockGameWithContests(gameId, [contestId])
+        const expected = mockStrife()
+        game.contests[contestId]!.strife = expected
 
         repo.getById.mockResolvedValue(game)
 
         request(app)
-            .get(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId2)}`)
+            .get(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/strife`)
             .expect(200, removeOptional(expected))
             .expect(() => {
                 expect(repo.getById).toHaveBeenCalledWith(gameId)
@@ -38,7 +39,7 @@ describe('GET /api/games/:gameId/contests/:contestId', () => {
         repo.getById.mockResolvedValue(undefined)
 
         request(app)
-            .get(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId2)}`)
+            .get(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/strife`)
             .expect(404, { message: `Could not find game with id '${gameId}'` })
             .end(done)
     })
@@ -47,8 +48,8 @@ describe('GET /api/games/:gameId/contests/:contestId', () => {
         repo.getById.mockResolvedValue(mockGame(gameId))
 
         request(app)
-            .get(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId2)}`)
-            .expect(404, { message: `Could not find contest with id '${contestId2}'` })
+            .get(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/strife`)
+            .expect(404, { message: `Could not find contest with id '${contestId}'` })
             .end(done)
     })
 })

@@ -3,6 +3,7 @@ import { mockGenerateId } from '../mock/generateId'
 import { mockSocket, MockServer } from '../mock/socket'
 import { mockGame, mockGameWithContests } from '../mock/game'
 import { mockContest } from '../mock/contest'
+import { removeOptional } from '../removeOptional'
 import request from 'supertest'
 import app from '../../src/server'
 
@@ -37,7 +38,7 @@ describe('POST /api/games/:gameId/contests', () => {
         request(app)
             .post(`/api/games/${encodeURI(gameId)}/contests`)
             .send(body)
-            .expect(200, JSON.parse(JSON.stringify(expected)))
+            .expect(200, removeOptional(expected))
             .expect(() => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}`, expected)
             })
@@ -58,7 +59,7 @@ describe('POST /api/games/:gameId/contests', () => {
         request(app)
             .post(`/api/games/${encodeURI(gameId)}/contests`)
             .send(body)
-            .expect(200, JSON.parse(JSON.stringify(expected)))
+            .expect(200, removeOptional(expected))
             .expect(() => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}`, expected)
             })
