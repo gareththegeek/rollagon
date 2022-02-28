@@ -26,7 +26,7 @@ describe('GET /api/games/:gameId/contests/:contestId/contestants/:contestantId',
         game.contests[contestId]!.contestants[playerId]! = expected
 
         repo.getById.mockResolvedValue(game)
-        console.log(expected)
+        
         request(app)
             .get(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/contestants/${encodeURI(playerId)}`)
             .expect(200, removeOptional(expected))
