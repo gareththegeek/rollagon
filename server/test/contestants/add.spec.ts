@@ -21,6 +21,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns a new contestant with specified player id', (done) => {

@@ -24,6 +24,7 @@ describe('POST /api/games', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns a new game with specified name', (done) => {

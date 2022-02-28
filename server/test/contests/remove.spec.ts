@@ -19,6 +19,7 @@ describe('DELETE /api/games/:gameId/contests/:contestId', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('deletes contest with specified id', (done) => {

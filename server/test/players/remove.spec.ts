@@ -19,6 +19,7 @@ describe('DELETE /api/games/:gameId/players/:playerId', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('deletes player with specified id', (done) => {

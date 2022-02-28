@@ -22,6 +22,7 @@ describe('POST /api/games/:gameId/players', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns a new player with specified name', (done) => {

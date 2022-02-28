@@ -14,6 +14,7 @@ describe('GET /api/games/:gameId', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns game with specified id', (done) => {

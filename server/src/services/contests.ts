@@ -31,7 +31,7 @@ export const getOne = async ({ gameId, contestId }: GetOneParams): Promise<Resul
     }
 
     const { value: game } = gameQuery
-    const contest = game.contests[contestId]
+    const contest = game!.contests[contestId]
     if (contest === undefined || contest === null) {
         return {
             status: 404,
@@ -99,6 +99,13 @@ export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> =
 }
 
 const setTarget = async ({ gameId, contestId }: GetOneParams, contest: Contest): Promise<Result<Contest>> => {
+    if (contest.strife.dicePool.dice.length === 0) {
+        return {
+            status: 400,
+            value: { message: 'Setting the contest target number requires at least one dice' }
+        }
+    }
+
     const nextStrife = rollStrife(contest.strife)
     const next: Contest = {
         ...contest,

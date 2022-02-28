@@ -18,6 +18,7 @@ describe('GET /api/games/:gameId/contests/:contestId/contestants/:contestantId',
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns specified contestant for contest with specified id from specified game', (done) => {

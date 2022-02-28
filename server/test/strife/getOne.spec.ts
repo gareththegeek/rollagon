@@ -17,6 +17,7 @@ describe('GET /api/games/:gameId/contests/:contestId/strife', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns strife for contest with specified id from specified game', (done) => {

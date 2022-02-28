@@ -19,6 +19,7 @@ describe('PUT /api/games/:gameId/players/:playerId', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('updates specified player name', (done) => {

@@ -1,3 +1,4 @@
+import { getRandom } from '../factories/getRandom'
 import { Dice, DiceType } from '../services/Game'
 
 const DiceMax: Record<DiceType, number> = {
@@ -11,5 +12,5 @@ const DiceMax: Record<DiceType, number> = {
 export const rollDice = (dice: Dice[]): Dice[] =>
     dice.map(({ type }) => ({
         type,
-        roll: Math.floor(Math.random() * DiceMax[type]) + 1
+        roll: Math.floor(getRandom() * DiceMax[type]) + 1
     }))

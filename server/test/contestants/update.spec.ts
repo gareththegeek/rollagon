@@ -22,6 +22,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     const buildContestantRecord = (playerId: string): Contestant => ({

@@ -17,6 +17,7 @@ describe('GET /api/games/:gameId/contests', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns contests for specified game', (done) => {

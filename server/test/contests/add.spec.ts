@@ -23,6 +23,7 @@ describe('POST /api/games/:gameId/contests', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     it('returns a new contest', (done) => {

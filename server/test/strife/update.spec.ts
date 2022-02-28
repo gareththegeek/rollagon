@@ -21,6 +21,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
+		jest.resetModules()
     })
 
     const buildStrifeRecord = () => ({
