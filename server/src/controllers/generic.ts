@@ -63,8 +63,9 @@ export const bind = <T>(config: ControllerConfig<T>) => {
                 validationResult.value
             )
 
-            if (status === 200) {
-                getSocket().send(`${config.topic}.add`, { params, value })
+            const { gameId } = params
+            if (status === 200 && gameId !== undefined) {
+                getSocket().to(gameId).emit(`${config.topic}.add`, { params, value })
             }
 
             res.status(status).send(value)
@@ -96,8 +97,9 @@ export const bind = <T>(config: ControllerConfig<T>) => {
                 validationResult.value
             )
 
-            if (status === 200) {
-                getSocket().send(`${config.topic}.update`, { params, value })
+            const { gameId } = params
+            if (status === 200 && gameId !== undefined) {
+                getSocket().to(gameId).emit(`${config.topic}.update`, { params, value })
             }
 
             res.status(status).send(value)
@@ -117,8 +119,9 @@ export const bind = <T>(config: ControllerConfig<T>) => {
 
             const { status, value } = await config.service.remove!(validationResult.value)
 
-            if (status === 200) {
-                getSocket().send(`${config.topic}.remove`, { params })
+            const { gameId } = params
+            if (status === 200 && gameId !== undefined) {
+                getSocket().to(gameId).emit(`${config.topic}.remove`, { params })
             }
 
             res.status(status).send(value)

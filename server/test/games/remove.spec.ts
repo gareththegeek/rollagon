@@ -36,6 +36,9 @@ describe('DELETE /api/games/:gameId', () => {
     })
 
     it('sends notification of deleted game via web socket', (done) => {
+        const room = { emit: jest.fn() }
+        socket.to.mockReturnValue(room)
+        
         const expected = mockGame(gameId)
 
         repo.getById.mockResolvedValue(expected)
@@ -44,7 +47,8 @@ describe('DELETE /api/games/:gameId', () => {
         request(app)
             .delete(`/api/games/${gameId}`)
             .expect(() => {
-                expect(socket.send).toHaveBeenCalledWith('games.remove', { params: { gameId } })
+                expect(socket.to).toHaveBeenCalledWith(gameId)
+				expect(room.emit).toHaveBeenCalledWith('games.remove', { params: { gameId } })
             })
             .end(done)
     })

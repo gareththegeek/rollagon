@@ -1,6 +1,6 @@
 import { mockRepo, MockRepository } from '../mock/repo'
 import { mockGetRandom } from '../mock/getRandom'
-import { mockSocket, MockServer } from '../mock/socket'
+import { mockSocket, MockServer, MockRoom } from '../mock/socket'
 import { mockGameWithContests, mockGameWithContestsAndPlayers } from '../mock/game'
 import request from 'supertest'
 import app from '../../src/server'
@@ -10,6 +10,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
     let repo: MockRepository
     let getRandom: jest.SpyInstance<number, []>
     let socket: MockServer
+    let room: MockRoom
 
     const gameId = '1234567890ABCDEfghijk'
     const contestId = '123123123123123123123'
@@ -21,6 +22,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
         repo = mockRepo()
         getRandom = mockGetRandom()
         socket = mockSocket()
+        room = { emit: jest.fn() }
+        socket.to.mockReturnValue(room)
     })
 
     afterEach(() => {
@@ -93,7 +96,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             .expect(200, expected)
             .expect(() => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}`, expected)
-                expect(socket.send).toHaveBeenCalledWith('contests.update', { params: { gameId, contestId }, value: expected })
+                expect(socket.to).toHaveBeenCalledWith(gameId)
+                expect(room.emit).toHaveBeenCalledWith('contests.update', { params: { gameId, contestId }, value: expected })
             })
             .end(done)
     })
@@ -276,7 +280,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             .expect(200, expected)
             .expect(() => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}`, expected)
-                expect(socket.send).toHaveBeenCalledWith('contests.update', { params: { gameId, contestId }, value: expected })
+                expect(socket.to).toHaveBeenCalledWith(gameId)
+                expect(room.emit).toHaveBeenCalledWith('contests.update', { params: { gameId, contestId }, value: expected })
             })
             .end(done)
     })

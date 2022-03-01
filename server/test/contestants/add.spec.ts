@@ -21,7 +21,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
-		jest.resetModules()
+        jest.resetModules()
     })
 
     it('returns a new contestant with specified player id', (done) => {
@@ -44,6 +44,9 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     })
 
     it('sends the new contestant via web socket', (done) => {
+        const room = { emit: jest.fn() }
+        socket.to.mockReturnValue(room)
+        
         const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
         const expected = mockContestant(playerId)
 
@@ -56,7 +59,8 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
             .post(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/contestants`)
             .send(body)
             .expect(() => {
-                expect(socket.send).toHaveBeenCalledWith('contestants.add', { params: { gameId, contestId }, value: expected })
+                expect(socket.to).toHaveBeenCalledWith(gameId)
+                expect(room.emit).toHaveBeenCalledWith('contestants.add', { params: { gameId, contestId }, value: expected })
             })
             .end(done)
     })

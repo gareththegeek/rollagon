@@ -72,6 +72,9 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
     })
 
     it('sends the updated contestant via web socket', (done) => {
+        const room = { emit: jest.fn() }
+        socket.to.mockReturnValue(room)
+        
         const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
         const existing = mockContestant(playerId)
         game.contests[contestId]!.contestants[playerId] = existing
@@ -86,7 +89,8 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
             .put(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/contestants/${encodeURI(playerId)}`)
             .send(body)
             .expect(() => {
-                expect(socket.send).toHaveBeenCalledWith('contestants.update', { params: { gameId, contestId, playerId }, value: expected })
+                expect(socket.to).toHaveBeenCalledWith(gameId)
+				expect(room.emit).toHaveBeenCalledWith('contestants.update', { params: { gameId, contestId, playerId }, value: expected })
             })
             .end(done)
     })

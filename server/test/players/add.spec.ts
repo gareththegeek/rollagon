@@ -48,6 +48,9 @@ describe('POST /api/games/:gameId/players', () => {
     })
 
     it('sends the new player via web socket', (done) => {
+        const room = { emit: jest.fn() }
+        socket.to.mockReturnValue(room)
+        
         const game = mockGame(gameId)
         const expected = mockPlayer(playerId)
 
@@ -63,7 +66,8 @@ describe('POST /api/games/:gameId/players', () => {
             .post(`/api/games/${encodeURI(gameId)}/players`)
             .send(body)
             .expect(() => {
-                expect(socket.send).toHaveBeenCalledWith('players.add', { params: { gameId }, value: expected })
+                expect(socket.to).toHaveBeenCalledWith(gameId)
+				expect(room.emit).toHaveBeenCalledWith('players.add', { params: { gameId }, value: expected })
             })
             .end(done)
     })

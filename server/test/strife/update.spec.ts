@@ -70,6 +70,9 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
     })
 
     it('sends the updated strife via web socket', (done) => {
+        const room = { emit: jest.fn() }
+        socket.to.mockReturnValue(room)
+        
         const game = mockGame(gameId)
         const existing = mockContest(contestId, 1)
         game.contests[contestId] = existing
@@ -84,7 +87,8 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
             .put(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/strife`)
             .send(body)
             .expect(() => {
-                expect(socket.send).toHaveBeenCalledWith('strife.update', { params: { gameId, contestId }, value: expected })
+                expect(socket.to).toHaveBeenCalledWith(gameId)
+				expect(room.emit).toHaveBeenCalledWith('strife.update', { params: { gameId, contestId }, value: expected })
             })
             .end(done)
     })
