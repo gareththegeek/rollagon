@@ -26,7 +26,7 @@ resource appService 'Microsoft.Web/sites@2020-06-01' = {
       appSettings: [
         {
           name: 'WEBSITE_NODE_DEFAULT_VERSION'
-          value: '14.18.1'
+          value: '~16'
         }
         {
           name: 'NODE_ENV'
