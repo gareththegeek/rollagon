@@ -42,7 +42,6 @@ export interface Player {
 
 export interface Game {
     id: string
-    name: string
     createdOn: string
     contests: { [id: string]: Contest }
     players: { [id: string]: Player }

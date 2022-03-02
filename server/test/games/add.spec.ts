@@ -24,16 +24,14 @@ describe('POST /api/games', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
-		jest.resetModules()
+        jest.resetModules()
     })
 
-    it('returns a new game with specified name', (done) => {
+    it('returns a new game', (done) => {
         const expected = mockGame(gameId)
         getTimestamp.mockReturnValue(expected.createdOn)
         generateId.mockReturnValue(gameId)
-        const body = {
-            name: expected.name
-        }
+        const body = {}
 
         repo.getById.mockResolvedValue(expected)
         repo.insert.mockResolvedValue(new ObjectId("123456789012345678901234"))
@@ -51,13 +49,11 @@ describe('POST /api/games', () => {
     it('does not send the new game via web socket', (done) => {
         const room = { emit: jest.fn() }
         socket.to.mockReturnValue(room)
-        
+
         const expected = mockGame(gameId)
         getTimestamp.mockReturnValue(expected.createdOn)
         generateId.mockReturnValue(gameId)
-        const body = {
-            name: expected.name
-        }
+        const body = {}
 
         repo.getById.mockResolvedValue(expected)
         repo.insert.mockResolvedValue(new ObjectId("123456789012345678901234"))
@@ -67,28 +63,7 @@ describe('POST /api/games', () => {
             .send(body)
             .expect(() => {
                 expect(socket.to).not.toHaveBeenCalled()
-				expect(room.emit).not.toHaveBeenCalled()
-            })
-            .end(done)
-    })
-
-    it('trims whitespace from specified name', (done) => {
-        const expected = mockGame(gameId)
-        getTimestamp.mockReturnValue(expected.createdOn)
-        generateId.mockReturnValue(gameId)
-        const body = {
-            name: ` ${expected.name} `
-        }
-
-        repo.getById.mockResolvedValue(expected)
-        repo.insert.mockResolvedValue(new ObjectId("123456789012345678901234"))
-
-        request(app)
-            .post(`/api/games`)
-            .send(body)
-            .expect(200, expected)
-            .expect(() => {
-                expect(repo.insert).toHaveBeenCalledWith(expected)
+                expect(room.emit).not.toHaveBeenCalled()
             })
             .end(done)
     })
@@ -96,9 +71,7 @@ describe('POST /api/games', () => {
     it('returns 500 error if game fails to persist', (done) => {
         const expected = mockGame(gameId)
         generateId.mockReturnValue(gameId)
-        const body = {
-            name: expected.name
-        }
+        const body = {}
 
         repo.getById.mockResolvedValue(expected)
         repo.insert.mockResolvedValue(undefined)
@@ -107,32 +80,6 @@ describe('POST /api/games', () => {
             .post(`/api/games`)
             .send(body)
             .expect(500, { message: 'Unexpectedly failed to persist data into database' })
-            .end(done)
-    });
-
-    ['Has"quotes', 'Contains .dots', 'Has$dollar', 'Has{brace', 'Has}otherbrace'].forEach(name => {
-        it(`returns 400 if invalid name is specified (${name})`, (done) => {
-            const body = { name }
-
-            request(app)
-                .post('/api/games')
-                .send(body)
-                .expect(400, {
-                    message: [
-                        `"name" with value "${name}" fails to match the required pattern: /^[^"|.|$|{|}]+$/`
-                    ]
-                })
-                .end(done)
-        })
-    })
-
-    it('returns 400 if no name specified', (done) => {
-        const body = {}
-
-        request(app)
-            .post('/api/games')
-            .send(body)
-            .expect(400, { message: ['"name" is required'] })
             .end(done)
     })
 })

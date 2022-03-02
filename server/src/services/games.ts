@@ -29,9 +29,8 @@ export const getOne = async ({ gameId }: GetOneParams): Promise<Result<Game>> =>
     }
 }
 
-export const add = async (_: unknown, game: Partial<Game>): Promise<Result<Game>> => {
+export const add = async (): Promise<Result<Game>> => {
     const valid: Game = {
-        name: game.name!,
         id: generateId(),
         createdOn: getTimestamp(),
         contests: {},
