@@ -2,6 +2,7 @@
   "name": "rollagon-server",
   "version": "0.1.0",
   "description": "Server component of dice roller for Paragon system",
+  "private": true,
   "main": "dist/index.js",
   "scripts": {
     "start:dev": "ts-node src/index.ts",
