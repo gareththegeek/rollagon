@@ -14,7 +14,7 @@ export const Splash = () => {
         if (gameId !== undefined) {
             navigate(`/join/${gameId}`, { replace: true })
         }
-    }, [gameId])
+    }, [gameId, navigate])
     
     return (
         <>
