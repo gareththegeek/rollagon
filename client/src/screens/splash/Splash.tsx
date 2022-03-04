@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
-import { createGameAsync, selectGameId, setGameId } from './splashSlice'
+import { AppDispatch } from '../../app/store'
+import { createGameAsync } from './gameSlice'
+
+const createGameClick = (dispatch: AppDispatch, navigate: NavigateFunction) => async () => {
+    const gameId = await dispatch(createGameAsync()).unwrap()
+    navigate(`/join/${gameId}`)
+}
 
 export const Splash = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const gameId = useSelector(selectGameId)
     const [text, setText] = useState('')
 
-    useEffect(() => {
-        if (gameId !== undefined) {
-            navigate(`/join/${gameId}`, { replace: true })
-        }
-    }, [gameId, navigate])
-    
     return (
         <>
-            <button onClick={() => dispatch(createGameAsync())}>Create Game</button>
+            <button onClick={createGameClick(dispatch, navigate)}>Create Game</button>
             <input value={text} onChange={(e) => setText(e.target.value)} />
-            <button onClick={() => dispatch(setGameId(text))}>Join Game</button>
+            <button onClick={() => navigate(`/join/${text}`)}>Join Game</button>
         </>
     )
 }

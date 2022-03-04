@@ -1,6 +1,6 @@
 import React from 'react'
-import { Route, Router, Routes } from 'react-router'
-import { history } from './app/store'
+import { Route, Routes } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
 import { About } from './screens/about/About'
 import { Game } from './screens/game/Game'
 import { Lobby } from './screens/lobby/Lobby'
@@ -9,14 +9,14 @@ import { Splash } from './screens/splash/Splash'
 function App() {
     return (
         <div className="App">
-            <Router location={history.location} navigator={history}>
+            <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Splash />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/game" element={<Game />} />
                     <Route path="/join/:gameId" element={<Lobby />} />
+                    <Route path="/" element={<Splash />} />
                 </Routes>
-            </Router>
+            </BrowserRouter>
         </div>
     )
 }
