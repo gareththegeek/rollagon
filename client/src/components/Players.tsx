@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Player } from '../api/players'
-import { selectPlayers } from '../screens/lobby/playerSlice'
+import { selectPlayers } from '../slices/playerSlice'
 
 export const Players = ({ onClick }: { onClick: (player: Player) => void }) => {
     const players = useSelector(selectPlayers)

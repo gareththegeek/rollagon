@@ -1,13 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-//import { createBrowserHistory } from 'history';
 import counterReducer from '../features/counter/counterSlice'
-import playerReducer from '../screens/lobby/playerSlice'
-import gameReducer from '../screens/splash/gameSlice'
-//export const history = createBrowserHistory()
+import contestReducer from '../slices/contestSlice'
+import playerReducer from '../slices/playerSlice'
+import gameReducer from '../slices/gameSlice'
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    contest: contestReducer,
     player: playerReducer,
     game: gameReducer
   }

@@ -4,8 +4,8 @@ import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Players } from '../../components/Players'
-import { join, setGameId } from '../splash/gameSlice'
-import { getPlayersAsync, createPlayerAsync, joinStrife, joinHero } from './playerSlice'
+import { join, setGameId } from '../../slices/gameSlice'
+import { getPlayersAsync, createPlayerAsync, joinStrife, joinHero } from '../../slices/playerSlice'
 
 const joinClick = (dispatch: AppDispatch, navigate: NavigateFunction) => {
     dispatch(join())

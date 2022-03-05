@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
-import { createGameAsync } from './gameSlice'
+import { createGameAsync } from '../../slices/gameSlice'
 
 const createGameClick = (dispatch: AppDispatch, navigate: NavigateFunction) => async () => {
     const gameId = await dispatch(createGameAsync()).unwrap()
