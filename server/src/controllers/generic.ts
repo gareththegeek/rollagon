@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { getSocket } from '../websockets'
+import { getSocketServer } from '../websockets'
 import { wrapAsync } from './errors'
 import { ControllerConfig } from './ControllerConfig'
 
@@ -65,7 +65,7 @@ export const bind = <T>(config: ControllerConfig<T>) => {
 
             const { gameId } = params
             if (status === 200 && gameId !== undefined) {
-                getSocket().to(gameId).emit(`${config.topic}.add`, { params, value })
+                getSocketServer().to(gameId).emit(`${config.topic}.add`, { params, value })
             }
 
             res.status(status).send(value)
@@ -99,7 +99,7 @@ export const bind = <T>(config: ControllerConfig<T>) => {
 
             const { gameId } = params
             if (status === 200 && gameId !== undefined) {
-                getSocket().to(gameId).emit(`${config.topic}.update`, { params, value })
+                getSocketServer().to(gameId).emit(`${config.topic}.update`, { params, value })
             }
 
             res.status(status).send(value)
@@ -121,7 +121,7 @@ export const bind = <T>(config: ControllerConfig<T>) => {
 
             const { gameId } = params
             if (status === 200 && gameId !== undefined) {
-                getSocket().to(gameId).emit(`${config.topic}.remove`, { params })
+                getSocketServer().to(gameId).emit(`${config.topic}.remove`, { params })
             }
 
             res.status(status).send(value)

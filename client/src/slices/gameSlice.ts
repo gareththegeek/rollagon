@@ -40,13 +40,6 @@ export const gameSlice = createSlice({
     reducers: {
         setGameId: (state, action) => {
             state.gameId = action.payload
-        },
-        join: (state) => {
-            state.joined = true
-        },
-        leave: (state) => {
-            state.gameId = undefined
-            state.joined = false
         }
     },
     extraReducers: (builder) => {
@@ -71,7 +64,7 @@ export const gameSlice = createSlice({
     }
 })
 
-export const { setGameId, join } = gameSlice.actions
+export const { setGameId } = gameSlice.actions
 
 export const selectGameId = (state: RootState) => state.game.gameId
 export const selectGame = (state: RootState) => state.game.current

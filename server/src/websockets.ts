@@ -1,9 +1,10 @@
 import { Server as HttpServer } from 'http'
 import { Server } from 'socket.io'
+import { socketConnectionHandler } from './services/players'
 
-export let socket: Server
+export let socketServer: Server
 
-export const getSocket = () => socket
+export const getSocketServer = () => socketServer
 
 const CORS_ORIGIN = process.env['CORS_ORIGIN'] ?? '*'
 
@@ -14,5 +15,8 @@ export const configure = (server: HttpServer): void => {
             origin: CORS_ORIGIN
         }
     })
-    socket = io
+
+    io.on('connection', socketConnectionHandler)
+
+    socketServer = io
 }

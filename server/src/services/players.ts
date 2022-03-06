@@ -3,6 +3,7 @@ import { getRepository } from '../repository/factory'
 import { isError, Result } from './Result'
 import * as gameService from './games'
 import { Player } from './Game'
+import { Socket } from 'socket.io'
 
 const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
 
@@ -124,4 +125,16 @@ export const remove = async ({ gameId, playerId }: GetOneParams): Promise<Result
         status: 200,
         value: {}
     }
+}
+
+export const socketConnectionHandler = (socket: Socket) => {
+    socket.on('players.join', ({ gameId }: { gameId: string }) => {
+        console.info(`Player joining ${gameId}`)
+        socket.join(gameId)
+    })
+
+    socket.on('players.leave', ({ gameId }: { gameId: string }) => {
+        console.info(`Player leaving ${gameId}`)
+        socket.leave(gameId)
+    })
 }

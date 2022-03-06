@@ -4,28 +4,17 @@ import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Players } from '../../components/Players'
-import { join, setGameId } from '../../slices/gameSlice'
-import { getPlayersAsync, createPlayerAsync, joinStrife, joinHero } from '../../slices/playerSlice'
+import { setGameId } from '../../slices/gameSlice'
+import { getPlayersAsync, joinHeroAsync, joinStrifeAsync } from '../../slices/playerSlice'
 
-const joinClick = (dispatch: AppDispatch, navigate: NavigateFunction) => {
-    dispatch(join())
+const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) => () => {
+    dispatch(joinStrifeAsync(gameId))
     navigate('/game')
 }
 
-const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction) => () => {
-    dispatch(joinStrife())
-    joinClick(dispatch, navigate)
-}
-
-const joinHeroClick = (dispatch: AppDispatch, navigate: NavigateFunction, player: Player) => {
-    dispatch(joinHero(player))
-    joinClick(dispatch, navigate)
-}
-
-const createHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string, name: string) => {
-    const player = await dispatch(createPlayerAsync({ gameId, player: { name } }))
-    dispatch(joinHero(player))
-    joinClick(dispatch, navigate)
+const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string, player: Player) => {
+    await dispatch(joinHeroAsync({ gameId, player }))
+    navigate('/game')
 }
 
 export const Lobby = () => {
@@ -42,9 +31,9 @@ export const Lobby = () => {
     return (
         <>
             <input value={text} onChange={(e) => setText(e.target.value)} />
-            <button onClick={() => createHeroClick(dispatch, navigate, gameId!, text)}>Join as new Hero</button>
-            <button onClick={joinStrifeClick(dispatch, navigate)}>Join as Strife Player</button>
-            <Players onClick={(player: Player) => joinHeroClick(dispatch, navigate, player)} />
+            <button onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>Join as new Hero</button>
+            <button onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</button>
+            <Players onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
         </>
     )
 }
