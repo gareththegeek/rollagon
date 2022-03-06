@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux'
-import { Player } from '../api/players'
-import { selectPlayers } from '../slices/playerSlice'
+import { Player } from '../../api/players'
+import { selectPlayers } from '../../slices/playerSlice'
 
 export const Players = ({ onClick }: { onClick?: (player: Player) => void }) => {
     const players = useSelector(selectPlayers)
 
-    return <ul>
+    return <>
+    <h2>Players</h2>
+    <ul>
         {players.map(player => <li key={player.id}><button onClick={() => {
             if (onClick === undefined) {
                 return
@@ -13,4 +15,5 @@ export const Players = ({ onClick }: { onClick?: (player: Player) => void }) => 
             onClick(player)
         }}>{player.name}</button></li>)}
     </ul>
+    </>
 }

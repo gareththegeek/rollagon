@@ -3,7 +3,7 @@ import { NavigateFunction, useNavigate, useParams } from 'react-router-dom'
 import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
-import { Players } from '../../components/Players'
+import { Players } from '../../components/players/Players'
 import { setGameId } from '../../slices/gameSlice'
 import { getPlayersAsync, joinHeroAsync, joinStrifeAsync } from '../../slices/playerSlice'
 

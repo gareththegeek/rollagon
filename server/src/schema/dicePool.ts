@@ -8,5 +8,6 @@ export const diceSchema = Joi.object({
 })
 
 export const dicePoolSchema = Joi.object({
+    rolled: Joi.boolean(),
     dice: Joi.array().items(diceSchema).required()
 })

@@ -1,5 +1,6 @@
-import axios from "axios"
-import { API_FQDN } from "./constants"
+import axios from 'axios'
+import { API_FQDN } from './constants'
+import { Strife } from './strife'
 
 export type ContestStatusType = 'new' | 'targetSet' | 'complete'
 export type DiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12'
@@ -21,13 +22,6 @@ export interface Contestant {
     ready: boolean
     prevail: boolean | undefined
     dicePool: DicePool
-}
-
-export interface Strife {
-    strifeLevel: number
-    dicePool: DicePool
-    harmTags: HarmTagType[]
-    targetNumber: number | undefined
 }
 
 export interface Contest {
