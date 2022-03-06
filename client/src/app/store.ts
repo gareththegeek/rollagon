@@ -1,5 +1,4 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import middleware from './websocket'
 import counterReducer from '../features/counter/counterSlice'
 import contestReducer from '../slices/contestSlice'
 import playerReducer from '../slices/playerSlice'
@@ -11,10 +10,7 @@ export const store = configureStore({
     contest: contestReducer,
     player: playerReducer,
     game: gameReducer
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: false
-  }).concat(middleware())
+  }
 })
 
 export type AppDispatch = typeof store.dispatch;

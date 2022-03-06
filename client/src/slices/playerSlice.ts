@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
 import { Player } from '../api/players'
 import { RootState } from '../app/store'
-import { websocketJoin, websocketSubscribe } from '../app/websocket'
+import * as ws from '../app/websocket'
 import { getGameAsync } from './gameSlice'
 
 export interface PlayerState {
@@ -29,21 +29,12 @@ export const getPlayersAsync = createAsyncThunk(
     }
 )
 
-export const subscribeAsync = createAsyncThunk(
-    'player/subscribe',
-    async (gameId: string, { dispatch }) => {
-        websocketSubscribe(dispatch, gameId, 'players.add', addPlayer)
-        websocketSubscribe(dispatch, gameId, 'players.update', updatePlayer)
-        websocketSubscribe(dispatch, gameId, 'players.remove', removePlayer)
-    }
-)
-
 export const joinAsync = createAsyncThunk(
     'player/join',
     async (gameId: string, { dispatch }) => {
-        await websocketJoin(dispatch, gameId)
+        await ws.join(gameId)
+        ws.subscribe(dispatch, 'player', ['add', 'update', 'remove'])
         await dispatch(join())
-        await dispatch(subscribeAsync(gameId))
     }
 )
 
@@ -101,14 +92,14 @@ export const playerSlice = createSlice({
             state.isStrife = false
             state.current = undefined
         },
-        addPlayer: (state, { payload: { value } }) => {
+        add: (state, { payload: { value } }) => {
             state.players.push(value)
         },
-        updatePlayer: (state, { payload: { value } }) => {
+        update: (state, { payload: { value } }) => {
             const idx = state.players.findIndex(x => x.id === value.payload.id)
             state.players[idx] = value
         },
-        removePlayer: (state, { payload: { value } }) => {
+        remove: (state, { payload: { value } }) => {
             const idx = state.players.findIndex(x => x.id === value.payload.id)
             state.players.splice(idx, 1)
         }
@@ -134,7 +125,7 @@ export const playerSlice = createSlice({
     }
 })
 
-export const { join, joinStrife, joinHero, addPlayer, updatePlayer, removePlayer } = playerSlice.actions
+export const { join, joinStrife, joinHero, add, update, remove } = playerSlice.actions
 
 export const selectPlayers = (state: RootState) => state.player.players
 export const selectIsStrifePlayer = (state: RootState) => state.player.isStrife

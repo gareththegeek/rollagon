@@ -13,7 +13,7 @@ export const addParamsSchema = Joi.object({})
 export const addSchema = Joi.object({})
 
 export const controllerConfig: ControllerConfig<Game> = {
-    topic: 'games',
+    topic: 'game',
     service,
     getOneParamsSchema,
     addParamsSchema,
