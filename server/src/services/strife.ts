@@ -11,6 +11,7 @@ interface GetOneParams {
 }
 
 interface StrifeBody {
+    timestamp?: string | undefined
     strifeLevel: number
     dicePool: {
         dice: {
@@ -40,6 +41,13 @@ export const update = async (params: GetOneParams, body: StrifeBody): Promise<Re
 
     const contest = contestQuery.value
     const { strife } = contestQuery.value
+
+    if (body.timestamp! < strife.timestamp!) {
+        return {
+            status: 200,
+            value: strife
+        }
+    }
 
     if (contest.status !== 'new') {
         return {

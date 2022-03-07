@@ -13,6 +13,8 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
 
     const gameId = '1234567890ABCDEfghijk'
     const contestId = '123123123123123123123'
+    const timestamp = '2022-01-01T00:00:01.000Z'
+    const newerTimestamp = '2022-01-01T00:00:02.000Z'
 
     beforeEach(() => {
         repo = mockRepo()
@@ -25,6 +27,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
     })
 
     const buildStrifeRecord = () => ({
+        timestamp,
         strifeLevel: 7,
         harmTags: ['sacred', 'perilous', 'mythic', 'epic'],
         targetNumber: undefined,
@@ -65,6 +68,27 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
             .expect(200, removeOptional(expected))
             .expect(() => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}.strife`, expected)
+            })
+            .end(done)
+    })
+
+    it('does not update specified contest if timestamp is older than database timestamp', (done) => {
+        const game = mockGame(gameId)
+        const existing = mockContest(contestId, 1)
+        existing.strife.timestamp = newerTimestamp
+        game.contests[contestId] = existing
+
+        const body = buildStrifeBody()
+
+        repo.getById.mockResolvedValue(game)
+        repo.updateNested.mockResolvedValue(true)
+
+        request(app)
+            .put(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/strife`)
+            .send(body)
+            .expect(200, removeOptional(existing.strife))
+            .expect(() => {
+                expect(repo.updateNested).not.toHaveBeenCalledWith(gameId, `contests.${contestId}.strife`, expect.any(Object))
             })
             .end(done)
     })
@@ -113,10 +137,11 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
     [{
         test: 'missing required properties',
         body: {},
-        message: ['"strifeLevel" is required', '"dicePool" is required']
+        message: ['"timestamp" is required', '"strifeLevel" is required', '"dicePool" is required']
     }, {
         test: 'invalid strife level',
         body: {
+            timestamp,
             strifeLevel: 'sausage',
             harmTags: [],
             dicePool: { dice: [] }
@@ -125,6 +150,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
     }, {
         test: 'invalid harm tag',
         body: {
+            timestamp,
             strifeLevel: 4,
             harmTags: ['invalid'],
             dicePool: { dice: [] }
@@ -133,6 +159,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
     }, {
         test: 'duplicate harm tag',
         body: {
+            timestamp,
             strifeLevel: 4,
             harmTags: ['epic', 'epic'],
             dicePool: { dice: [] }
@@ -141,6 +168,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
     }, {
         test: 'missing required dice properties',
         body: {
+            timestamp,
             strifeLevel: 4,
             harmTags: [],
             dicePool: { dice: [{}] }
@@ -149,6 +177,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/strife', () => {
     }, {
         test: 'invalid dice type',
         body: {
+            timestamp,
             strifeLevel: 4,
             harmTags: [],
             dicePool: {

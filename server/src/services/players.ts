@@ -16,6 +16,7 @@ interface GetOneParams extends GetManyParams {
 }
 
 interface AddBody {
+    timestamp?: string | undefined
     name: string
 }
 
@@ -53,7 +54,7 @@ export const getMany = async ({ gameId }: GetManyParams): Promise<Result<Player[
     }
 }
 
-export const add = async ({ gameId }: GetManyParams, { name }: AddBody): Promise<Result<Player>> => {
+export const add = async ({ gameId }: GetManyParams, { name, timestamp }: AddBody): Promise<Result<Player>> => {
     const repo = getRepository(GAME_COLLECTION_NAME)
     const gameQuery = await gameService.getOne({ gameId })
     if (isError(gameQuery)) {
@@ -62,6 +63,7 @@ export const add = async ({ gameId }: GetManyParams, { name }: AddBody): Promise
 
     const player: Player = {
         id: generateId(),
+        timestamp,
         name
     }
     const result = await repo.updateNested(gameId, `players.${player.id}`, player)
@@ -79,16 +81,24 @@ export const add = async ({ gameId }: GetManyParams, { name }: AddBody): Promise
     }
 }
 
-export const update = async (params: GetOneParams, { name }: AddBody): Promise<Result<Player>> => {
+export const update = async (params: GetOneParams, { name, timestamp }: AddBody): Promise<Result<Player>> => {
     const playerQuery = await getOne(params)
     if (isError(playerQuery)) {
         return playerQuery
+    }
+
+    if (timestamp! < playerQuery.value.timestamp!) {
+        return {
+            status: 200,
+            value: playerQuery.value
+        }
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
     const { id } = playerQuery.value
     const { gameId } = params
     const next = {
+        timestamp,
         id,
         name
     }

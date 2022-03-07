@@ -20,7 +20,12 @@ interface GetOneParams extends GetManyParams {
     contestId: string
 }
 
+interface AddContestBody {
+    timestamp?: string | undefined
+}
+
 interface ContestBody {
+    timestamp?: string | undefined
     status: ContestStatusType
 }
 
@@ -57,7 +62,7 @@ export const getMany = async ({ gameId }: GetManyParams): Promise<Result<Contest
     }
 }
 
-export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> => {
+export const add = async ({ gameId }: GetManyParams, { timestamp }: AddContestBody): Promise<Result<Contest>> => {
     const gameQuery = await gameService.getOne({ gameId })
     if (isError(gameQuery)) {
         return gameQuery
@@ -65,6 +70,7 @@ export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> =
 
     const { value: game } = gameQuery
     const contest: Contest = {
+        timestamp,
         id: generateId(),
         sort: nextSort(game),
         status: 'new',
@@ -98,7 +104,7 @@ export const add = async ({ gameId }: GetManyParams): Promise<Result<Contest>> =
     }
 }
 
-const setTarget = async ({ gameId, contestId }: GetOneParams, contest: Contest): Promise<Result<Contest>> => {
+const setTarget = async ({ gameId, contestId }: GetOneParams, contest: Contest, { timestamp }: ContestBody): Promise<Result<Contest>> => {
     if (contest.strife.dicePool.dice.length === 0) {
         return {
             status: 400,
@@ -109,6 +115,7 @@ const setTarget = async ({ gameId, contestId }: GetOneParams, contest: Contest):
     const nextStrife = rollStrife(contest.strife)
     const next: Contest = {
         ...contest,
+        timestamp,
         status: 'targetSet',
         strife: {
             ...nextStrife
@@ -130,7 +137,7 @@ const setTarget = async ({ gameId, contestId }: GetOneParams, contest: Contest):
     }
 }
 
-const completeContest = async ({ gameId, contestId }: GetOneParams, contest: Contest): Promise<Result<Contest>> => {
+const completeContest = async ({ gameId, contestId }: GetOneParams, contest: Contest, { timestamp }: ContestBody): Promise<Result<Contest>> => {
     if (Object.values(contest.contestants).some(x => !x.ready)) {
         return {
             status: 400,
@@ -138,7 +145,7 @@ const completeContest = async ({ gameId, contestId }: GetOneParams, contest: Con
         }
     }
 
-    const next = rollContest(contest)
+    const next = { ...rollContest(contest), timestamp }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
     const result = await repo.updateNested(gameId, `contests.${contestId}`, next)
@@ -166,7 +173,8 @@ export const update = async (params: GetOneParams, body: ContestBody): Promise<R
         return contestQuery
     }
 
-    const from = contestQuery.value.status
+    const { value: existing } = contestQuery
+    const from = existing.status
     const to = body.status
     if (!validStateChanges.some(x => x.from === from && x.to === to)) {
         return {
@@ -175,12 +183,19 @@ export const update = async (params: GetOneParams, body: ContestBody): Promise<R
         }
     }
 
+    if (body.timestamp! < existing.timestamp!) {
+        return {
+            status: 200,
+            value: existing
+        }
+    }
+
     switch (body.status) {
         case 'targetSet': {
-            return await setTarget(params, contestQuery.value)
+            return await setTarget(params, existing, body)
         }
         case 'complete': {
-            return await completeContest(params, contestQuery.value)
+            return await completeContest(params, existing, body)
         }
         default: {
             return {

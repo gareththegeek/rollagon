@@ -14,6 +14,7 @@ describe('POST /api/games/:gameId/contests', () => {
 
     const gameId = '1234567890ABCDEfghijk'
     const contestId = '123123123123123123123'
+    const timestamp = '2022-01-01T00:00:01.000Z'
 
     beforeEach(() => {
         repo = mockRepo()
@@ -23,15 +24,16 @@ describe('POST /api/games/:gameId/contests', () => {
 
     afterEach(() => {
         jest.resetAllMocks()
-		jest.resetModules()
+        jest.resetModules()
     })
 
     it('returns a new contest', (done) => {
         const game = mockGame(gameId)
         const expected = mockContest(contestId, 1)
+        expected.timestamp = timestamp
 
         generateId.mockReturnValue(contestId)
-        const body = {}
+        const body = { timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -50,9 +52,10 @@ describe('POST /api/games/:gameId/contests', () => {
         const existingContestIds = [contestId, '111222333444555666777']
         const game = mockGameWithContests(gameId, existingContestIds)
         const expected = mockContest(contestId, existingContestIds.length + 1)
+        expected.timestamp = timestamp
 
         generateId.mockReturnValue(contestId)
-        const body = {}
+        const body = { timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -70,12 +73,13 @@ describe('POST /api/games/:gameId/contests', () => {
     it('sends the new contest via web socket', (done) => {
         const room = { emit: jest.fn() }
         socket.to.mockReturnValue(room)
-        
+
         const game = mockGame(gameId)
         const expected = mockContest(contestId, 1)
+        expected.timestamp = timestamp
 
         generateId.mockReturnValue(contestId)
-        const body = {}
+        const body = { timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -85,7 +89,7 @@ describe('POST /api/games/:gameId/contests', () => {
             .send(body)
             .expect(() => {
                 expect(socket.to).toHaveBeenCalledWith(gameId)
-				expect(room.emit).toHaveBeenCalledWith('contest.add', { params: { gameId }, value: expected })
+                expect(room.emit).toHaveBeenCalledWith('contest.add', { params: { gameId }, value: expected })
             })
             .end(done)
     })
@@ -94,7 +98,7 @@ describe('POST /api/games/:gameId/contests', () => {
         const game = mockGame(gameId)
 
         generateId.mockReturnValue(contestId)
-        const body = {}
+        const body = { timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(false)
@@ -107,7 +111,7 @@ describe('POST /api/games/:gameId/contests', () => {
     })
 
     it('returns 404 if no game found with specified id', (done) => {
-        const body = {}
+        const body = { timestamp }
 
         repo.getById.mockResolvedValue(undefined)
 

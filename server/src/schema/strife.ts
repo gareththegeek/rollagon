@@ -11,6 +11,7 @@ export const getOneParamsSchema = Joi.object({
 })
 
 export const updateSchema = Joi.object({
+    timestamp: Joi.date().iso().required(),
     strifeLevel: Joi.number().required(),
     dicePool: dicePoolSchema.required(),
     harmTags: Joi

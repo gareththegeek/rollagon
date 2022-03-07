@@ -13,9 +13,12 @@ export const getManyParamsSchema = Joi.object({
     gameId: idSchema.label('game id')
 })
 
-export const addSchema = Joi.object({})
+export const addSchema = Joi.object({
+    timestamp: Joi.date().iso().required()
+})
 
 export const updateSchema = Joi.object({
+    timestamp: Joi.date().iso().required(),
     status: Joi.string()
         .valid('new', 'targetSet', 'complete')
         .required()

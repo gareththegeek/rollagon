@@ -17,10 +17,12 @@ export const getManyParamsSchema = Joi.object({
 })
 
 export const addSchema = Joi.object({
+    timestamp: Joi.date().iso().required(),
     playerId: idSchema.label('player id')
 })
 
 export const updateSchema = Joi.object({
+    timestamp: Joi.date().iso().required(),
     ready: Joi.boolean().required(),
     dicePool: dicePoolSchema.required()
 })

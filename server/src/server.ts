@@ -11,7 +11,7 @@ const app = express()
 const CORS_ORIGIN = process.env['CORS_ORIGIN'] ?? '*'
 app.use(cors({ origin: CORS_ORIGIN }))
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true,  }));
 app.use(express.json())
 app.use(mongoSanitize())
 

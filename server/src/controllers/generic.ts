@@ -58,6 +58,10 @@ export const bind = <T>(config: ControllerConfig<T>) => {
                     .send({ message: validationResult.error.details.map(x => x.message) })
             }
 
+            if (!!validationResult.value.timestamp) {
+                validationResult.value.timestamp = validationResult.value.timestamp.toISOString() // Thanks body parser :/
+            }
+
             const { status, value } = await config.service.add!(
                 paramsValidationResult.value,
                 validationResult.value
@@ -90,6 +94,10 @@ export const bind = <T>(config: ControllerConfig<T>) => {
                 return res
                     .status(400)
                     .send({ message: validationResult.error.details.map(x => x.message) })
+            }
+
+            if (!!validationResult.value.timestamp) {
+                validationResult.value.timestamp = validationResult.value.timestamp.toISOString() // Thanks body parser :/
             }
 
             const { status, value } = await config.service.update!(

@@ -5,6 +5,7 @@ import { mockGameWithContests, mockGameWithContestsAndPlayers } from '../mock/ga
 import request from 'supertest'
 import app from '../../src/server'
 import { Contest, ContestStatusType } from '../../src/services/Game'
+import { removeOptional } from '../removeOptional'
 
 describe('PUT /api/games/:gameId/contests/:contestId', () => {
     let repo: MockRepository
@@ -17,6 +18,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
     const playerId1 = '111111111111111111111'
     const playerId2 = '222222222222222222222'
     const playerId3 = '333333333333333333333'
+    const timestamp = '2022-01-01T00:00:01.000Z'
+    const newerTimestamp = '2022-01-01T00:00:02.000Z'
 
     beforeEach(() => {
         repo = mockRepo()
@@ -63,6 +66,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
         }
 
         const expected: Contest = {
+            timestamp,
             status: 'targetSet',
             id: contest.id,
             sort: contest.sort,
@@ -85,7 +89,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             contestants: {}
         }
 
-        const body = { status: 'targetSet' }
+        const body = { status: 'targetSet', timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -98,6 +102,41 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}`, expected)
                 expect(socket.to).toHaveBeenCalledWith(gameId)
                 expect(room.emit).toHaveBeenCalledWith('contest.update', { params: { gameId, contestId }, value: expected })
+            })
+            .end(done)
+    })
+
+    it('does not update contest if timestamp is older than database timestamp', (done) => {
+        const game = mockGameWithContests(gameId, [contestId])
+
+        const existing = game.contests[contestId]!
+        existing.timestamp = newerTimestamp
+        existing.status = 'new'
+        existing.strife = {
+            strifeLevel: 4,
+            targetNumber: undefined,
+            harmTags: [],
+            dicePool: {
+                rolled: false,
+                score: undefined,
+                dice: [{
+                    type: 'd6',
+                    roll: undefined
+                }]
+            }
+        }
+
+        const body = { status: 'targetSet', timestamp }
+
+        repo.getById.mockResolvedValue(game)
+        repo.updateNested.mockResolvedValue(true)
+
+        request(app)
+            .put(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}`)
+            .send(body)
+            .expect(200, removeOptional(existing))
+            .expect(() => {
+                expect(repo.updateNested).not.toHaveBeenCalledWith(gameId, `contests.${contestId}`, expect.any(Object))
             })
             .end(done)
     })
@@ -118,7 +157,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             }
         }
 
-        const body = { status: 'targetSet' }
+        const body = { status: 'targetSet', timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -218,6 +257,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
         }
 
         const expected: Contest = {
+            timestamp,
             status: 'complete',
             id: contest.id,
             sort: contest.sort,
@@ -269,7 +309,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             }
         }
 
-        const body = { status: 'complete' }
+        const body = { status: 'complete', timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -321,7 +361,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             }
         }
 
-        const body = { status: 'complete' }
+        const body = { status: 'complete', timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -352,7 +392,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             }
         }
 
-        const body = { status: 'targetSet' }
+        const body = { status: 'targetSet', timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(false)
@@ -376,7 +416,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             const game = mockGameWithContests(gameId, [contestId])
             game.contests[contestId]!.status = from as ContestStatusType
 
-            const body = { status: to }
+            const body = { status: to, timestamp }
 
             repo.getById.mockResolvedValue(game)
 

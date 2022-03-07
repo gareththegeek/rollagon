@@ -13,6 +13,7 @@ describe('POST /api/games/:gameId/players', () => {
 
     const gameId = '1234567890ABCDEfghijk'
     const playerId = '123123123123123123123'
+    const timestamp = '2022-01-01T00:00:01.000Z'
 
     beforeEach(() => {
         repo = mockRepo()
@@ -28,9 +29,11 @@ describe('POST /api/games/:gameId/players', () => {
     it('returns a new player with specified name', (done) => {
         const game = mockGame(gameId)
         const expected = mockPlayer(playerId)
+        expected.timestamp = timestamp
 
         generateId.mockReturnValue(playerId)
         const body = {
+            timestamp,
             name: expected.name
         }
 
@@ -53,9 +56,11 @@ describe('POST /api/games/:gameId/players', () => {
         
         const game = mockGame(gameId)
         const expected = mockPlayer(playerId)
+        expected.timestamp = timestamp
 
         generateId.mockReturnValue(playerId)
         const body = {
+            timestamp,
             name: expected.name
         }
 
@@ -75,9 +80,11 @@ describe('POST /api/games/:gameId/players', () => {
     it('trims whitespace from specified name', (done) => {
         const game = mockGame(gameId)
         const expected = mockPlayer(playerId)
+        expected.timestamp = timestamp
 
         generateId.mockReturnValue(playerId)
         const body = {
+            timestamp,
             name: ` ${expected.name} `
         }
 
@@ -100,6 +107,7 @@ describe('POST /api/games/:gameId/players', () => {
 
         generateId.mockReturnValue(playerId)
         const body = {
+            timestamp,
             name: ` ${expected.name} `
         }
 
@@ -115,7 +123,7 @@ describe('POST /api/games/:gameId/players', () => {
 
     ['Has"quotes', 'Contains .dots', 'Has$dollar', 'Has{brace', 'Has}otherbrace'].forEach(name => {
         it(`returns 400 if invalid name is specified (${name})`, (done) => {
-            const body = { name }
+            const body = { name, timestamp }
 
             request(app)
                 .post(`/api/games/${encodeURI(gameId)}/players`)
@@ -130,7 +138,7 @@ describe('POST /api/games/:gameId/players', () => {
     })
 
     it('returns 400 if no name specified', (done) => {
-        const body = {}
+        const body = { timestamp }
 
         request(app)
             .post(`/api/games/${encodeURI(gameId)}/players`)
@@ -138,9 +146,19 @@ describe('POST /api/games/:gameId/players', () => {
             .expect(400, { message: ['"name" is required'] })
             .end(done)
     })
+    
+    it('returns 400 if no timestamp specified', (done) => {
+        const body = { name: 'foo' }
+
+        request(app)
+            .post(`/api/games/${encodeURI(gameId)}/players`)
+            .send(body)
+            .expect(400, { message: ['"timestamp" is required'] })
+            .end(done)
+    })
 
     it('returns 404 if no game found with specified id', (done) => {
-        const body = { name: 'hello' }
+        const body = { name: 'hello', timestamp }
 
         repo.getById.mockResolvedValue(undefined)
 

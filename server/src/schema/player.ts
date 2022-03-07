@@ -18,6 +18,7 @@ const nameSchema = stringSchema
     .required()
 
 export const addSchema = Joi.object({
+    timestamp: Joi.date().iso().required(),
     name: nameSchema
 })
 

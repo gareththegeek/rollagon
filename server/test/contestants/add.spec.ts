@@ -13,6 +13,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     const gameId = '1234567890ABCDEfghijk'
     const contestId = '123123123123123123123'
     const playerId = 'abcabcabcabcabcabcabc'
+    const timestamp = '2022-01-01T00:00:01.000Z'
 
     beforeEach(() => {
         repo = mockRepo()
@@ -27,8 +28,9 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     it('returns a new contestant with specified player id', (done) => {
         const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
         const expected = mockContestant(playerId)
+        expected.timestamp = timestamp
 
-        const body = { playerId }
+        const body = { playerId, timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -46,11 +48,12 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     it('sends the new contestant via web socket', (done) => {
         const room = { emit: jest.fn() }
         socket.to.mockReturnValue(room)
-        
+
         const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
         const expected = mockContestant(playerId)
+        expected.timestamp = timestamp
 
-        const body = { playerId }
+        const body = { playerId, timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(true)
@@ -68,7 +71,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     it('returns 500 error if contestant fails to persist', (done) => {
         const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
 
-        const body = { playerId }
+        const body = { playerId, timestamp }
 
         repo.getById.mockResolvedValue(game)
         repo.updateNested.mockResolvedValue(false)
@@ -81,7 +84,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     })
 
     it('returns 400 if no player id specified', (done) => {
-        const body = {}
+        const body = { timestamp }
 
         request(app)
             .post(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/contestants`)
@@ -90,8 +93,18 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
             .end(done)
     })
 
-    it('returns 404 if no game found with specified id', (done) => {
+    it('returns 400 if no timestamp is specified', (done) => {
         const body = { playerId }
+
+        request(app)
+            .post(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/contestants`)
+            .send(body)
+            .expect(400, { message: ['"timestamp" is required'] })
+            .end(done)
+    })
+
+    it('returns 404 if no game found with specified id', (done) => {
+        const body = { playerId, timestamp }
 
         repo.getById.mockResolvedValue(undefined)
 
@@ -103,7 +116,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     })
 
     it('returns 404 if no contest found with specified id', (done) => {
-        const body = { playerId }
+        const body = { playerId, timestamp }
 
         repo.getById.mockResolvedValue(mockGame(gameId))
 
@@ -115,7 +128,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     })
 
     it('returns 400 if no player found with specified id', (done) => {
-        const body = { playerId }
+        const body = { playerId, timestamp }
 
         repo.getById.mockResolvedValue(mockGameWithContests(gameId, [contestId]))
 
@@ -127,7 +140,7 @@ describe('POST /api/games/:gameId/contests/:contestId/contestants', () => {
     })
 
     it('returns 400 if player id is invalid', (done) => {
-        const body = { playerId: 'invalid' }
+        const body = { playerId: 'invalid', timestamp }
 
         repo.getById.mockResolvedValue(mockGame(gameId))
 

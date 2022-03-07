@@ -14,6 +14,8 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
     const gameId = '1234567890ABCDEfghijk'
     const contestId = '123123123123123123123'
     const playerId = '555555555555555555555'
+    const timestamp = '2022-01-01T00:00:01.000Z'
+    const newerTimestamp = '2022-01-01T00:00:02.000Z'
 
     beforeEach(() => {
         repo = mockRepo()
@@ -22,10 +24,11 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
 
     afterEach(() => {
         jest.resetAllMocks()
-		jest.resetModules()
+        jest.resetModules()
     })
 
     const buildContestantRecord = (playerId: string): Contestant => ({
+        timestamp,
         playerId,
         ready: false,
         prevail: undefined,
@@ -74,7 +77,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
     it('sends the updated contestant via web socket', (done) => {
         const room = { emit: jest.fn() }
         socket.to.mockReturnValue(room)
-        
+
         const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
         const existing = mockContestant(playerId)
         game.contests[contestId]!.contestants[playerId] = existing
@@ -90,7 +93,29 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
             .send(body)
             .expect(() => {
                 expect(socket.to).toHaveBeenCalledWith(gameId)
-				expect(room.emit).toHaveBeenCalledWith('contestant.update', { params: { gameId, contestId, playerId }, value: expected })
+                expect(room.emit).toHaveBeenCalledWith('contestant.update', { params: { gameId, contestId, playerId }, value: expected })
+            })
+            .end(done)
+    })
+
+    it('does not update specified contestant details if timestamp is older than timestamp in database', (done) => {
+        const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
+        const existing = mockContestant(playerId)
+        existing.timestamp = newerTimestamp
+        game.contests[contestId]!.contestants[playerId] = existing
+
+        const expected = buildContestantRecord(playerId)
+        const body = buildContestantBody(playerId)
+
+        repo.getById.mockResolvedValue(game)
+        repo.updateNested.mockResolvedValue(true)
+
+        request(app)
+            .put(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/contestants/${encodeURI(playerId)}`)
+            .send(body)
+            .expect(200, removeOptional(existing))
+            .expect(() => {
+                expect(repo.updateNested).not.toHaveBeenCalledWith(gameId, `contests.${contestId}.contestants.${playerId}`, expected)
             })
             .end(done)
     })
@@ -115,10 +140,11 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
     [{
         test: 'missing required properties',
         body: {},
-        message: ['"ready" is required', '"dicePool" is required']
+        message: ['"timestamp" is required', '"ready" is required', '"dicePool" is required']
     }, {
         test: 'missing required dice properties',
         body: {
+            timestamp,
             ready: false,
             dicePool: { dice: [{}] }
         },
@@ -126,6 +152,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
     }, {
         test: 'invalid dice type',
         body: {
+            timestamp,
             ready: false,
             dicePool: {
                 dice: [{
@@ -161,6 +188,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
             game.contests[contestId]!.contestants[playerId] = existing
 
             const body = {
+                timestamp,
                 ready: true,
                 dicePool
             }

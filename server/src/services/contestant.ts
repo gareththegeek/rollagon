@@ -18,10 +18,12 @@ interface GetManyParams {
 }
 
 interface AddContestantBody {
+    timestamp?: string | undefined
     playerId: string
 }
 
 interface ContestantBody {
+    timestamp?: string | undefined
     ready: boolean
     dicePool: {
         dice: {
@@ -77,7 +79,7 @@ export const add = async ({ gameId, contestId }: GetManyParams, body: AddContest
         }
     }
 
-    const { playerId } = body
+    const { playerId, timestamp } = body
     if (!Object.keys(game.players).includes(playerId)) {
         return {
             status: 400,
@@ -86,6 +88,7 @@ export const add = async ({ gameId, contestId }: GetManyParams, body: AddContest
     }
 
     const contestant = {
+        timestamp,
         playerId,
         ready: false,
         prevail: undefined,
@@ -119,6 +122,13 @@ export const update = async (params: GetOneParams, body: ContestantBody): Promis
     }
 
     const contestant = contestantQuery.value
+
+    if (body.timestamp! < contestant.timestamp!) {
+        return {
+            status: 200,
+            value: contestant
+        }
+    }
 
     if (body.ready) {
         if (body.dicePool.dice.filter(x => x.type !== 'd4').length < 2) {

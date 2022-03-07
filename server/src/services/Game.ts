@@ -14,6 +14,7 @@ export interface DicePool {
 }
 
 export interface Contestant {
+    timestamp?: string | undefined
     playerId: string
     ready: boolean
     prevail: boolean | undefined
@@ -21,6 +22,7 @@ export interface Contestant {
 }
 
 export interface Strife {
+    timestamp?: string | undefined
     strifeLevel: number
     dicePool: DicePool
     harmTags: HarmTagType[]
@@ -29,6 +31,7 @@ export interface Strife {
 
 export interface Contest {
     id: string
+    timestamp?: string | undefined
     sort: number
     status: ContestStatusType
     strife: Strife
@@ -37,6 +40,7 @@ export interface Contest {
 
 export interface Player {
     id: string
+    timestamp?: string | undefined
     name: string
 }
 
