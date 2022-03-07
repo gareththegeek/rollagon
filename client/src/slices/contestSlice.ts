@@ -21,8 +21,20 @@ const initialState: ContestState = {
 export const createContestAsync = createAsyncThunk(
     'contest/createContest',
     async (gameId: string) => {
-        const response = await api.contests.create(gameId)
-        return response
+        return await api.contests.create(gameId)
+    }
+)
+
+export interface CloseContestProps {
+    gameId: string
+    contestId: string
+}
+
+export const removeContestAsync = createAsyncThunk(
+    'contest/removeContest',
+    async ({ gameId, contestId }: CloseContestProps, { dispatch }) => {
+        dispatch(remove({ params: { contestId } }))
+        return await api.contests.remove(gameId, contestId)
     }
 )
 
@@ -50,7 +62,7 @@ export const strifeDiceChangeAsync = createAsyncThunk(
             }
         }
         dispatch(updateStrife({ value: next }))
-        await api.strife.update(gameId, contestId, next)
+        return await api.strife.update(gameId, contestId, next)
     }
 )
 
@@ -69,7 +81,7 @@ export const strifeLevelChangeAsync = createAsyncThunk(
             strifeLevel
         }
         dispatch(updateStrife({ value: next }))
-        await api.strife.update(gameId, contestId, next)
+        return await api.strife.update(gameId, contestId, next)
     }
 )
 
@@ -88,7 +100,7 @@ export const harmTagsChangeAsync = createAsyncThunk(
             harmTags
         }
         dispatch(updateStrife({ value: next }))
-        await api.strife.update(gameId, contestId, next)
+        return await api.strife.update(gameId, contestId, next)
     }
 )
 
@@ -100,7 +112,7 @@ export interface RollTargetNumberArgs {
 export const rollTargetNumber = createAsyncThunk(
     'contest/rollTargetNumber',
     async ({ gameId, contestId }: RollTargetNumberArgs) => {
-        await api.contests.update(gameId, {
+        return await api.contests.update(gameId, {
             id: contestId,
             status: 'targetSet'
         })
@@ -120,16 +132,17 @@ export const contestSlice = createSlice({
     initialState,
     reducers: {
         add: (state, { payload: { value } }) => {
+            console.log(`add ${JSON.stringify(value)}`)
             state.current = value
             state.contests.push(value)
         },
         update: (state, { payload: { value } }) => {
             state.current = value
         },
-        remove: (state, { payload: { value } }) => {
-            const idx = state.contests.findIndex(x => x.id === value.id)
+        remove: (state, { payload: { params: { contestId } } }) => {
+            const idx = state.contests.findIndex(x => x.id === contestId)
             state.contests.splice(idx, 1)
-            if (state.current?.id === value.id) {
+            if (state.current?.id === contestId) {
                 state.current = undefined
             }
         },

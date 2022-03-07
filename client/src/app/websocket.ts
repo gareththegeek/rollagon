@@ -19,6 +19,9 @@ export const subscribe = (dispatch: Dispatch, topic: string, events: string[]) =
     events.forEach(event => {
         const actionType = `${topic}/${event}`
         const eventType = `${topic}.${event}`
-        socket.on(eventType, (result: unknown) => dispatch({ type: actionType, payload: result }))
+        socket.on(eventType, (result: unknown) => {
+            console.info(`${eventType} -> ${actionType}: ${JSON.stringify(result)}`)
+            dispatch({ type: actionType, payload: result })
+        })
     })
 }

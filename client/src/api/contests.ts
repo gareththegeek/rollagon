@@ -46,3 +46,8 @@ export const update = async (gameId: string, { id, status }: ContestUpdatePayloa
     const response = await axios.put(`${API_FQDN}/api/games/${gameId}/contests/${id}`, { status })
     return response.data
 }
+
+export const remove = async (gameId: string, contestId: string): Promise<boolean> => {
+    await axios.delete(`${API_FQDN}/api/games/${gameId}/contests/${contestId}`)
+    return true
+}
