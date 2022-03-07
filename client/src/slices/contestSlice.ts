@@ -6,18 +6,6 @@ import { RootState } from '../app/store'
 import * as ws from '../app/websocket'
 import { getGameAsync } from './gameSlice'
 
-export interface ContestState {
-    status: 'loading' | 'idle'
-    current: Contest | undefined
-    contests: Contest[]
-}
-
-const initialState: ContestState = {
-    status: 'idle',
-    current: undefined,
-    contests: []
-}
-
 export const createContestAsync = createAsyncThunk(
     'contest/createContest',
     async (gameId: string) => {
@@ -33,7 +21,7 @@ export interface CloseContestProps {
 export const removeContestAsync = createAsyncThunk(
     'contest/removeContest',
     async ({ gameId, contestId }: CloseContestProps, { dispatch }) => {
-        dispatch(remove({ params: { contestId } }))
+        dispatch(remove())
         return await api.contests.remove(gameId, contestId)
     }
 )
@@ -127,24 +115,28 @@ export const subscribeAsync = createAsyncThunk(
     }
 )
 
+export interface ContestState {
+    status: 'loading' | 'idle'
+    current: Contest | undefined
+}
+
+const initialState: ContestState = {
+    status: 'idle',
+    current: undefined
+}
+
 export const contestSlice = createSlice({
     name: 'contest',
     initialState,
     reducers: {
         add: (state, { payload: { value } }) => {
-            console.log(`add ${JSON.stringify(value)}`)
             state.current = value
-            state.contests.push(value)
         },
         update: (state, { payload: { value } }) => {
             state.current = value
         },
-        remove: (state, { payload: { params: { contestId } } }) => {
-            const idx = state.contests.findIndex(x => x.id === contestId)
-            state.contests.splice(idx, 1)
-            if (state.current?.id === contestId) {
-                state.current = undefined
-            }
+        remove: (state) => {
+            state.current = undefined
         },
         updateStrife: (state, { payload: { value } }) => {
             if (state.current === undefined) {
@@ -152,16 +144,6 @@ export const contestSlice = createSlice({
             }
             state.current.strife = value
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(getGameAsync.fulfilled, (state, action) => {
-                state.contests = Object.values(action.payload.contests)
-                if (state.current !== undefined
-                    && !state.contests.map(x => x.id).includes(state.current.id)) {
-                    throw new Error('Somehow current contest isn\'t in game?')
-                }
-            })
     }
 })
 
