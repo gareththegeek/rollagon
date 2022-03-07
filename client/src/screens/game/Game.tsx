@@ -7,7 +7,9 @@ import { createContestAsync, selectContestStatus } from '../../slices/contestSli
 import { getGameAsync, selectGameId } from '../../slices/gameSlice'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { Challenge } from './Challenge'
+import { EnterContest } from './EnterContest'
 import { CreateContest } from './CreateContest'
+import { ContestResult } from './ContestResult'
 
 export const Game = () => {
     const dispatch = useAppDispatch()
@@ -22,7 +24,7 @@ export const Game = () => {
         } else {
             navigate('/')
         }
-    }, [navigate, gameId])
+    }, [dispatch, navigate, gameId])
 
     if (gameId === undefined) {
         return <></>
@@ -35,7 +37,9 @@ export const Game = () => {
                 <button onClick={() => dispatch(createContestAsync(gameId))}>Create Contest</button>
             )}
             {contestStatus === 'new' && isStrifePlayer && <CreateContest />}
-            {contestStatus === 'targetSet' && <Challenge />}
+            {contestStatus !== 'new' && <Challenge />}
+            {contestStatus === 'targetSet' && <EnterContest />}
+            {contestStatus === 'complete' && <ContestResult />}
             <Players />
         </div>
     )

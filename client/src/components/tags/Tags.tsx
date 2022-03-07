@@ -7,5 +7,8 @@ export interface TagsProps {
 }
 
 export const Tags = ({ tags }: TagsProps) => {
-    return <>{tags.map((tag, idx) => <Tag key={`tags-${idx}`} tag={tag} />)}</>
+    if (tags.length === 0) {
+        return <></>
+    }
+    return <><div>Tags:</div>{tags.map((tag, idx) => <Tag key={`tags-${idx}`} tag={tag} />)}</>
 }

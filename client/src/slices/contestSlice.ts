@@ -107,6 +107,19 @@ export const rollTargetNumber = createAsyncThunk(
     }
 )
 
+export interface JoinContestArgs {
+    gameId: string
+    contestId: string
+    playerId: string
+}
+
+export const joinContestAsync = createAsyncThunk(
+    'contest/joinContest',
+    async ({ gameId, contestId, playerId }: JoinContestArgs, { dispatch }) => {
+        return await api.contestants.create(gameId, contestId, playerId)
+    }
+)
+
 export const subscribeAsync = createAsyncThunk(
     'contest/subscribe',
     async (_, { dispatch }) => {
@@ -143,6 +156,12 @@ export const contestSlice = createSlice({
                 return
             }
             state.current.strife = value
+        },
+        createContestant: (state, { payload: { value } }) => {
+            if (state.current === undefined) {
+                return
+            }
+            state.current.contestants[value.id] = value
         }
     },
     extraReducers: (builder) => {
@@ -175,5 +194,6 @@ export const selectContestStoreStatus = (state: RootState) => state.contest.stat
 export const selectCurrentContest = (state: RootState) => state.contest.current
 export const selectContestId = (state: RootState) => state.contest.current?.id
 export const selectCurrentStrife = (state: RootState) => state.contest.current?.strife
+export const selectContestant = (playerId: string) => (state: RootState) => state.contest.current?.contestants[playerId]
 
 export default contestSlice.reducer

@@ -14,7 +14,7 @@ import {
 import { selectGameId } from '../../slices/gameSlice'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
 import { StrifeLevelEditor } from './StifeLevelEditor'
-import { HarmTagsEditor } from './HarmTagsEditor'
+import { HarmTagsEditor } from '../../components/tags/HarmTagsEditor'
 import { HarmTagType } from '../../api/contests'
 
 const diceChangeHandler =

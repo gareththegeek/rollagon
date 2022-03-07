@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { removeContestAsync, selectContestId, selectCurrentStrife } from '../../slices/contestSlice'
-import { Tags } from './Tags'
+import { Tags } from '../../components/tags/Tags'
 import { StrifeRoll } from '../../components/dice/StrifeRoll'
 import { selectGameId } from '../../slices/gameSlice'
 import { useAppDispatch } from '../../app/hooks'
@@ -29,7 +29,6 @@ export const Challenge = () => {
             <div>
                 <h2>Challenge</h2>
                 <StrifeRoll strife={strife} />
-                <div>Tags:</div>
                 <Tags tags={harmTags} />
                 {isStrifePlayer &&
                     <button onClick={abandonContestHandler(dispatch, gameId, contestId)}>
