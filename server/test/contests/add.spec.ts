@@ -85,7 +85,7 @@ describe('POST /api/games/:gameId/contests', () => {
             .send(body)
             .expect(() => {
                 expect(socket.to).toHaveBeenCalledWith(gameId)
-				expect(room.emit).toHaveBeenCalledWith('contests.add', { params: { gameId }, value: expected })
+				expect(room.emit).toHaveBeenCalledWith('contest.add', { params: { gameId }, value: expected })
             })
             .end(done)
     })

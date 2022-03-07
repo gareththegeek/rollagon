@@ -6,7 +6,7 @@ import { Players } from '../../components/players/Players'
 import { createContestAsync, selectContestStatus } from '../../slices/contestSlice'
 import { getGameAsync, selectGameId } from '../../slices/gameSlice'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
-import { Contest } from './Contest'
+import { Challenge } from './Challenge'
 import { CreateContest } from './CreateContest'
 
 export const Game = () => {
@@ -19,11 +19,7 @@ export const Game = () => {
     useEffect(() => {
         if (gameId !== undefined) {
             dispatch(getGameAsync(gameId!))
-        }
-    }, [dispatch, gameId])
-
-    useEffect(() => {
-        if (gameId === undefined) {
+        } else {
             navigate('/')
         }
     }, [navigate, gameId])
@@ -31,14 +27,16 @@ export const Game = () => {
     if (gameId === undefined) {
         return <></>
     }
-
-    return <div>Game
-        {contestStatus === 'complete' && isStrifePlayer
-            && <button onClick={() => dispatch(createContestAsync(gameId))}>Create Contest</button>}
-        {contestStatus === 'new' && isStrifePlayer
-            && <CreateContest />}
-        {contestStatus === 'targetSet'
-            && <Contest />}
-        <Players />
-    </div>
+    
+    return (
+        <div>
+            Game
+            {contestStatus === 'complete' && isStrifePlayer && (
+                <button onClick={() => dispatch(createContestAsync(gameId))}>Create Contest</button>
+            )}
+            {contestStatus === 'new' && isStrifePlayer && <CreateContest />}
+            {contestStatus === 'targetSet' && <Challenge />}
+            <Players />
+        </div>
+    )
 }

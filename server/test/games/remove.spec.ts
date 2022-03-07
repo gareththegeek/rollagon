@@ -48,7 +48,7 @@ describe('DELETE /api/games/:gameId', () => {
             .delete(`/api/games/${gameId}`)
             .expect(() => {
                 expect(socket.to).toHaveBeenCalledWith(gameId)
-				expect(room.emit).toHaveBeenCalledWith('games.remove', { params: { gameId } })
+				expect(room.emit).toHaveBeenCalledWith('game.remove', { params: { gameId } })
             })
             .end(done)
     })

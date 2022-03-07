@@ -9,8 +9,18 @@ const DiceMax: Record<DiceType, number> = {
     'd12': 12,
 }
 
-export const rollDice = (dice: Dice[]): Dice[] =>
-    dice.map(({ type }) => ({
+export const rollDice = (dice: Dice[]): Dice[] => {
+    const result = dice.map(({ type }) => ({
         type,
         roll: Math.floor(getRandom() * DiceMax[type]) + 1
     }))
+    result.sort((a, b) => {
+        if (a.type === 'd4' && b.type !== 'd4') {
+            return 1
+        } else if (a.type !== 'd4' && b.type === 'd4') {
+            return -1
+        }
+        return b.roll - a.roll
+    })
+    return result
+}

@@ -74,11 +74,11 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
                     rolled: true,
                     score: d8,
                     dice: [{
-                        type: 'd6',
-                        roll: d6
-                    }, {
                         type: 'd8',
                         roll: d8
+                    }, {
+                        type: 'd6',
+                        roll: d6
                     }]
                 }
             },
@@ -97,7 +97,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             .expect(() => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}`, expected)
                 expect(socket.to).toHaveBeenCalledWith(gameId)
-                expect(room.emit).toHaveBeenCalledWith('contests.update', { params: { gameId, contestId }, value: expected })
+                expect(room.emit).toHaveBeenCalledWith('contest.update', { params: { gameId, contestId }, value: expected })
             })
             .end(done)
     })
@@ -147,7 +147,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
         const rolls = [
             roll(d6a, 6), roll(d6b, 6), roll(d4a, 4), // player 1
             roll(d6c, 6), roll(d6d, 6), roll(d10a, 10), // player 2
-            roll(d8a, 8), roll(d8b, 8), roll(d4b, 4), roll(d4c, 4) // player 3
+            roll(d8a, 8), roll(d4b, 4), roll(d8b, 8), roll(d4c, 4) // player 3
         ]
         rolls.forEach(roll => getRandom.mockReturnValueOnce(roll))
 
@@ -163,11 +163,11 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
                 rolled: true,
                 score: 4,
                 dice: [{
-                    type: 'd6',
-                    roll: 3
-                }, {
                     type: 'd8',
                     roll: 4
+                }, {
+                    type: 'd6',
+                    roll: 3
                 }]
             }
         }
@@ -209,8 +209,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
                     score: undefined,
                     dice: [
                         { type: 'd8', roll: undefined },
-                        { type: 'd8', roll: undefined },
                         { type: 'd4', roll: undefined },
+                        { type: 'd8', roll: undefined },
                         { type: 'd4', roll: undefined }
                     ]
                 }
@@ -231,8 +231,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
                         rolled: true,
                         score: 8,
                         dice: [
-                            { type: 'd6', roll: d6a },
                             { type: 'd6', roll: d6b },
+                            { type: 'd6', roll: d6a },
                             { type: 'd4', roll: d4a }
                         ]
                     }
@@ -246,8 +246,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
                         score: 10,
                         dice: [
                             { type: 'd6', roll: d6c },
-                            { type: 'd6', roll: d6d },
-                            { type: 'd10', roll: d10a }
+                            { type: 'd10', roll: d10a },
+                            { type: 'd6', roll: d6d }
                         ]
                     }
                 },
@@ -261,8 +261,8 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
                         dice: [
                             { type: 'd8', roll: d8a },
                             { type: 'd8', roll: d8b },
-                            { type: 'd4', roll: d4b },
-                            { type: 'd4', roll: d4c }
+                            { type: 'd4', roll: d4c },
+                            { type: 'd4', roll: d4b }
                         ]
                     }
                 }
@@ -281,7 +281,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
             .expect(() => {
                 expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}`, expected)
                 expect(socket.to).toHaveBeenCalledWith(gameId)
-                expect(room.emit).toHaveBeenCalledWith('contests.update', { params: { gameId, contestId }, value: expected })
+                expect(room.emit).toHaveBeenCalledWith('contest.update', { params: { gameId, contestId }, value: expected })
             })
             .end(done)
     })

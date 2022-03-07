@@ -36,3 +36,13 @@ export const create = async (gameId: string): Promise<Contest> => {
     const response = await axios.post(`${API_FQDN}/api/games/${gameId}/contests`)
     return response.data
 }
+
+export interface ContestUpdatePayload {
+    id: string
+    status: ContestStatusType
+}
+
+export const update = async (gameId: string, { id, status }: ContestUpdatePayload): Promise<Contest> => {
+    const response = await axios.put(`${API_FQDN}/api/games/${gameId}/contests/${id}`, { status })
+    return response.data
+}

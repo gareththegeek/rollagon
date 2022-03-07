@@ -92,6 +92,21 @@ export const harmTagsChangeAsync = createAsyncThunk(
     }
 )
 
+export interface RollTargetNumberArgs {
+    gameId: string
+    contestId: string
+}
+
+export const rollTargetNumber = createAsyncThunk(
+    'contest/rollTargetNumber',
+    async ({ gameId, contestId }: RollTargetNumberArgs) => {
+        await api.contests.update(gameId, {
+            id: contestId,
+            status: 'targetSet'
+        })
+    }
+)
+
 export const subscribeAsync = createAsyncThunk(
     'contest/subscribe',
     async (_, { dispatch }) => {

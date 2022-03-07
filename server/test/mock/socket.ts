@@ -17,6 +17,6 @@ export const mockSocket = (): MockServer => {
     const mock = {
         to: jest.fn().mockReturnValue(room)
     }
-    jest.spyOn(singleton, 'getSocket').mockReturnValue(mock as unknown as Server)
+    jest.spyOn(singleton, 'getSocketServer').mockReturnValue(mock as unknown as Server)
     return mock
 }
