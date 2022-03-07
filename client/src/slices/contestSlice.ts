@@ -4,7 +4,6 @@ import { Contest, HarmTagType } from '../api/contests'
 import { Strife } from '../api/strife'
 import { RootState } from '../app/store'
 import * as ws from '../app/websocket'
-import { getGameAsync } from './gameSlice'
 
 export const createContestAsync = createAsyncThunk(
     'contest/createContest',

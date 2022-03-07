@@ -66,7 +66,7 @@ export const joinHeroAsync = createAsyncThunk(
     'player/joinHero',
     async ({ gameId, player }: JoinHeroArgs, { dispatch }) => {
         if (isNewPlayer(player)) {
-            return await api.players.create(gameId, player)
+            player = await api.players.create(gameId, player)
         }
         await dispatch(joinAsync(gameId))
         await dispatch(joinHero(player))
@@ -95,7 +95,9 @@ export const playerSlice = createSlice({
             state.current = undefined
         },
         add: (state, { payload: { value } }) => {
-            state.players.push(value)
+            if (!state.players.some(x => x.id === value.id)) {
+                state.players.push(value)
+            }
         },
         update: (state, { payload: { value } }) => {
             const idx = state.players.findIndex(x => x.id === value.payload.id)
