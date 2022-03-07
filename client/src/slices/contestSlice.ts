@@ -99,7 +99,8 @@ export interface RollTargetNumberArgs {
 
 export const rollTargetNumber = createAsyncThunk(
     'contest/rollTargetNumber',
-    async ({ gameId, contestId }: RollTargetNumberArgs) => {
+    async ({ gameId, contestId }: RollTargetNumberArgs, { dispatch }) => {
+        dispatch(update({ value: { status: 'targetSet' } }))
         return await api.contests.update(gameId, {
             id: contestId,
             status: 'targetSet'
@@ -144,12 +145,34 @@ export const contestSlice = createSlice({
             }
             state.current.strife = value
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(strifeDiceChangeAsync.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(harmTagsChangeAsync.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(strifeLevelChangeAsync.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(strifeDiceChangeAsync.fulfilled, (state) => {
+                state.status = 'idle'
+            })
+            .addCase(harmTagsChangeAsync.fulfilled, (state) => {
+                state.status = 'idle'
+            })
+            .addCase(strifeLevelChangeAsync.fulfilled, (state) => {
+                state.status = 'idle'
+            })
     }
 })
 
 export const { add, remove, update, updateStrife } = contestSlice.actions
 
 export const selectContestStatus = (state: RootState) => state.contest.current?.status ?? 'complete'
+export const selectContestStoreStatus = (state: RootState) => state.contest.status
 export const selectCurrentContest = (state: RootState) => state.contest.current
 export const selectContestId = (state: RootState) => state.contest.current?.id
 export const selectCurrentStrife = (state: RootState) => state.contest.current?.strife

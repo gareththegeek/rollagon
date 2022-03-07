@@ -33,7 +33,8 @@ export interface Contest {
 }
 
 export const create = async (gameId: string): Promise<Contest> => {
-    const response = await axios.post(`${API_FQDN}/api/games/${gameId}/contests`)
+    const timestamp = new Date().toISOString()
+    const response = await axios.post(`${API_FQDN}/api/games/${gameId}/contests`, { timestamp })
     return response.data
 }
 
@@ -43,7 +44,8 @@ export interface ContestUpdatePayload {
 }
 
 export const update = async (gameId: string, { id, status }: ContestUpdatePayload): Promise<Contest> => {
-    const response = await axios.put(`${API_FQDN}/api/games/${gameId}/contests/${id}`, { status })
+    const timestamp = new Date().toISOString()
+    const response = await axios.put(`${API_FQDN}/api/games/${gameId}/contests/${id}`, { status, timestamp })
     return response.data
 }
 

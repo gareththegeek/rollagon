@@ -12,6 +12,7 @@ export const get = async (gameId: string): Promise<Player[]> => {
 }
 
 export const create = async (gameId: string, player: Player): Promise<Player> => {
-    const response = await axios.post(`${API_FQDN}/api/games/${gameId}/players`, player)
+    const timestamp = new Date().toISOString()
+    const response = await axios.post(`${API_FQDN}/api/games/${gameId}/players`, { ...player, timestamp })
     return response.data
 }

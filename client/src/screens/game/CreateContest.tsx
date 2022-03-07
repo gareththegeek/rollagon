@@ -6,7 +6,7 @@ import {
     harmTagsChangeAsync,
     rollTargetNumber,
     selectContestId,
-    selectCurrentContest,
+    selectContestStoreStatus,
     selectCurrentStrife,
     strifeDiceChangeAsync,
     strifeLevelChangeAsync
@@ -15,7 +15,7 @@ import { selectGameId } from '../../slices/gameSlice'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
 import { StrifeLevelEditor } from './StifeLevelEditor'
 import { HarmTagsEditor } from './HarmTagsEditor'
-import { Contest, HarmTagType } from '../../api/contests'
+import { HarmTagType } from '../../api/contests'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -40,6 +40,7 @@ export const CreateContest = () => {
     const dispatch = useAppDispatch()
     const gameId = useSelector(selectGameId)
     const strife = useSelector(selectCurrentStrife)
+    const status = useSelector(selectContestStoreStatus)
     const contestId = useSelector(selectContestId)
 
     if (gameId === undefined || contestId === undefined || strife === undefined) {
@@ -65,7 +66,9 @@ export const CreateContest = () => {
                     <h3>Harm Tags</h3>
                     <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
                 </div>
-                <button onClick={rollContestHandler(dispatch, gameId, contestId)}>Roll the Contest</button>
+                <button disabled={status === 'loading'} onClick={rollContestHandler(dispatch, gameId, contestId)}>
+                    Roll the Contest
+                </button>
             </div>
         </div>
     )

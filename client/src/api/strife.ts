@@ -10,6 +10,7 @@ export interface Strife {
 }
 
 export const update = async (gameId: string, contestId: string, strife: Strife): Promise<Strife> => {
-    const response = await axios.put(`${API_FQDN}/api/games/${gameId}/contests/${contestId}/strife`, strife)
+    const timestamp = new Date().toISOString()
+    const response = await axios.put(`${API_FQDN}/api/games/${gameId}/contests/${contestId}/strife`, { ...strife, timestamp })
     return response.data
 }
