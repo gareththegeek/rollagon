@@ -4,6 +4,7 @@ import { Contest, HarmTagType } from '../api/contests'
 import { Strife } from '../api/strife'
 import { RootState } from '../app/store'
 import * as ws from '../app/websocket'
+import { getGameAsync } from './gameSlice'
 
 export const createContestAsync = createAsyncThunk(
     'contest/createContest',
@@ -73,6 +74,12 @@ export const contestSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getGameAsync.fulfilled, (state, {payload: {contests}}) => {
+                const sorted = Object.values(contests).sort((a, b) => b.sort - a.sort)
+                if (sorted.length > 0) {
+                    state.current = sorted[0]
+                }
+            })
             .addCase(createContestAsync.pending, (state) => {
                 state.status = 'loading'
             })

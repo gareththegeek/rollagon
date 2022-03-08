@@ -3,6 +3,7 @@ import api from '../api'
 import { Contestant } from '../api/contests'
 import { RootState } from '../app/store'
 import * as ws from '../app/websocket'
+import { getGameAsync } from './gameSlice'
 
 export interface JoinContestArgs {
     gameId: string
@@ -50,6 +51,12 @@ export const contestantSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getGameAsync.fulfilled, (state, { payload: { contests } }) => {
+                const sorted = Object.values(contests).sort((a, b) => b.sort - a.sort)
+                if (sorted.length > 0) {
+                    state.contestants = sorted[0].contestants
+                }
+            })
             .addCase(joinContestAsync.pending, (state) => {
                 state.status = 'loading'
             })

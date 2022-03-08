@@ -4,6 +4,7 @@ import { HarmTagType } from '../api/contests'
 import { Strife } from '../api/strife'
 import { RootState } from '../app/store'
 import * as ws from '../app/websocket'
+import { getGameAsync } from './gameSlice'
 
 export interface StrifeDiceChangeArgs {
     gameId: string
@@ -98,6 +99,12 @@ export const strifeSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getGameAsync.fulfilled, (state, { payload: { contests } }) => {
+                const sorted = Object.values(contests).sort((a, b) => b.sort - a.sort)
+                if (sorted.length > 0) {
+                    state.strife = sorted[0].strife
+                }
+            })
             .addCase(strifeDiceChangeAsync.pending, (state) => {
                 state.status = 'loading'
             })
