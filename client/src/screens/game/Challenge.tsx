@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux'
-import { removeContestAsync, selectContestId, selectCurrentStrife } from '../../slices/contestSlice'
+import { removeContestAsync, selectContestId } from '../../slices/contestSlice'
 import { Tags } from '../../components/tags/Tags'
 import { StrifeRoll } from '../../components/dice/StrifeRoll'
 import { selectGameId } from '../../slices/gameSlice'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
+import { selectCurrentStrife } from '../../slices/strifeSlice'
 
 const abandonContestHandler = (dispatch: AppDispatch, gameId: string, contestId: string) => () => {
     dispatch(removeContestAsync({gameId, contestId}))

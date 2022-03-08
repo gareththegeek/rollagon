@@ -20,74 +20,8 @@ export interface CloseContestProps {
 export const removeContestAsync = createAsyncThunk(
     'contest/removeContest',
     async ({ gameId, contestId }: CloseContestProps, { dispatch }) => {
-        dispatch(remove())
+        await dispatch(remove())
         return await api.contests.remove(gameId, contestId)
-    }
-)
-
-export interface StrifeDiceChangeArgs {
-    gameId: string
-    contestId: string
-    strife: Strife
-    type: string
-    quantity: number
-}
-
-export const strifeDiceChangeAsync = createAsyncThunk(
-    'contest/strifeDiceChange',
-    async ({ gameId, contestId, strife, type, quantity }: StrifeDiceChangeArgs, { dispatch }) => {
-        const next: Strife = {
-            ...strife,
-            dicePool: {
-                ...strife.dicePool,
-                dice: [
-                    ...strife.dicePool.dice.filter(x => x.type !== type),
-                    ...(new Array(quantity).fill({
-                        type
-                    }))
-                ]
-            }
-        }
-        dispatch(updateStrife({ value: next }))
-        return await api.strife.update(gameId, contestId, next)
-    }
-)
-
-export interface StrifeLevelChangeArgs {
-    gameId: string
-    contestId: string
-    strife: Strife
-    strifeLevel: number
-}
-
-export const strifeLevelChangeAsync = createAsyncThunk(
-    'contest/strifeLevelChange',
-    async ({ gameId, contestId, strife, strifeLevel }: StrifeLevelChangeArgs, { dispatch }) => {
-        const next: Strife = {
-            ...strife,
-            strifeLevel
-        }
-        dispatch(updateStrife({ value: next }))
-        return await api.strife.update(gameId, contestId, next)
-    }
-)
-
-export interface HarmTagsChangeArgs {
-    gameId: string
-    contestId: string
-    strife: Strife
-    harmTags: HarmTagType[]
-}
-
-export const harmTagsChangeAsync = createAsyncThunk(
-    'contest/harmTagsChange',
-    async ({ gameId, contestId, strife, harmTags }: HarmTagsChangeArgs, { dispatch }) => {
-        const next: Strife = {
-            ...strife,
-            harmTags
-        }
-        dispatch(updateStrife({ value: next }))
-        return await api.strife.update(gameId, contestId, next)
     }
 )
 
@@ -96,10 +30,9 @@ export interface RollTargetNumberArgs {
     contestId: string
 }
 
-export const rollTargetNumber = createAsyncThunk(
+export const rollTargetNumberAsync = createAsyncThunk(
     'contest/rollTargetNumber',
-    async ({ gameId, contestId }: RollTargetNumberArgs, { dispatch }) => {
-        dispatch(update({ value: { status: 'targetSet' } }))
+    async ({ gameId, contestId }: RollTargetNumberArgs) => {
         return await api.contests.update(gameId, {
             id: contestId,
             status: 'targetSet'
@@ -107,24 +40,10 @@ export const rollTargetNumber = createAsyncThunk(
     }
 )
 
-export interface JoinContestArgs {
-    gameId: string
-    contestId: string
-    playerId: string
-}
-
-export const joinContestAsync = createAsyncThunk(
-    'contest/joinContest',
-    async ({ gameId, contestId, playerId }: JoinContestArgs, { dispatch }) => {
-        return await api.contestants.create(gameId, contestId, playerId)
-    }
-)
-
 export const subscribeAsync = createAsyncThunk(
     'contest/subscribe',
     async (_, { dispatch }) => {
         ws.subscribe(dispatch, 'contest', ['add', 'update', 'remove'])
-        ws.subscribe(dispatch, 'strife', ['updateStife'])
     }
 )
 
@@ -150,50 +69,30 @@ export const contestSlice = createSlice({
         },
         remove: (state) => {
             state.current = undefined
-        },
-        updateStrife: (state, { payload: { value } }) => {
-            if (state.current === undefined) {
-                return
-            }
-            state.current.strife = value
-        },
-        createContestant: (state, { payload: { value } }) => {
-            if (state.current === undefined) {
-                return
-            }
-            state.current.contestants[value.id] = value
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(strifeDiceChangeAsync.pending, (state) => {
+            .addCase(createContestAsync.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(harmTagsChangeAsync.pending, (state) => {
+            .addCase(rollTargetNumberAsync.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(strifeLevelChangeAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(strifeDiceChangeAsync.fulfilled, (state) => {
+            .addCase(createContestAsync.fulfilled, (state) => {
                 state.status = 'idle'
             })
-            .addCase(harmTagsChangeAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
-            .addCase(strifeLevelChangeAsync.fulfilled, (state) => {
+            .addCase(rollTargetNumberAsync.fulfilled, (state) => {
                 state.status = 'idle'
             })
     }
 })
 
-export const { add, remove, update, updateStrife } = contestSlice.actions
+export const { add, remove, update } = contestSlice.actions
 
 export const selectContestStatus = (state: RootState) => state.contest.current?.status ?? 'complete'
 export const selectContestStoreStatus = (state: RootState) => state.contest.status
 export const selectCurrentContest = (state: RootState) => state.contest.current
 export const selectContestId = (state: RootState) => state.contest.current?.id
-export const selectCurrentStrife = (state: RootState) => state.contest.current?.strife
-export const selectContestant = (playerId: string) => (state: RootState) => state.contest.current?.contestants[playerId]
 
 export default contestSlice.reducer

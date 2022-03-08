@@ -2,20 +2,18 @@ import { useSelector } from 'react-redux'
 import { Strife } from '../../api/strife'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
-import {
-    harmTagsChangeAsync,
-    rollTargetNumber,
-    selectContestId,
-    selectContestStoreStatus,
-    selectCurrentStrife,
-    strifeDiceChangeAsync,
-    strifeLevelChangeAsync
-} from '../../slices/contestSlice'
+import { rollTargetNumberAsync, selectContestId, selectContestStoreStatus } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
 import { StrifeLevelEditor } from './StifeLevelEditor'
 import { HarmTagsEditor } from '../../components/tags/HarmTagsEditor'
 import { HarmTagType } from '../../api/contests'
+import {
+    strifeDiceChangeAsync,
+    strifeLevelChangeAsync,
+    harmTagsChangeAsync,
+    selectCurrentStrife
+} from '../../slices/strifeSlice'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -33,7 +31,7 @@ const harmTagsChangeHandler =
     }
 
 const rollContestHandler = (dispatch: AppDispatch, gameId: string, contestId: string) => () => {
-    dispatch(rollTargetNumber({ gameId, contestId }))
+    dispatch(rollTargetNumberAsync({ gameId, contestId }))
 }
 
 export const CreateContest = () => {

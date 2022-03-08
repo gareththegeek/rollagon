@@ -5,6 +5,8 @@ import { RootState } from '../app/store'
 import * as ws from '../app/websocket'
 import { getGameAsync } from './gameSlice'
 import { subscribeAsync as subscribeContestAsync } from './contestSlice'
+import { subscribeAsync as subscribeContestantAsync } from './contestantSlice'
+import { subscribeAsync as subscribeStrifeAsync } from './strifeSlice'
 
 export interface PlayerState {
     status: 'loading' | 'idle'
@@ -36,6 +38,8 @@ export const joinAsync = createAsyncThunk(
         await ws.join(gameId)
         ws.subscribe(dispatch, 'player', ['add', 'update', 'remove'])
         await dispatch(subscribeContestAsync())
+        await dispatch(subscribeContestantAsync())
+        await dispatch(subscribeStrifeAsync())
         await dispatch(join())
     }
 )

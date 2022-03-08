@@ -1,15 +1,17 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice'
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import contestReducer from '../slices/contestSlice'
-import playerReducer from '../slices/playerSlice'
+import contestantReducer from '../slices/contestantSlice'
 import gameReducer from '../slices/gameSlice'
+import playerReducer from '../slices/playerSlice'
+import strifeReducer from '../slices/strifeSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     contest: contestReducer,
+    contestant: contestantReducer,
+    game: gameReducer,
     player: playerReducer,
-    game: gameReducer
+    strife: strifeReducer
   }
 })
 
