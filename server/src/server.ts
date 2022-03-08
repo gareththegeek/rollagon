@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import mongoSanitize from 'express-mongo-sanitize'
 import routes from './routes'
 import controllers from './controllers'
+import * as nocache from './nocache'
 
 const app = express()
 
@@ -14,6 +15,8 @@ app.use(cors({ origin: CORS_ORIGIN }))
 app.use(bodyParser.urlencoded({ extended: true,  }));
 app.use(express.json())
 app.use(mongoSanitize())
+
+app.use('/api/*', nocache.middleware)
 
 routes(app)
 
