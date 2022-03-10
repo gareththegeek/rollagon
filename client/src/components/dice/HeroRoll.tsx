@@ -7,16 +7,37 @@ export interface HeroRollProps {
 }
 
 export const HeroRoll = ({ contestant }: HeroRollProps) => {
-    const best = contestant.dicePool.dice.filter((x) => x.type !== 'd4').slice(0, 2)
+    const [best0, best1, ...rest] = contestant.dicePool.dice.filter((x) => x.type !== 'd4')
     const d4s = contestant.dicePool.dice.filter((x) => x.type === 'd4')
     const hasD4 = d4s.length > 0
     const d4 = hasD4 ? d4s[0] : undefined
+    const d4sDropped = d4s.length > 1 ? d4s.slice(1) : []
 
     return (
         <div>
             <Roll value={contestant.dicePool.score!} label="Result" />
-            <Roll value={best[0].roll!} label={best[0].type} /> + <Roll value={best[1].roll!} label={best[1].type} />
-            {hasD4 ? <Roll value={d4!.roll!} label="Bonus" /> : <></>}
+            <Roll value={best0.roll!} label={best0.type} /> + <Roll value={best1.roll!} label={best1.type} />
+            {hasD4 ? (
+                <>
+                    <span>+</span>
+                    <Roll value={d4!.roll!} label="Bonus" />
+                </>
+            ) : (
+                <></>
+            )}
+            {rest.length > 0 && (
+                <>
+                    (
+                    {rest.map((x,i) => (
+                        <Roll key={`dropped-${contestant.playerId}-${i}`} value={x.roll!} label={x.type} />
+                    ))}
+                    ) (
+                    {d4sDropped.map((x,i) => (
+                        <Roll key={`dropped-d4-${contestant.playerId}-${i}`} value={x.roll!} label={x.type} />
+                    ))}
+                    )
+                </>
+            )}
         </div>
     )
 }

@@ -7,11 +7,20 @@ export interface StrifeRollProps {
 }
 
 export const StrifeRoll = ({ strife }: StrifeRollProps) => {
-    const best = strife.dicePool.dice[0]
+    const [best, ...rest] = strife.dicePool.dice
     return (
         <div>
             <Roll value={strife.targetNumber!} label="Target" />
             <Roll value={strife.strifeLevel} label="Strife" /> + <Roll value={best.roll!} label={best.type} />
+            {rest.length > 0 && (
+                <div>
+                    (
+                    {rest.map((x) => (
+                        <Roll value={x.roll!} label={x.type} />
+                    ))}
+                    )
+                </div>
+            )}
         </div>
     )
 }
