@@ -57,6 +57,7 @@ export const CreateContest = () => {
                     <h3>Dice Pool</h3>
                     <DicePoolEditor
                         dice={[6, 8, 10, 12]}
+                        enabled={true}
                         onChange={diceChangeHandler(dispatch, gameId, contestId, strife)}
                     />
                 </div>

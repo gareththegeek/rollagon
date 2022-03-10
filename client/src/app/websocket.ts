@@ -1,6 +1,12 @@
-import { Dispatch } from '@reduxjs/toolkit'
+import { AsyncThunk } from '@reduxjs/toolkit'
 import { io } from 'socket.io-client'
 import { API_FQDN } from '../api/constants'
+import { AppDispatch } from './store'
+
+export interface EventArgs<T> {
+    params?: any | undefined
+    value: T
+}
 
 const url = new URL(API_FQDN)
 url.protocol = 'ws'
@@ -15,13 +21,18 @@ export const leave = (gameId: string) => {
     socket.removeAllListeners()
 }
 
-export const subscribe = (dispatch: Dispatch, topic: string, events: string[]) => {
-    events.forEach(event => {
-        const actionType = `${topic}/${event}`
-        const eventType = `${topic}.${event}`
+export interface WebSocketBinding {
+    name: string,
+    handler: AsyncThunk<any, any, {}>
+}
+
+export const subscribe = (dispatch: AppDispatch, topic: string, events: WebSocketBinding[]) => {
+    events.forEach(({ name, handler }) => {
+        const actionType = `${topic}/${name}Async`
+        const eventType = `${topic}.${name}`
         socket.on(eventType, (result: unknown) => {
             console.info(`${eventType} -> ${actionType}: ${JSON.stringify(result)}`)
-            dispatch({ type: actionType, payload: result })
+            dispatch(handler(result))
         })
     })
 }

@@ -2,18 +2,18 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
 import { Game } from '../api/games'
 import { RootState } from '../app/store'
+import * as contest from './contestSlice'
+import * as player from './playerSlice'
 
 export interface GameState {
     status: 'loading' | 'idle'
     gameId: string | undefined
-    joined: boolean,
     current: Game | undefined
 }
 
 const initialState: GameState = {
     status: 'idle',
     gameId: undefined,
-    joined: false,
     current: undefined
 }
 
@@ -28,8 +28,10 @@ export const createGameAsync = createAsyncThunk(
 
 export const getGameAsync = createAsyncThunk(
     'game/getGame',
-    async (gameId: string) => {
+    async (gameId: string, { dispatch }) => {
         const game = await api.games.get(gameId)
+        dispatch(player.setGameAsync(game))
+        dispatch(contest.setGameAsync(game))
         return game
     }
 )

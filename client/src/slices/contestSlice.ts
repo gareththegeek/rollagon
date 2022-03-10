@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { AsyncThunkAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
-import { Contest, HarmTagType } from '../api/contests'
-import { Strife } from '../api/strife'
-import { RootState } from '../app/store'
+import { Contest } from '../api/contests'
+import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
-import { getGameAsync } from './gameSlice'
+import { Game } from '../api/games'
+import * as contestant from './contestantSlice'
+import * as strife from './strifeSlice'
 
 export const createContestAsync = createAsyncThunk(
     'contest/createContest',
@@ -44,7 +45,50 @@ export const rollTargetNumberAsync = createAsyncThunk(
 export const subscribeAsync = createAsyncThunk(
     'contest/subscribe',
     async (_, { dispatch }) => {
-        ws.subscribe(dispatch, 'contest', ['add', 'update', 'remove'])
+        ws.subscribe(dispatch as AppDispatch, 'contest', [
+            { name: 'add', handler: addAsync },
+            { name: 'update', handler: updateAsync },
+            { name: 'remove', handler: removeAsync }
+        ])
+    }
+)
+
+export const setGameAsync = createAsyncThunk(
+    'contest/setGame',
+    async ({ contests }: Game, { dispatch }) => {
+        const sorted = Object.values(contests).sort((a, b) => b.sort - a.sort)
+        if (sorted.length === 0) {
+            dispatch(removeAsync())
+            return
+        }
+        dispatch(updateAsync({ value: sorted[0] }))
+    }
+)
+
+export const addAsync = createAsyncThunk(
+    'contest/addAsync',
+    async ({ value }: ws.EventArgs<Contest>, { dispatch }) => {
+        dispatch(add(value))
+        dispatch(contestant.setContestAsync(value))
+        dispatch(strife.setContestAsync(value))
+    }
+)
+
+export const updateAsync = createAsyncThunk(
+    'contest/updateAsync',
+    async ({ value }: ws.EventArgs<Contest>, { dispatch }) => {
+        dispatch(update(value))
+        dispatch(contestant.setContestAsync(value))
+        dispatch(strife.setContestAsync(value))
+    }
+)
+
+export const removeAsync = createAsyncThunk(
+    'contest/removeAsync',
+    async (_, { dispatch }) => {
+        dispatch(remove())
+        dispatch(contestant.setContestAsync(undefined))
+        dispatch(strife.setContestAsync(undefined))
     }
 )
 
@@ -62,11 +106,11 @@ export const contestSlice = createSlice({
     name: 'contest',
     initialState,
     reducers: {
-        add: (state, { payload: { value } }) => {
-            state.current = value
+        add: (state, { payload }) => {
+            state.current = payload
         },
-        update: (state, { payload: { value } }) => {
-            state.current = value
+        update: (state, { payload }) => {
+            state.current = payload
         },
         remove: (state) => {
             state.current = undefined
@@ -74,12 +118,6 @@ export const contestSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getGameAsync.fulfilled, (state, {payload: {contests}}) => {
-                const sorted = Object.values(contests).sort((a, b) => b.sort - a.sort)
-                if (sorted.length > 0) {
-                    state.current = sorted[0]
-                }
-            })
             .addCase(createContestAsync.pending, (state) => {
                 state.status = 'loading'
             })

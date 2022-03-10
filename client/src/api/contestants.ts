@@ -7,3 +7,9 @@ export const create = async (gameId: string, contestId: string, playerId: string
     const result = await axios.post(`${API_FQDN}/api/games/${gameId}/contests/${contestId}/contestants`, { playerId, timestamp })
     return result.data
 }
+
+export const update = async (gameId: string, contestId: string, contestant: Contestant): Promise<Contestant> => {
+    const timestamp = new Date().toISOString()
+    const result = await axios.put(`${API_FQDN}/api/games/${gameId}/contests/${contestId}/contestants/${contestant.playerId}`, { ...contestant, timestamp })
+    return result.data
+}

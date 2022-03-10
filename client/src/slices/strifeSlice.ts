@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
-import { HarmTagType } from '../api/contests'
+import { Contest, HarmTagType } from '../api/contests'
 import { Strife } from '../api/strife'
-import { RootState } from '../app/store'
+import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
 import { getGameAsync } from './gameSlice'
 
@@ -75,7 +75,23 @@ export const harmTagsChangeAsync = createAsyncThunk(
 export const subscribeAsync = createAsyncThunk(
     'strife/subscribe',
     async (_, { dispatch }) => {
-        ws.subscribe(dispatch, 'strife', ['update'])
+        ws.subscribe(dispatch as AppDispatch, 'strife', [
+            { name: 'update', handler: updateAsync }
+        ])
+    }
+)
+
+export const setContestAsync = createAsyncThunk(
+    'strife/setContest',
+    async (contest: Contest | undefined, { dispatch }) => {
+        dispatch(update(contest?.strife))
+    }
+)
+
+export const updateAsync = createAsyncThunk(
+    'strife/updateAsync',
+    async ({ value }: ws.EventArgs<Strife>, { dispatch }) => {
+        dispatch(update(value))
     }
 )
 
@@ -93,18 +109,12 @@ export const strifeSlice = createSlice({
     name: 'strife',
     initialState,
     reducers: {
-        update: (state, { payload: { value } }) => {
-            state.strife = value
+        update: (state, { payload }) => {
+            state.strife = payload
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getGameAsync.fulfilled, (state, { payload: { contests } }) => {
-                const sorted = Object.values(contests).sort((a, b) => b.sort - a.sort)
-                if (sorted.length > 0) {
-                    state.strife = sorted[0].strife
-                }
-            })
             .addCase(strifeDiceChangeAsync.pending, (state) => {
                 state.status = 'loading'
             })
@@ -128,6 +138,6 @@ export const strifeSlice = createSlice({
 
 export const { update } = strifeSlice.actions
 
-export const selectCurrentStrife = (state: RootState) => state.contest.current?.strife
+export const selectCurrentStrife = (state: RootState) => state.strife.strife
 
 export default strifeSlice.reducer

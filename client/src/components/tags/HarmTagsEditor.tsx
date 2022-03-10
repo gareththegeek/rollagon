@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { HarmTagType } from '../../api/contests'
-import { HarmTagEditor } from './HarmTagEditor'
+import { ToggleButton } from '../ToggleButton'
 
 export interface HarmTagsEditorProps {
     onChange: (harmTags: HarmTagType[]) => void
@@ -18,9 +18,10 @@ export const HarmTagsEditor = ({ onChange }: HarmTagsEditorProps) => {
 
     return <>
         {tags.map(({ name, value }) =>
-            <HarmTagEditor
+            <ToggleButton
                 key={`tag-editor-${value}`}
-                name={name}
+                label={name}
+                enabled={true}
                 onChange={(toggled: boolean) => {
                     let next = [...selectedTags]
                     if (toggled) {

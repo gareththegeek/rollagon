@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
 import { Player } from '../api/players'
-import { RootState } from '../app/store'
+import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
 import { getGameAsync } from './gameSlice'
 import { subscribeAsync as subscribeContestAsync } from './contestSlice'
 import { subscribeAsync as subscribeContestantAsync } from './contestantSlice'
 import { subscribeAsync as subscribeStrifeAsync } from './strifeSlice'
+import { Game } from '../api/games'
 
 export interface PlayerState {
     status: 'loading' | 'idle'
@@ -26,9 +27,11 @@ const initialState: PlayerState = {
 
 export const getPlayersAsync = createAsyncThunk(
     'player/getPlayers',
-    async (gameId: string) => {
+    async (gameId: string, { dispatch }) => {
         //TODO error handling / service layer? 
-        return await api.players.get(gameId)
+        const players = await api.players.get(gameId)
+        dispatch(set(players))
+        return players
     }
 )
 
@@ -36,7 +39,11 @@ export const joinAsync = createAsyncThunk(
     'player/join',
     async (gameId: string, { dispatch }) => {
         await ws.join(gameId)
-        ws.subscribe(dispatch, 'player', ['add', 'update', 'remove'])
+        ws.subscribe(dispatch as AppDispatch, 'player', [
+            { name: 'add', handler: addAsync },
+            { name: 'update', handler: updateAsync },
+            { name: 'remove', handler: removeAsync }
+        ])
         await dispatch(subscribeContestAsync())
         await dispatch(subscribeContestantAsync())
         await dispatch(subscribeStrifeAsync())
@@ -78,6 +85,34 @@ export const joinHeroAsync = createAsyncThunk(
     }
 )
 
+export const setGameAsync = createAsyncThunk(
+    'player/setGame',
+    async (game: Game, { dispatch }) => {
+        dispatch(set(game.players))
+    }
+)
+
+export const addAsync = createAsyncThunk(
+    'player/addAsync',
+    async ({ value }: ws.EventArgs<Player>, { dispatch }) => {
+        dispatch(add(value))
+    }
+)
+
+export const updateAsync = createAsyncThunk(
+    'player/updateAsync',
+    async ({ value }: ws.EventArgs<Player>, { dispatch }) => {
+        dispatch(update(value))
+    }
+)
+
+export const removeAsync = createAsyncThunk(
+    'player/removeAsync',
+    async ({ value }: ws.EventArgs<Player>, { dispatch }) => {
+        dispatch(remove(value))
+    }
+)
+
 export const playerSlice = createSlice({
     name: 'player',
     initialState,
@@ -98,17 +133,20 @@ export const playerSlice = createSlice({
             state.isStrife = false
             state.current = undefined
         },
-        add: (state, { payload: { value } }) => {
-            if (!state.players.some(x => x.id === value.id)) {
-                state.players.push(value)
+        set: (state, { payload }) => {
+            state.players = Object.values(payload)
+        },
+        add: (state, { payload }) => {
+            if (!state.players.some(x => x.id === payload.id)) {
+                state.players.push(payload)
             }
         },
-        update: (state, { payload: { value } }) => {
-            const idx = state.players.findIndex(x => x.id === value.payload.id)
-            state.players[idx] = value
+        update: (state, { payload }) => {
+            const idx = state.players.findIndex(x => x.id === payload.id)
+            state.players[idx] = payload
         },
-        remove: (state, { payload: { value } }) => {
-            const idx = state.players.findIndex(x => x.id === value.payload.id)
+        remove: (state, { payload }) => {
+            const idx = state.players.findIndex(x => x.id === payload.id)
             state.players.splice(idx, 1)
         }
     },
@@ -117,25 +155,19 @@ export const playerSlice = createSlice({
             .addCase(getPlayersAsync.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(getPlayersAsync.fulfilled, (state, action) => {
-                state.status = 'idle'
-                state.players = action.payload
-            })
             .addCase(joinHeroAsync.pending, (state) => {
                 state.status = 'loading'
             })
             .addCase(joinHeroAsync.fulfilled, (state) => {
                 state.status = 'idle'
             })
-            .addCase(getGameAsync.fulfilled, (state, action) => {
-                state.players = Object.values(action.payload.players)
-            })
     }
 })
 
-export const { join, joinStrife, joinHero, add, update, remove } = playerSlice.actions
+export const { join, joinStrife, joinHero, set, add, update, remove } = playerSlice.actions
 
 export const selectPlayers = (state: RootState) => state.player.players
 export const selectIsStrifePlayer = (state: RootState) => state.player.isStrife
+export const selectPlayerId = (state: RootState) => state.player.current?.id
 
 export default playerSlice.reducer
