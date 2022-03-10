@@ -78,11 +78,9 @@ export const add = async ({ gameId }: GetManyParams, { timestamp }: AddContestBo
             strifeLevel: 5,
             dicePool: {
                 rolled: false,
-                score: undefined,
                 dice: []
             },
-            harmTags: [],
-            targetNumber: undefined
+            harmTags: []
         },
         contestants: {}
     }

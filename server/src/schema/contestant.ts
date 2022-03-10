@@ -24,7 +24,8 @@ export const addSchema = Joi.object({
 export const updateSchema = Joi.object({
     timestamp: Joi.date().iso().required(),
     ready: Joi.boolean().required(),
-    dicePool: dicePoolSchema.required()
+    dicePool: dicePoolSchema.required(),
+    playerId: idSchema.label('player id')
 })
 
 export const controllerConfig: ControllerConfig<Contestant> = {

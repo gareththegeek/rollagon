@@ -22,6 +22,7 @@ export const createGameAsync = createAsyncThunk(
     async () => {
         //TODO error handling / service layer? 
         const { id } = await api.games.create()
+        await api.contests.create(id)
         return id
     }
 )

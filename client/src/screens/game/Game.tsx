@@ -33,9 +33,6 @@ export const Game = () => {
     return (
         <div>
             Game
-            {contestStatus === 'complete' && isStrifePlayer && (
-                <button onClick={() => dispatch(createContestAsync(gameId))}>Create Contest</button>
-            )}
             {contestStatus === 'new' && isStrifePlayer && <CreateContest />}
             {contestStatus !== 'new' && <Challenge />}
             {contestStatus === 'targetSet' && <EnterContest />}

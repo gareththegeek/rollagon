@@ -35,7 +35,7 @@ export const setReadyAsync = createAsyncThunk(
             ...contestant,
             ready
         }
-        await dispatch(update({ value: next }))
+        await dispatch(update(next))
         return await api.contestants.update(gameId, contestId, next)
     }
 )
@@ -61,7 +61,7 @@ export const diceChangeAsync = createAsyncThunk(
                 ]
             }
         }
-        await dispatch(update({ value: next }))
+        await dispatch(update(next))
         return await api.contestants.update(gameId, contestId, next)
     }
 )
@@ -154,9 +154,13 @@ export const { set, add, remove, update, clear } = contestantSlice.actions
 
 export const selectReadyContestantCount = (state: RootState) => {
     const contestants = Object.values(state.contestant.contestants)
-    return {
+    const result = {
         ready: contestants.filter(x => x.ready).length ?? 0,
         total: contestants.length
+    }
+    return {
+        ...result,
+        all: result.ready === result.total && result.total > 0
     }
 }
 export const selectContestants = (state: RootState) => Object.values(state.contestant.contestants)

@@ -4,12 +4,12 @@ export type HarmTagType = 'sacred' | 'perilous' | 'mythic' | 'epic'
 
 export interface Dice {
     type: DiceType
-    roll: number | undefined
+    roll?: number | undefined
 }
 
 export interface DicePool {
     rolled: boolean
-    score: number | undefined
+    score?: number | undefined
     dice: Dice[]
 }
 
@@ -17,7 +17,7 @@ export interface Contestant {
     timestamp?: string | undefined
     playerId: string
     ready: boolean
-    prevail: boolean | undefined
+    prevail?: boolean | undefined
     dicePool: DicePool
 }
 
@@ -26,7 +26,7 @@ export interface Strife {
     strifeLevel: number
     dicePool: DicePool
     harmTags: HarmTagType[]
-    targetNumber: number | undefined
+    targetNumber?: number | undefined
 }
 
 export interface Contest {

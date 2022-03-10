@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 
 export interface DiceEditorProps {
     type: number
-    initialQuantity: number
+    quantity: number
     enabled: boolean
     onChange: (value: number) => void
 }
 
-export const DiceEditor = ({ type, initialQuantity, enabled, onChange }: DiceEditorProps) => {
-    const [quantity, setQuantity] = useState(initialQuantity)
+export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProps) => {
+    //const [quantity, setQuantity] = useState(initialQuantity)
 
     return (
         <div>
@@ -17,7 +17,6 @@ export const DiceEditor = ({ type, initialQuantity, enabled, onChange }: DiceEdi
                     disabled={quantity === 0}
                     onClick={() => {
                         const newQuantity = quantity - 1
-                        setQuantity(newQuantity)
                         onChange(newQuantity)
                     }}
                 >
@@ -32,7 +31,6 @@ export const DiceEditor = ({ type, initialQuantity, enabled, onChange }: DiceEdi
                     disabled={!enabled}
                     onClick={() => {
                         const newQuantity = quantity + 1
-                        setQuantity(newQuantity)
                         onChange(newQuantity)
                     }}
                 >

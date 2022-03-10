@@ -1,19 +1,21 @@
 import React from 'react'
+import { DicePool } from '../../api/contests'
 import { DiceEditor } from './DiceEditor'
 
 export interface DicePoolEditorProps {
     dice: number[]
+    dicePool: DicePool
     enabled: boolean
     onChange: (type: string, quantity: number) => void
 }
 
-export const DicePoolEditor = ({ dice, enabled, onChange }: DicePoolEditorProps) => {
+export const DicePoolEditor = ({ dice, dicePool, enabled, onChange }: DicePoolEditorProps) => {
     return <>
         {dice.map(d =>
             <DiceEditor
                 key={`edit-dice-d${d}`}
                 type={d}
-                initialQuantity={0}
+                quantity={dicePool.dice.filter(x => x.type === `d${d}`).length}
                 enabled={enabled}
                 onChange={(quantity: number) => onChange(`d${d}`, quantity)}
             />)}

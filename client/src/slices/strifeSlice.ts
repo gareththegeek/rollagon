@@ -27,7 +27,7 @@ export const strifeDiceChangeAsync = createAsyncThunk(
                 ]
             }
         }
-        await dispatch(update({ value: next }))
+        await dispatch(update(next))
         return await api.strife.update(gameId, contestId, next)
     }
 )
@@ -44,7 +44,7 @@ export const strifeLevelChangeAsync = createAsyncThunk(
             ...strife,
             strifeLevel
         }
-        await dispatch(update({ value: next }))
+        await dispatch(update(next))
         return await api.strife.update(gameId, contestId, next)
     }
 )
@@ -61,7 +61,7 @@ export const harmTagsChangeAsync = createAsyncThunk(
             ...strife,
             harmTags
         }
-        await dispatch(update({ value: next }))
+        await dispatch(update(next))
         return await api.strife.update(gameId, contestId, next)
     }
 )

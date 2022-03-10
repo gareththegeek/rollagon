@@ -70,8 +70,7 @@ export const update = async (params: GetOneParams, body: StrifeBody): Promise<Re
             ...strife.dicePool,
             ...body.dicePool,
             dice: body.dicePool.dice.map(({ type }) => ({
-                type,
-                roll: undefined
+                type
             }))
         }
     }

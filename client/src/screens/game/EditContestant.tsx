@@ -66,6 +66,7 @@ export const EditContestant = ({ player }: EditContestantProps) => {
             <h3>{player.name}</h3>
             <DicePoolEditor
                 enabled={isCurrentPlayer}
+                dicePool={contestant.dicePool}
                 dice={[4, 6, 8, 10, 12]}
                 onChange={editDiceHandler(dispatch, gameId, contestId, contestant)}
             />

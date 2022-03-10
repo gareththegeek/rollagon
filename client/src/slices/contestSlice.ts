@@ -27,6 +27,14 @@ export const removeContestAsync = createAsyncThunk(
     }
 )
 
+export const closeContestAsync = createAsyncThunk(
+    'contest/closeContest',
+    async ({ gameId, contestId }: ContestArgs, { dispatch }) => {
+        await dispatch(remove())
+        return await api.contests.remove(gameId, contestId)
+    }
+)
+
 export const rollTargetNumberAsync = createAsyncThunk(
     'contest/rollTargetNumber',
     async ({ gameId, contestId }: ContestArgs) => {
@@ -66,7 +74,7 @@ export const setGameAsync = createAsyncThunk(
             dispatch(removeAsync())
             return
         }
-        dispatch(updateAsync({ value: sorted[0] }))
+        dispatch(updateAsync({ value:sorted[0] }))
     }
 )
 

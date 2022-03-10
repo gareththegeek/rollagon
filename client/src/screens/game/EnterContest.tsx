@@ -2,9 +2,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
+import { selectReadyContestantCount } from '../../slices/contestantSlice'
 import { rollContestResultAsync, selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
-import { selectPlayers } from '../../slices/playerSlice'
+import { selectIsStrifePlayer, selectPlayers } from '../../slices/playerSlice'
 import { EditContestant } from './EditContestant'
 import { ReadySummary } from './ReadySummary'
 
@@ -14,9 +15,11 @@ const rollResultsHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 
 export const EnterContest = () => {
     const dispatch = useAppDispatch()
+    const isStifePlayer = useSelector(selectIsStrifePlayer)
     const gameId = useSelector(selectGameId)
     const contestId = useSelector(selectContestId)
     const players = useSelector(selectPlayers)
+    const { all } = useSelector(selectReadyContestantCount)
 
     if (gameId === undefined || contestId === undefined) {
         return <></>
@@ -29,7 +32,11 @@ export const EnterContest = () => {
                 <EditContestant key={`enter-contest-player-${playa.id}`} player={playa} />
             ))}
             <ReadySummary />
-            <button onClick={rollResultsHandler(dispatch, gameId, contestId)}>Roll Player Results</button>
+            {isStifePlayer && (
+                <button disabled={!all} onClick={rollResultsHandler(dispatch, gameId, contestId)}>
+                    Roll Player Results
+                </button>
+            )}
         </div>
     )
 }

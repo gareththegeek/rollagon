@@ -91,10 +91,8 @@ export const add = async ({ gameId, contestId }: GetManyParams, body: AddContest
         timestamp,
         playerId,
         ready: false,
-        prevail: undefined,
         dicePool: {
             rolled: false,
-            score: undefined,
             dice: []
         }
     }
@@ -146,8 +144,7 @@ export const update = async (params: GetOneParams, body: ContestantBody): Promis
             ...contestant.dicePool,
             ...body.dicePool,
             dice: body.dicePool.dice.map(({ type }) => ({
-                type,
-                roll: undefined
+                type
             }))
         }
     }
