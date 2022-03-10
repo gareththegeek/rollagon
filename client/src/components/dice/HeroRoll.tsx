@@ -29,11 +29,11 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                 <>
                     (
                     {rest.map((x,i) => (
-                        <Roll key={`dropped-${contestant.playerId}-${i}`} value={x.roll!} label={x.type} />
+                        <Roll key={`dropped-${contestant.playerId}-${i}`} value={x.roll!} label={x.type} dropped={true} />
                     ))}
                     ) (
                     {d4sDropped.map((x,i) => (
-                        <Roll key={`dropped-d4-${contestant.playerId}-${i}`} value={x.roll!} label={x.type} />
+                        <Roll key={`dropped-d4-${contestant.playerId}-${i}`} value={x.roll!} label={x.type} dropped={true} />
                     ))}
                     )
                 </>

@@ -16,7 +16,7 @@ export const StrifeRoll = ({ strife }: StrifeRollProps) => {
                 <div>
                     (
                     {rest.map((x) => (
-                        <Roll value={x.roll!} label={x.type} />
+                        <Roll value={x.roll!} label={x.type} dropped={true} />
                     ))}
                     )
                 </div>
