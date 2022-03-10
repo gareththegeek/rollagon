@@ -49,7 +49,6 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
         const record = removeOptional(buildContestantRecord(playerId))
         const dicePool = record.dicePool as Partial<DicePool>
         delete dicePool.rolled
-        delete record.playerId
         return record
     }
 
@@ -140,10 +139,11 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
     [{
         test: 'missing required properties',
         body: {},
-        message: ['"timestamp" is required', '"ready" is required', '"dicePool" is required']
+        message: ['"timestamp" is required', '"ready" is required', '"dicePool" is required', '"player id" is required']
     }, {
         test: 'missing required dice properties',
         body: {
+            playerId,
             timestamp,
             ready: false,
             dicePool: { dice: [{}] }
@@ -152,6 +152,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
     }, {
         test: 'invalid dice type',
         body: {
+            playerId,
             timestamp,
             ready: false,
             dicePool: {
@@ -188,6 +189,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
             game.contests[contestId]!.contestants[playerId] = existing
 
             const body = {
+                playerId,
                 timestamp,
                 ready: true,
                 dicePool
