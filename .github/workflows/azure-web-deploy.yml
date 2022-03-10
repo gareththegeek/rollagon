@@ -31,7 +31,6 @@ jobs:
         cd client
         npm install
         #npm run test
-        REACT_APP_API_FQDN=https://rollagon.azurewebsites.net
         npm run build
 
     - name: 'Server - npm install, build, and test'
