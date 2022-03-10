@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export interface StrifeLevelEditorProps {
     onChange: (level: number) => void
@@ -12,15 +12,12 @@ export const StrifeLevelEditor = ({ onChange }: StrifeLevelEditorProps) => {
         { name: '+6', value: 6 }
     ]
 
-    const [current, setCurrent] = useState(-1)
-
     //TODO highlight button if value === current
     return <>
         {levels.map(({ name, value }, idx) =>
             <button key={`strife-level-${idx}`}
                 onClick={() => {
                     onChange(value)
-                    setCurrent(value)
                 }}>
                 {name}
             </button>)}

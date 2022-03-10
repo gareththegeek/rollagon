@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contests'
 import { HeroRoll } from '../../components/dice/HeroRoll'
-import { Roll } from '../../components/dice/Roll'
 import { selectPlayer } from '../../slices/playerSlice'
 
 export interface ContestantResultProps {

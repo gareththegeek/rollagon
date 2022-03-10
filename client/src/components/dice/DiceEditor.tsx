@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export interface DiceEditorProps {
     type: number
@@ -8,8 +8,6 @@ export interface DiceEditorProps {
 }
 
 export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProps) => {
-    //const [quantity, setQuantity] = useState(initialQuantity)
-
     return (
         <div>
             {enabled && (

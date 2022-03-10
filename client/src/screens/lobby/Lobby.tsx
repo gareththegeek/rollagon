@@ -26,7 +26,7 @@ export const Lobby = () => {
     useEffect(() => {
         dispatch(setGameId(gameId))
         dispatch(getPlayersAsync(gameId!))
-    }, [])
+    }, [dispatch, gameId])
 
     return (
         <>
