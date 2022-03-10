@@ -3,7 +3,6 @@ import api from '../api'
 import { Player } from '../api/players'
 import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
-import { getGameAsync } from './gameSlice'
 import { subscribeAsync as subscribeContestAsync } from './contestSlice'
 import { subscribeAsync as subscribeContestantAsync } from './contestantSlice'
 import { subscribeAsync as subscribeStrifeAsync } from './strifeSlice'
@@ -166,6 +165,8 @@ export const playerSlice = createSlice({
 
 export const { join, joinStrife, joinHero, set, add, update, remove } = playerSlice.actions
 
+export const selectPlayer = (playerId: string) =>
+    (state: RootState) => state.player.players.find(x => x.id === playerId)
 export const selectPlayers = (state: RootState) => state.player.players
 export const selectIsStrifePlayer = (state: RootState) => state.player.isStrife
 export const selectPlayerId = (state: RootState) => state.player.current?.id

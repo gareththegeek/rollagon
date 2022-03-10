@@ -3,23 +3,27 @@ import api from '../api'
 import { Contest, Contestant } from '../api/contests'
 import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
+import { ContestArgs } from './contestSlice'
 
-export interface JoinContestArgs {
-    gameId: string
-    contestId: string
+export interface ContestantArgs extends ContestArgs {
     playerId: string
 }
 
 export const joinContestAsync = createAsyncThunk(
     'contestant/joinContest',
-    async ({ gameId, contestId, playerId }: JoinContestArgs) => {
+    async ({ gameId, contestId, playerId }: ContestantArgs) => {
         return await api.contestants.create(gameId, contestId, playerId)
     }
 )
 
-export interface SetReadyArgs {
-    gameId: string
-    contestId: string
+export const leaveContestAsync = createAsyncThunk(
+    'contestant/leaveContest',
+    async ({ gameId, contestId, playerId }: ContestantArgs) => {
+        return await api.contestants.remove(gameId, contestId, playerId)
+    }
+)
+
+export interface SetReadyArgs extends ContestArgs {
     contestant: Contestant,
     ready: boolean
 }
@@ -36,9 +40,7 @@ export const setReadyAsync = createAsyncThunk(
     }
 )
 
-export interface DiceChangeArgs {
-    gameId: string
-    contestId: string
+export interface DiceChangeArgs extends ContestArgs {
     contestant: Contestant,
     type: string,
     quantity: number
@@ -150,6 +152,14 @@ export const contestantSlice = createSlice({
 
 export const { set, add, remove, update, clear } = contestantSlice.actions
 
+export const selectReadyContestantCount = (state: RootState) => {
+    const contestants = Object.values(state.contestant.contestants)
+    return {
+        ready: contestants.filter(x => x.ready).length ?? 0,
+        total: contestants.length
+    }
+}
+export const selectContestants = (state: RootState) => Object.values(state.contestant.contestants)
 export const selectContestant = (playerId: string | undefined) => (state: RootState) =>
     playerId !== undefined
         ? state.contestant.contestants[playerId]

@@ -1,4 +1,4 @@
-import { AsyncThunkAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
 import { Contest } from '../api/contests'
 import { AppDispatch, RootState } from '../app/store'
@@ -7,6 +7,11 @@ import { Game } from '../api/games'
 import * as contestant from './contestantSlice'
 import * as strife from './strifeSlice'
 
+export interface ContestArgs {
+    gameId: string
+    contestId: string
+}
+
 export const createContestAsync = createAsyncThunk(
     'contest/createContest',
     async (gameId: string) => {
@@ -14,30 +19,30 @@ export const createContestAsync = createAsyncThunk(
     }
 )
 
-export interface CloseContestProps {
-    gameId: string
-    contestId: string
-}
-
 export const removeContestAsync = createAsyncThunk(
     'contest/removeContest',
-    async ({ gameId, contestId }: CloseContestProps, { dispatch }) => {
+    async ({ gameId, contestId }: ContestArgs, { dispatch }) => {
         await dispatch(remove())
         return await api.contests.remove(gameId, contestId)
     }
 )
 
-export interface RollTargetNumberArgs {
-    gameId: string
-    contestId: string
-}
-
 export const rollTargetNumberAsync = createAsyncThunk(
     'contest/rollTargetNumber',
-    async ({ gameId, contestId }: RollTargetNumberArgs) => {
+    async ({ gameId, contestId }: ContestArgs) => {
         return await api.contests.update(gameId, {
             id: contestId,
             status: 'targetSet'
+        })
+    }
+)
+
+export const rollContestResultAsync = createAsyncThunk(
+    'contest/rollContestResult',
+    async ({ gameId, contestId }: ContestArgs) => {
+        return await api.contests.update(gameId, {
+            id: contestId,
+            status: 'complete'
         })
     }
 )

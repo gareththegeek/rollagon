@@ -4,11 +4,9 @@ import { Contest, HarmTagType } from '../api/contests'
 import { Strife } from '../api/strife'
 import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
-import { getGameAsync } from './gameSlice'
+import { ContestArgs } from './contestSlice'
 
-export interface StrifeDiceChangeArgs {
-    gameId: string
-    contestId: string
+export interface StrifeDiceChangeArgs extends ContestArgs {
     strife: Strife
     type: string
     quantity: number
@@ -34,9 +32,7 @@ export const strifeDiceChangeAsync = createAsyncThunk(
     }
 )
 
-export interface StrifeLevelChangeArgs {
-    gameId: string
-    contestId: string
+export interface StrifeLevelChangeArgs extends ContestArgs {
     strife: Strife
     strifeLevel: number
 }
@@ -53,9 +49,7 @@ export const strifeLevelChangeAsync = createAsyncThunk(
     }
 )
 
-export interface HarmTagsChangeArgs {
-    gameId: string
-    contestId: string
+export interface HarmTagsChangeArgs extends ContestArgs {
     strife: Strife
     harmTags: HarmTagType[]
 }
