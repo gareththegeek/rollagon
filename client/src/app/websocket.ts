@@ -8,9 +8,13 @@ export interface EventArgs<T> {
     value: T
 }
 
-const url = new URL(API_FQDN)
-url.protocol = 'ws'
-const socket = io(url.origin)
+let origin = API_FQDN
+if (origin.indexOf('http') >= 0) {
+    const url = new URL(API_FQDN)
+    url.protocol = 'ws'
+    origin = url.origin
+}
+const socket = io(origin)
 
 export const join = (gameId: string) => {
     socket.emit('players.join', { gameId })
