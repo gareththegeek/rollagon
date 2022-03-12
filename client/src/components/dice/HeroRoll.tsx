@@ -1,5 +1,5 @@
 import React from 'react'
-import { Contestant } from '../../api/contests'
+import { Contestant } from '../../api/contestants'
 import { Roll } from './Roll'
 
 export interface HeroRollProps {

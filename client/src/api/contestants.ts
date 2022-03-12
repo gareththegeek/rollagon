@@ -1,6 +1,26 @@
 import axios from 'axios'
 import { API_FQDN } from './constants'
-import { Contestant } from './contests'
+
+export type DiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12'
+
+export interface Dice {
+    type: DiceType
+    roll: number | undefined
+}
+
+export interface DicePool {
+    rolled: boolean
+    score: number | undefined
+    dice: Dice[]
+}
+
+export interface Contestant {
+    playerId: string
+    timestamp: string
+    ready: boolean
+    prevail: boolean | undefined
+    dicePool: DicePool
+}
 
 export const create = async (gameId: string, contestId: string, playerId: string): Promise<Contestant> => {
     const timestamp = new Date().toISOString()

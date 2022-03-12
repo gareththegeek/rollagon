@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Contestant } from '../../api/contests'
+import { Contestant } from '../../api/contestants'
 import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'

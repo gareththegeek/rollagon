@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Contestant } from '../../api/contests'
+import { Contestant } from '../../api/contestants'
 import { HeroRoll } from '../../components/dice/HeroRoll'
 import { selectPlayer } from '../../slices/playerSlice'
 

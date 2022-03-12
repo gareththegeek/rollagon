@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dice as DiceType } from '../../api/contests'
+import { Dice as DiceType } from '../../api/contestants'
 
 export interface DiceProps {
     dice: DiceType

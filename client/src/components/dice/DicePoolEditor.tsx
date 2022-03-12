@@ -1,5 +1,5 @@
 import React from 'react'
-import { DicePool } from '../../api/contests'
+import { DicePool } from '../../api/contestants'
 import { DiceEditor } from './DiceEditor'
 
 export interface DicePoolEditorProps {

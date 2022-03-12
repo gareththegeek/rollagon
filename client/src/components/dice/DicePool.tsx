@@ -1,5 +1,5 @@
 import React from 'react'
-import { DicePool as DicePoolType } from '../../api/contests'
+import { DicePool as DicePoolType } from '../../api/contestants'
 import { Dice } from './Dice'
 
 export interface DicePoolProps {

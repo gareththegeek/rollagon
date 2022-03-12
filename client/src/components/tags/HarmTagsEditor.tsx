@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { HarmTagType } from '../../api/contests'
+import { HarmTagType } from '../../api/strife'
 import { ToggleButton } from '../ToggleButton'
 
 export interface HarmTagsEditorProps {

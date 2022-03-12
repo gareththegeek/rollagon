@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { API_FQDN } from './constants'
-import { DicePool, HarmTagType } from './contests'
+import { DicePool } from './contestants'
+
+export type HarmTagType = 'sacred' | 'perilous' | 'mythic' | 'epic'
 
 export interface Strife {
+    timestamp: string
     strifeLevel: number
     dicePool: DicePool
     harmTags: HarmTagType[]

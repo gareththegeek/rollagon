@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
-import { Contest, HarmTagType } from '../api/contests'
-import { Strife } from '../api/strife'
+import { Contest } from '../api/contests'
+import { HarmTagType, Strife } from '../api/strife'
 import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
 import { ContestArgs } from './contestSlice'
@@ -17,6 +17,7 @@ export const strifeDiceChangeAsync = createAsyncThunk(
     async ({ gameId, contestId, strife, type, quantity }: StrifeDiceChangeArgs, { dispatch }) => {
         const next: Strife = {
             ...strife,
+            timestamp: new Date().toISOString(),
             dicePool: {
                 ...strife.dicePool,
                 dice: [
@@ -42,6 +43,7 @@ export const strifeLevelChangeAsync = createAsyncThunk(
     async ({ gameId, contestId, strife, strifeLevel }: StrifeLevelChangeArgs, { dispatch }) => {
         const next: Strife = {
             ...strife,
+            timestamp: new Date().toISOString(),
             strifeLevel
         }
         await dispatch(update(next))
@@ -59,6 +61,7 @@ export const harmTagsChangeAsync = createAsyncThunk(
     async ({ gameId, contestId, strife, harmTags }: HarmTagsChangeArgs, { dispatch }) => {
         const next: Strife = {
             ...strife,
+            timestamp: new Date().toISOString(),
             harmTags
         }
         await dispatch(update(next))
@@ -84,8 +87,11 @@ export const setContestAsync = createAsyncThunk(
 
 export const updateAsync = createAsyncThunk(
     'strife/updateAsync',
-    async ({ value }: ws.EventArgs<Strife>, { dispatch }) => {
-        dispatch(update(value))
+    async ({ value }: ws.EventArgs<Strife>, { dispatch, getState }) => {
+        const existing = selectCurrentStrife(getState() as RootState)
+        if (existing !== undefined && existing.timestamp < value.timestamp) {
+            dispatch(update(value))
+        }
     }
 )
 

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
-import { Contest, Contestant } from '../api/contests'
+import { Contestant } from '../api/contestants'
+import { Contest } from '../api/contests'
 import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
 import { ContestArgs } from './contestSlice'
@@ -33,6 +34,7 @@ export const setReadyAsync = createAsyncThunk(
     async ({ gameId, contestId, contestant, ready }: SetReadyArgs, { dispatch }) => {
         const next = {
             ...contestant,
+            timestamp: new Date().toISOString(),
             ready
         }
         await dispatch(update(next))
@@ -51,6 +53,7 @@ export const diceChangeAsync = createAsyncThunk(
     async ({ gameId, contestId, contestant, type, quantity }: DiceChangeArgs, { dispatch }) => {
         const next: Contestant = {
             ...contestant,
+            timestamp: new Date().toISOString(),
             dicePool: {
                 ...contestant.dicePool,
                 dice: [
@@ -97,8 +100,11 @@ export const addAsync = createAsyncThunk(
 
 export const updateAsync = createAsyncThunk(
     'contestant/updateAsync',
-    async ({ value }: ws.EventArgs<Contestant>, { dispatch }) => {
-        dispatch(update(value))
+    async ({ value }: ws.EventArgs<Contestant>, { dispatch, getState }) => {
+        const existing = selectContestant(value.playerId)(getState() as RootState)
+        if (existing !== undefined && existing.timestamp < value.timestamp) {
+            dispatch(update(value))
+        }
     }
 )
 

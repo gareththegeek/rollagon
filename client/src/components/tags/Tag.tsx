@@ -1,5 +1,5 @@
 import React from 'react'
-import { HarmTagType } from '../../api/contests'
+import { HarmTagType } from '../../api/strife'
 
 export interface TagProps {
     tag: HarmTagType
