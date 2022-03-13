@@ -6,6 +6,7 @@ import { selectReadyContestantCount } from '../../slices/contestantSlice'
 import { rollContestResultAsync, selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
 import { selectIsStrifePlayer, selectPlayers } from '../../slices/playerSlice'
+import { selectIsLoading } from '../../slices/statusSlice'
 import { EditContestant } from './EditContestant'
 import { ReadySummary } from './ReadySummary'
 
@@ -15,6 +16,7 @@ const rollResultsHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 
 export const EnterContest = () => {
     const dispatch = useAppDispatch()
+    const isLoading = useSelector(selectIsLoading)
     const isStifePlayer = useSelector(selectIsStrifePlayer)
     const gameId = useSelector(selectGameId)
     const contestId = useSelector(selectContestId)
@@ -33,7 +35,7 @@ export const EnterContest = () => {
             ))}
             <ReadySummary />
             {isStifePlayer && (
-                <button disabled={!all} onClick={rollResultsHandler(dispatch, gameId, contestId)}>
+                <button disabled={isLoading || !all} onClick={rollResultsHandler(dispatch, gameId, contestId)}>
                     Roll Player Results
                 </button>
             )}
