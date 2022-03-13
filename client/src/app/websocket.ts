@@ -35,7 +35,9 @@ export const subscribe = (dispatch: AppDispatch, topic: string, events: WebSocke
         const actionType = `${topic}/${name}Async`
         const eventType = `${topic}.${name}`
         socket.on(eventType, (result: unknown) => {
-            console.info(`${eventType} -> ${actionType}: ${JSON.stringify(result)}`)
+            if (process.env.NODE_ENV === 'development') {
+                console.info(`${eventType} -> ${actionType}: ${JSON.stringify(result)}`)
+            }
             dispatch(handler(result))
         })
     })
