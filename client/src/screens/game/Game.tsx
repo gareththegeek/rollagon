@@ -16,8 +16,9 @@ export const Game = () => {
     const navigate = useNavigate()
     const gameId = useSelector(selectGameId)
     const contestStatus = useSelector(selectContestStatus)
+    console.log(contestStatus)
     const isStrifePlayer = useSelector(selectIsStrifePlayer)
-    
+
     useEffect(() => {
         if (gameId !== undefined) {
             dispatch(getGameAsync(gameId!))

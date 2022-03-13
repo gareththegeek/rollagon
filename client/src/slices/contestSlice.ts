@@ -29,7 +29,9 @@ export const removeContestAsync = createAsyncThunk(
         const contest = selectCurrentContest(getState() as RootState)
         try {
             await dispatch(remove())
-            return await api.contests.remove(gameId, contestId)
+            await api.contests.remove(gameId, contestId)
+            const next = await api.contests.create(gameId)
+            await dispatch(add(next))
         } catch (e: any) {
             await dispatch(add(contest))
             return rejectWithValue(e?.response?.data?.message)
