@@ -114,9 +114,9 @@ export const addAsync = createAsyncThunk(
 export const updateAsync = createAsyncThunk(
     'contest/updateAsync',
     async ({ value }: ws.EventArgs<Contest>, { dispatch }) => {
-        dispatch(update(value))
         dispatch(contestant.setContestAsync(value))
         dispatch(strife.setContestAsync(value))
+        dispatch(update(value))
     }
 )
 
@@ -162,7 +162,7 @@ export const thunks = [
     rollContestResultAsync
 ]
 
-export const selectContestStatus = (state: RootState) => state.contest.current?.status ?? 'complete'
+export const selectContestStatus = (state: RootState) => state.contest.current?.status ?? 'new'
 export const selectCurrentContest = (state: RootState) => state.contest.current
 export const selectContestId = (state: RootState) => state.contest.current?.id
 
