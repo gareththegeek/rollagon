@@ -9,7 +9,6 @@ import { subscribeAsync as subscribeStrifeAsync } from './strifeSlice'
 import { Game } from '../api/games'
 
 export interface PlayerState {
-    status: 'loading' | 'idle'
     joined: boolean
     isStrife: boolean
     current: Player | undefined
@@ -17,7 +16,6 @@ export interface PlayerState {
 }
 
 const initialState: PlayerState = {
-    status: 'idle',
     joined: false,
     isStrife: false,
     current: undefined,
@@ -26,27 +24,34 @@ const initialState: PlayerState = {
 
 export const getPlayersAsync = createAsyncThunk(
     'player/getPlayers',
-    async (gameId: string, { dispatch }) => {
-        //TODO error handling / service layer? 
-        const players = await api.players.get(gameId)
-        dispatch(set(players))
-        return players
+    async (gameId: string, { dispatch, rejectWithValue }) => {
+        try {
+            const players = await api.players.get(gameId)
+            dispatch(set(players))
+            return players
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
 export const joinAsync = createAsyncThunk(
     'player/join',
-    async (gameId: string, { dispatch }) => {
-        await ws.join(gameId)
-        ws.subscribe(dispatch as AppDispatch, 'player', [
-            { name: 'add', handler: addAsync },
-            { name: 'update', handler: updateAsync },
-            { name: 'remove', handler: removeAsync }
-        ])
-        await dispatch(subscribeContestAsync())
-        await dispatch(subscribeContestantAsync())
-        await dispatch(subscribeStrifeAsync())
-        await dispatch(join())
+    async (gameId: string, { dispatch, rejectWithValue }) => {
+        try {
+            await ws.join(gameId)
+            ws.subscribe(dispatch as AppDispatch, 'player', [
+                { name: 'add', handler: addAsync },
+                { name: 'update', handler: updateAsync },
+                { name: 'remove', handler: removeAsync }
+            ])
+            await dispatch(subscribeContestAsync())
+            await dispatch(subscribeContestantAsync())
+            await dispatch(subscribeStrifeAsync())
+            await dispatch(join())
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
@@ -59,9 +64,13 @@ export const joinAsync = createAsyncThunk(
 
 export const joinStrifeAsync = createAsyncThunk(
     'player/joinStrife',
-    async (gameId: string, { dispatch }) => {
-        await dispatch(joinAsync(gameId))
-        await dispatch(joinStrife())
+    async (gameId: string, { dispatch, rejectWithValue }) => {
+        try {
+            await dispatch(joinAsync(gameId))
+            await dispatch(joinStrife())
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
@@ -74,13 +83,17 @@ export interface JoinHeroArgs {
 
 export const joinHeroAsync = createAsyncThunk(
     'player/joinHero',
-    async ({ gameId, player }: JoinHeroArgs, { dispatch }) => {
-        if (isNewPlayer(player)) {
-            player = await api.players.create(gameId, player)
+    async ({ gameId, player }: JoinHeroArgs, { dispatch, rejectWithValue }) => {
+        try {
+            if (isNewPlayer(player)) {
+                player = await api.players.create(gameId, player)
+            }
+            await dispatch(joinAsync(gameId))
+            await dispatch(joinHero(player))
+            return player
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
         }
-        await dispatch(joinAsync(gameId))
-        await dispatch(joinHero(player))
-        return player
     }
 )
 
@@ -148,22 +161,16 @@ export const playerSlice = createSlice({
             const idx = state.players.findIndex(x => x.id === payload.id)
             state.players.splice(idx, 1)
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(getPlayersAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(joinHeroAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(joinHeroAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
     }
 })
 
 export const { join, joinStrife, joinHero, set, add, update, remove } = playerSlice.actions
+export const thunks = [
+    getPlayersAsync,
+    joinAsync,
+    joinStrifeAsync,
+    joinHeroAsync
+]
 
 export const selectPlayer = (playerId: string) =>
     (state: RootState) => state.player.players.find(x => x.id === playerId)

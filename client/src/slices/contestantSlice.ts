@@ -12,15 +12,23 @@ export interface ContestantArgs extends ContestArgs {
 
 export const joinContestAsync = createAsyncThunk(
     'contestant/joinContest',
-    async ({ gameId, contestId, playerId }: ContestantArgs) => {
-        return await api.contestants.create(gameId, contestId, playerId)
+    async ({ gameId, contestId, playerId }: ContestantArgs, { rejectWithValue }) => {
+        try {
+            return await api.contestants.create(gameId, contestId, playerId)
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
 export const leaveContestAsync = createAsyncThunk(
     'contestant/leaveContest',
-    async ({ gameId, contestId, playerId }: ContestantArgs) => {
-        return await api.contestants.remove(gameId, contestId, playerId)
+    async ({ gameId, contestId, playerId }: ContestantArgs, { rejectWithValue }) => {
+        try {
+            return await api.contestants.remove(gameId, contestId, playerId)
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
@@ -31,14 +39,19 @@ export interface SetReadyArgs extends ContestArgs {
 
 export const setReadyAsync = createAsyncThunk(
     'contestant/setReady',
-    async ({ gameId, contestId, contestant, ready }: SetReadyArgs, { dispatch }) => {
-        const next = {
-            ...contestant,
-            timestamp: new Date().toISOString(),
-            ready
+    async ({ gameId, contestId, contestant, ready }: SetReadyArgs, { dispatch, rejectWithValue }) => {
+        try {
+            const next = {
+                ...contestant,
+                timestamp: new Date().toISOString(),
+                ready
+            }
+            await dispatch(update(next))
+            return await api.contestants.update(gameId, contestId, next)
+        } catch (e: any) {
+            await dispatch(update(contestant))
+            return rejectWithValue(e?.response?.data?.message)
         }
-        await dispatch(update(next))
-        return await api.contestants.update(gameId, contestId, next)
     }
 )
 
@@ -50,22 +63,27 @@ export interface DiceChangeArgs extends ContestArgs {
 
 export const diceChangeAsync = createAsyncThunk(
     'contestant/diceChange',
-    async ({ gameId, contestId, contestant, type, quantity }: DiceChangeArgs, { dispatch }) => {
-        const next: Contestant = {
-            ...contestant,
-            timestamp: new Date().toISOString(),
-            dicePool: {
-                ...contestant.dicePool,
-                dice: [
-                    ...contestant.dicePool.dice.filter(x => x.type !== type),
-                    ...(new Array(quantity).fill({
-                        type
-                    }))
-                ]
+    async ({ gameId, contestId, contestant, type, quantity }: DiceChangeArgs, { dispatch, rejectWithValue }) => {
+        try {
+            const next: Contestant = {
+                ...contestant,
+                timestamp: new Date().toISOString(),
+                dicePool: {
+                    ...contestant.dicePool,
+                    dice: [
+                        ...contestant.dicePool.dice.filter(x => x.type !== type),
+                        ...(new Array(quantity).fill({
+                            type
+                        }))
+                    ]
+                }
             }
+            await dispatch(update(next))
+            return await api.contestants.update(gameId, contestId, next)
+        } catch (e: any) {
+            await dispatch(update(contestant))
+            return rejectWithValue(e?.response?.data?.message)
         }
-        await dispatch(update(next))
-        return await api.contestants.update(gameId, contestId, next)
     }
 )
 
@@ -116,12 +134,10 @@ export const removeAsync = createAsyncThunk(
 )
 
 export interface ContestantState {
-    status: 'loading' | 'idle'
     contestants: Record<string, Contestant>
 }
 
 const initialState: ContestantState = {
-    status: 'idle',
     contestants: {}
 }
 
@@ -144,19 +160,16 @@ export const contestantSlice = createSlice({
         clear: (state) => {
             state.contestants = {}
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(joinContestAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(joinContestAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
     }
 })
 
 export const { set, add, remove, update, clear } = contestantSlice.actions
+export const thunks = [
+    joinContestAsync,
+    leaveContestAsync,
+    setReadyAsync,
+    diceChangeAsync
+]
 
 export const selectReadyContestantCount = (state: RootState) => {
     const contestants = Object.values(state.contestant.contestants)

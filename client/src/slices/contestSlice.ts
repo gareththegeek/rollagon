@@ -14,44 +14,68 @@ export interface ContestArgs {
 
 export const createContestAsync = createAsyncThunk(
     'contest/createContest',
-    async (gameId: string) => {
-        return await api.contests.create(gameId)
+    async (gameId: string, { rejectWithValue }) => {
+        try {
+            return await api.contests.create(gameId)
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
 export const removeContestAsync = createAsyncThunk(
     'contest/removeContest',
-    async ({ gameId, contestId }: ContestArgs, { dispatch }) => {
-        await dispatch(remove())
-        return await api.contests.remove(gameId, contestId)
+    async ({ gameId, contestId }: ContestArgs, { dispatch, getState, rejectWithValue }) => {
+        const contest = selectCurrentContest(getState() as RootState)
+        try {
+            await dispatch(remove())
+            return await api.contests.remove(gameId, contestId)
+        } catch (e: any) {
+            await dispatch(add(contest))
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
 export const closeContestAsync = createAsyncThunk(
     'contest/closeContest',
-    async ({ gameId, contestId }: ContestArgs, { dispatch }) => {
-        await dispatch(remove())
-        return await api.contests.remove(gameId, contestId)
+    async ({ gameId, contestId }: ContestArgs, { dispatch, getState, rejectWithValue }) => {
+        const contest = selectCurrentContest(getState() as RootState)
+        try {
+            await dispatch(remove())
+            return await api.contests.remove(gameId, contestId)
+        } catch (e: any) {
+            await dispatch(add(contest))
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
 export const rollTargetNumberAsync = createAsyncThunk(
     'contest/rollTargetNumber',
-    async ({ gameId, contestId }: ContestArgs) => {
-        return await api.contests.update(gameId, {
-            id: contestId,
-            status: 'targetSet'
-        })
+    async ({ gameId, contestId }: ContestArgs, { rejectWithValue }) => {
+        try {
+            return await api.contests.update(gameId, {
+                id: contestId,
+                status: 'targetSet'
+            })
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
 export const rollContestResultAsync = createAsyncThunk(
     'contest/rollContestResult',
-    async ({ gameId, contestId }: ContestArgs) => {
-        return await api.contests.update(gameId, {
-            id: contestId,
-            status: 'complete'
-        })
+    async ({ gameId, contestId }: ContestArgs, { rejectWithValue }) => {
+        try {
+            return await api.contests.update(gameId, {
+                id: contestId,
+                status: 'complete'
+            })
+        } catch (e: any) {
+            return rejectWithValue(e?.response?.data?.message)
+        }
     }
 )
 
@@ -74,7 +98,7 @@ export const setGameAsync = createAsyncThunk(
             dispatch(removeAsync())
             return
         }
-        dispatch(updateAsync({ value:sorted[0] }))
+        dispatch(updateAsync({ value: sorted[0] }))
     }
 )
 
@@ -106,12 +130,10 @@ export const removeAsync = createAsyncThunk(
 )
 
 export interface ContestState {
-    status: 'loading' | 'idle'
     current: Contest | undefined
 }
 
 const initialState: ContestState = {
-    status: 'idle',
     current: undefined
 }
 
@@ -128,28 +150,19 @@ export const contestSlice = createSlice({
         remove: (state) => {
             state.current = undefined
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(createContestAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(rollTargetNumberAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(createContestAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
-            .addCase(rollTargetNumberAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
     }
 })
 
 export const { add, remove, update } = contestSlice.actions
+export const thunks = [
+    createContestAsync,
+    removeContestAsync,
+    closeContestAsync,
+    rollTargetNumberAsync,
+    rollContestResultAsync
+]
 
 export const selectContestStatus = (state: RootState) => state.contest.current?.status ?? 'complete'
-export const selectContestStoreStatus = (state: RootState) => state.contest.status
 export const selectCurrentContest = (state: RootState) => state.contest.current
 export const selectContestId = (state: RootState) => state.contest.current?.id
 

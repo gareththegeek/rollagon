@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { Strife } from '../../api/strife'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
-import { rollTargetNumberAsync, selectContestId, selectContestStoreStatus } from '../../slices/contestSlice'
+import { rollTargetNumberAsync, selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
 import { StrifeLevelEditor } from './StifeLevelEditor'
@@ -14,6 +14,7 @@ import {
     harmTagsChangeAsync,
     selectCurrentStrife
 } from '../../slices/strifeSlice'
+import { selectIsLoading } from '../../slices/statusSlice'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -38,7 +39,7 @@ export const CreateContest = () => {
     const dispatch = useAppDispatch()
     const gameId = useSelector(selectGameId)
     const strife = useSelector(selectCurrentStrife)
-    const status = useSelector(selectContestStoreStatus)
+    const isLoading = useSelector(selectIsLoading)
     const contestId = useSelector(selectContestId)
 
     if (gameId === undefined || contestId === undefined || strife === undefined) {
@@ -66,7 +67,7 @@ export const CreateContest = () => {
                     <h3>Harm Tags</h3>
                     <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
                 </div>
-                <button disabled={status === 'loading'} onClick={rollContestHandler(dispatch, gameId, contestId)}>
+                <button disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
                     Roll the Contest
                 </button>
             </div>

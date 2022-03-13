@@ -3,6 +3,7 @@ import contestReducer from '../slices/contestSlice'
 import contestantReducer from '../slices/contestantSlice'
 import gameReducer from '../slices/gameSlice'
 import playerReducer from '../slices/playerSlice'
+import statusReducer from '../slices/statusSlice'
 import strifeReducer from '../slices/strifeSlice'
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     contestant: contestantReducer,
     game: gameReducer,
     player: playerReducer,
+    status: statusReducer,
     strife: strifeReducer
   }
 })

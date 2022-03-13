@@ -5,8 +5,10 @@ import { AppDispatch } from '../../app/store'
 import { createGameAsync } from '../../slices/gameSlice'
 
 const createGameClick = (dispatch: AppDispatch, navigate: NavigateFunction) => async () => {
-    const gameId = await dispatch(createGameAsync()).unwrap()
-    navigate(`/join/${gameId}`)
+    const result = await dispatch(createGameAsync())
+    if (result.meta.requestStatus === 'fulfilled') {
+        navigate(`/join/${result.payload}`)
+    }
 }
 
 export const Splash = () => {

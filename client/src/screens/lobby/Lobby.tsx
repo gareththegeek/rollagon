@@ -7,15 +7,21 @@ import { Players } from '../../components/players/Players'
 import { setGameId } from '../../slices/gameSlice'
 import { getPlayersAsync, joinHeroAsync, joinStrifeAsync } from '../../slices/playerSlice'
 
-const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) => () => {
-    dispatch(joinStrifeAsync(gameId))
-    navigate('/game')
-}
+const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) =>
+    async () => {
+        const result = await dispatch(joinStrifeAsync(gameId))
+        if (result.meta.requestStatus === 'fulfilled') {
+            navigate('/game')
+        }
+    }
 
-const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string, player: Player) => {
-    await dispatch(joinHeroAsync({ gameId, player }))
-    navigate('/game')
-}
+const joinHeroClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string, player: Player) =>
+    async () => {
+        const result = await dispatch(joinHeroAsync({ gameId, player }))
+        if (result.meta.requestStatus === 'fulfilled') {
+            navigate('/game')
+        }
+    }
 
 export const Lobby = () => {
     const dispatch = useAppDispatch()
@@ -31,7 +37,7 @@ export const Lobby = () => {
     return (
         <>
             <input value={text} onChange={(e) => setText(e.target.value)} />
-            <button onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>Join as new Hero</button>
+            <button onClick={joinHeroClick(dispatch, navigate, gameId!, { name: text })}>Join as new Hero</button>
             <button onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</button>
             <Players onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
         </>

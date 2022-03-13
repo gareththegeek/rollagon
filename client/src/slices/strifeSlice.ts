@@ -14,22 +14,27 @@ export interface StrifeDiceChangeArgs extends ContestArgs {
 
 export const strifeDiceChangeAsync = createAsyncThunk(
     'strife/strifeDiceChange',
-    async ({ gameId, contestId, strife, type, quantity }: StrifeDiceChangeArgs, { dispatch }) => {
-        const next: Strife = {
-            ...strife,
-            timestamp: new Date().toISOString(),
-            dicePool: {
-                ...strife.dicePool,
-                dice: [
-                    ...strife.dicePool.dice.filter(x => x.type !== type),
-                    ...(new Array(quantity).fill({
-                        type
-                    }))
-                ]
+    async ({ gameId, contestId, strife, type, quantity }: StrifeDiceChangeArgs, { dispatch, rejectWithValue }) => {
+        try {
+            const next: Strife = {
+                ...strife,
+                timestamp: new Date().toISOString(),
+                dicePool: {
+                    ...strife.dicePool,
+                    dice: [
+                        ...strife.dicePool.dice.filter(x => x.type !== type),
+                        ...(new Array(quantity).fill({
+                            type
+                        }))
+                    ]
+                }
             }
+            await dispatch(update(next))
+            return await api.strife.update(gameId, contestId, next)
+        } catch (e: any) {
+            dispatch(update(strife))
+            return rejectWithValue(e?.response?.data?.message)
         }
-        await dispatch(update(next))
-        return await api.strife.update(gameId, contestId, next)
     }
 )
 
@@ -40,14 +45,19 @@ export interface StrifeLevelChangeArgs extends ContestArgs {
 
 export const strifeLevelChangeAsync = createAsyncThunk(
     'strife/strifeLevelChange',
-    async ({ gameId, contestId, strife, strifeLevel }: StrifeLevelChangeArgs, { dispatch }) => {
-        const next: Strife = {
-            ...strife,
-            timestamp: new Date().toISOString(),
-            strifeLevel
+    async ({ gameId, contestId, strife, strifeLevel }: StrifeLevelChangeArgs, { dispatch, rejectWithValue }) => {
+        try {
+            const next: Strife = {
+                ...strife,
+                timestamp: new Date().toISOString(),
+                strifeLevel
+            }
+            await dispatch(update(next))
+            return await api.strife.update(gameId, contestId, next)
+        } catch (e: any) {
+            dispatch(update(strife))
+            return rejectWithValue(e?.response?.data?.message)
         }
-        await dispatch(update(next))
-        return await api.strife.update(gameId, contestId, next)
     }
 )
 
@@ -58,14 +68,19 @@ export interface HarmTagsChangeArgs extends ContestArgs {
 
 export const harmTagsChangeAsync = createAsyncThunk(
     'strife/harmTagsChange',
-    async ({ gameId, contestId, strife, harmTags }: HarmTagsChangeArgs, { dispatch }) => {
-        const next: Strife = {
-            ...strife,
-            timestamp: new Date().toISOString(),
-            harmTags
+    async ({ gameId, contestId, strife, harmTags }: HarmTagsChangeArgs, { dispatch, rejectWithValue }) => {
+        try {
+            const next: Strife = {
+                ...strife,
+                timestamp: new Date().toISOString(),
+                harmTags
+            }
+            await dispatch(update(next))
+            return await api.strife.update(gameId, contestId, next)
+        } catch (e: any) {
+            dispatch(update(strife))
+            return rejectWithValue(e?.response?.data?.message)
         }
-        await dispatch(update(next))
-        return await api.strife.update(gameId, contestId, next)
     }
 )
 
@@ -96,12 +111,10 @@ export const updateAsync = createAsyncThunk(
 )
 
 export interface StrifeState {
-    status: 'loading' | 'idle'
     strife: Strife | undefined
 }
 
 const initialState: StrifeState = {
-    status: 'idle',
     strife: undefined
 }
 
@@ -112,31 +125,15 @@ export const strifeSlice = createSlice({
         update: (state, { payload }) => {
             state.strife = payload
         }
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(strifeDiceChangeAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(harmTagsChangeAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(strifeLevelChangeAsync.pending, (state) => {
-                state.status = 'loading'
-            })
-            .addCase(strifeDiceChangeAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
-            .addCase(harmTagsChangeAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
-            .addCase(strifeLevelChangeAsync.fulfilled, (state) => {
-                state.status = 'idle'
-            })
     }
 })
 
 export const { update } = strifeSlice.actions
+export const thunks = [
+    strifeDiceChangeAsync,
+    strifeLevelChangeAsync,
+    harmTagsChangeAsync
+]
 
 export const selectCurrentStrife = (state: RootState) => state.strife.strife
 
