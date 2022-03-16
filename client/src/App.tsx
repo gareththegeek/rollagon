@@ -9,7 +9,7 @@ import { Splash } from './screens/splash/Splash'
 
 function App() {
     return (
-        <div className="App">
+        <div className="">
             <Header />
             <BrowserRouter>
                 <Routes>

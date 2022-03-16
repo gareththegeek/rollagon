@@ -17,10 +17,11 @@ export const Splash = () => {
     const [text, setText] = useState('')
 
     return (
-        <>
+        <div className="container max-w-screen-sm mx-auto text-center flex flex-col">
+            <h1 className="text-5xl">Paragon Dice Roller</h1>
             <button onClick={createGameClick(dispatch, navigate)}>Create Game</button>
             <input value={text} onChange={(e) => setText(e.target.value)} />
             <button onClick={() => navigate(`/join/${text}`)}>Join Game</button>
-        </>
+        </div>
     )
 }
