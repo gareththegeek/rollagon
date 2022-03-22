@@ -10,7 +10,7 @@ export interface DicePoolEditorProps {
 }
 
 export const DicePoolEditor = ({ dice, dicePool, enabled, onChange }: DicePoolEditorProps) => {
-    return <>
+    return <div className="flex">
         {dice.map(d =>
             <DiceEditor
                 key={`edit-dice-d${d}`}
@@ -19,5 +19,5 @@ export const DicePoolEditor = ({ dice, dicePool, enabled, onChange }: DicePoolEd
                 enabled={enabled}
                 onChange={(quantity: number) => onChange(`d${d}`, quantity)}
             />)}
-    </>
+    </div>
 }

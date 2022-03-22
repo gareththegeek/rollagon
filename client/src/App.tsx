@@ -9,16 +9,18 @@ import { Splash } from './screens/splash/Splash'
 
 function App() {
     return (
-        <div className="">
-            <Header />
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/about" element={<About />} />
-                    <Route path="/game" element={<Game />} />
-                    <Route path="/join/:gameId" element={<Lobby />} />
-                    <Route path="/" element={<Splash />} />
-                </Routes>
-            </BrowserRouter>
+        <div className="bg-stone-50 h-screen font-sans">
+            <div className="container max-w-screen-md mx-auto text-center flex flex-col">
+                <Header />
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/about" element={<About />} />
+                        <Route path="/game" element={<Game />} />
+                        <Route path="/join/:gameId" element={<Lobby />} />
+                        <Route path="/" element={<Splash />} />
+                    </Routes>
+                </BrowserRouter>
+            </div>
         </div>
     )
 }

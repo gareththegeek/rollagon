@@ -4,9 +4,17 @@ import { Contestant } from '../../api/contestants'
 import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
+import { Button } from '../../components/Button'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
+import { SmallButton } from '../../components/SmallButton'
 import { ToggleButton } from '../../components/ToggleButton'
-import { diceChangeAsync, joinContestAsync, leaveContestAsync, selectContestant, setReadyAsync } from '../../slices/contestantSlice'
+import {
+    diceChangeAsync,
+    joinContestAsync,
+    leaveContestAsync,
+    selectContestant,
+    setReadyAsync
+} from '../../slices/contestantSlice'
 import { selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
 import { selectPlayerId } from '../../slices/playerSlice'
@@ -49,11 +57,11 @@ export const EditContestant = ({ player }: EditContestantProps) => {
     if (contestant === undefined) {
         if (isCurrentPlayer) {
             return (
-                <div>
-                    <h3>{player.name}</h3>
-                    <button onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}>
+                <div className="mb-4">
+                    <h3 className="text-lg mb-2">{player.name}</h3>
+                    <Button highlight={true} onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}>
                         Join the Contest!
-                    </button>
+                    </Button>
                 </div>
             )
         } else {
@@ -62,21 +70,27 @@ export const EditContestant = ({ player }: EditContestantProps) => {
     }
 
     return (
-        <div>
-            <h3>{player.name}</h3>
-            <DicePoolEditor
-                enabled={isCurrentPlayer}
-                dicePool={contestant.dicePool}
-                dice={[4, 6, 8, 10, 12]}
-                onChange={editDiceHandler(dispatch, gameId, contestId, contestant)}
-            />
-            <div>|</div>
-            <ToggleButton
-                enabled={isCurrentPlayer}
-                label="Ready"
-                onChange={readyHandler(dispatch, gameId, contestId, contestant)}
-            />
-            { isCurrentPlayer && <button onClick={leaveContestHandler(dispatch, gameId, contestId, player.id!)}>Leave Contest</button>}
+        <div className="mb-4">
+            <h3 className="text-lg mb-2">{player.name}</h3>
+            <div className="flex">
+                <DicePoolEditor
+                    enabled={isCurrentPlayer}
+                    dicePool={contestant.dicePool}
+                    dice={[4, 6, 8, 10, 12]}
+                    onChange={editDiceHandler(dispatch, gameId, contestId, contestant)}
+                />
+                <ToggleButton
+                    enabled={isCurrentPlayer}
+                    toggled={contestant.ready}
+                    label="Ready"
+                    onChange={readyHandler(dispatch, gameId, contestId, contestant)}
+                />
+                {isCurrentPlayer && (
+                    <SmallButton onClick={leaveContestHandler(dispatch, gameId, contestId, player.id!)}>
+                        Leave
+                    </SmallButton>
+                )}
+            </div>
         </div>
     )
 }
