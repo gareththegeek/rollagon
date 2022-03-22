@@ -10,8 +10,8 @@ import { Splash } from './screens/splash/Splash'
 function App() {
     return (
         <div className="bg-stone-50 h-screen font-sans">
+            <Header />
             <div className="container max-w-screen-md mx-auto text-center flex flex-col">
-                <Header />
                 <BrowserRouter>
                     <Routes>
                         <Route path="/about" element={<About />} />
