@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
+import { Errors } from './components/header/Errors'
 import { Header } from './components/header/Header'
 import { About } from './screens/about/About'
 import { Game } from './screens/game/Game'
@@ -12,6 +13,7 @@ function App() {
         <div className="bg-stone-50 h-screen font-sans">
             <Header />
             <div className="container max-w-screen-md mx-auto text-center flex flex-col">
+                <Errors />
                 <BrowserRouter>
                     <Routes>
                         <Route path="/about" element={<About />} />

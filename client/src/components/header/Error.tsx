@@ -3,10 +3,9 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { dismissError } from '../../slices/statusSlice'
 
-const dismissHandler = (dispatch: AppDispatch, error: ErrorMessage) =>
-    () => {
-        dispatch(dismissError(error.timestamp))
-    }
+const dismissHandler = (dispatch: AppDispatch, error: ErrorMessage) => () => {
+    dispatch(dismissError(error.timestamp))
+}
 
 interface ErrorMessage {
     timestamp: string
@@ -19,12 +18,10 @@ export interface ErrorProps {
 
 export const Error = ({ error }: ErrorProps) => {
     const dispatch = useAppDispatch()
-    return <div>
-        <button onClick={dismissHandler(dispatch, error)}>Dismiss</button>
-        <span>{
-            Array.isArray(error.message)
-                ? error.message.join(', ')
-                : error.message}
-        </span>
-    </div>
+    return (
+        <div className="flex justify-between">
+            <div>{Array.isArray(error.message) ? error.message.join(', ') : error.message}</div>
+            <button onClick={dismissHandler(dispatch, error)} className="border-2 border-red-500 rounded px-2" title="Dismiss">X</button>
+        </div>
+    )
 }
