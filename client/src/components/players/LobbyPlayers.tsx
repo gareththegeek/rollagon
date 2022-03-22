@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux'
 import { Player } from '../../api/players'
-import { selectGameId } from '../../slices/gameSlice'
 import { selectPlayers } from '../../slices/playerSlice'
 import { Button } from '../Button'
 

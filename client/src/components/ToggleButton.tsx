@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { SmallButton } from './SmallButton'
 
 export interface ToggleButtonProps {
