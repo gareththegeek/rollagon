@@ -22,6 +22,7 @@ export const HarmTagsEditor = ({ onChange }: HarmTagsEditorProps) => {
                 key={`tag-editor-${value}`}
                 label={name}
                 enabled={true}
+                toggled={selectedTags.includes(value)}
                 onChange={(toggled: boolean) => {
                     let next = [...selectedTags]
                     if (toggled) {

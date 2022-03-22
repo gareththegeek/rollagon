@@ -1,23 +1,24 @@
 import React, { useState } from 'react'
+import { SmallButton } from './SmallButton'
 
 export interface ToggleButtonProps {
     label: string
     enabled: boolean
+    toggled: boolean
     onChange: (toggled: boolean) => void
 }
 
-export const ToggleButton = ({ label, enabled, onChange }: ToggleButtonProps) => {
-    const [toggled, setToggled] = useState(false)
+export const ToggleButton = ({ label, enabled, onChange, toggled }: ToggleButtonProps) => {
     return (
-        <button
+        <SmallButton
             disabled={!enabled}
+            selected={toggled}
             onClick={() => {
                 const next = !toggled
-                setToggled(next)
                 onChange(next)
             }}
         >
             {label}
-        </button>
+        </SmallButton>
     )
 }

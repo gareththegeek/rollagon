@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { NavigateFunction, useNavigate, useParams } from 'react-router-dom'
 import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
-import { Players } from '../../components/players/Players'
+import { Button } from '../../components/Button'
+import { H1 } from '../../components/H1'
+import { Input } from '../../components/Input'
+import { LobbyPlayers } from '../../components/players/LobbyPlayers'
 import { setGameId } from '../../slices/gameSlice'
 import { getPlayersAsync, joinHeroAsync, joinStrifeAsync } from '../../slices/playerSlice'
 
-const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) =>
-    async () => {
-        const result = await dispatch(joinStrifeAsync(gameId))
-        if (result.meta.requestStatus === 'fulfilled') {
-            navigate('/game')
-        }
+const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) => async () => {
+    const result = await dispatch(joinStrifeAsync(gameId))
+    if (result.meta.requestStatus === 'fulfilled') {
+        navigate('/game')
     }
+}
 
 const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string, player: Player) => {
     const result = await dispatch(joinHeroAsync({ gameId, player }))
@@ -35,10 +37,24 @@ export const Lobby = () => {
 
     return (
         <>
-            <input value={text} onChange={(e) => setText(e.target.value)} />
-            <button onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>Join as new Hero</button>
-            <button onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</button>
-            <Players onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
+            <H1>Lobby</H1>
+            <h3 className="mb-8 text">Are you the strife player or a hero player?</h3>
+            <div className="m-8">
+                <h2 className="mb-2 text-2xl">Strife player</h2>
+                <Button onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
+            </div>
+            <div className="m-8">
+                <h2 className="mb-2 text-2xl">Hero player</h2>
+                <Input
+                    value={text}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
+                    placeholder="Hero's name..."
+                />
+                <Button onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>
+                    Join as new Hero
+                </Button>
+                <LobbyPlayers onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
+            </div>
         </>
     )
 }

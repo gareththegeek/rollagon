@@ -7,6 +7,8 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { selectCurrentStrife } from '../../slices/strifeSlice'
+import { Box } from '../../components/Box'
+import { Button } from '../../components/Button'
 
 const abandonContestHandler = (dispatch: AppDispatch, gameId: string, contestId: string) => () => {
     dispatch(removeContestAsync({ gameId, contestId }))
@@ -31,18 +33,18 @@ export const Challenge = () => {
     const { harmTags } = strife
 
     return (
-        <div>
-            <div>
-                <h2>Challenge</h2>
-                <StrifeRoll strife={strife} />
-                <Tags tags={harmTags} />
+        <Box>
+            <div className="flex justify-between">
+                <h2 className="text-2xl mb-6">Challenge</h2>
                 {isStrifePlayer && status !== 'complete' && (
-                    <button onClick={abandonContestHandler(dispatch, gameId, contestId)}>Abandon Contest</button>
-                )}
-                {isStrifePlayer && status === 'complete' && (
-                    <button onClick={createContestHandler(dispatch, gameId)}>Create New Contest</button>
+                    <Button onClick={abandonContestHandler(dispatch, gameId, contestId)}>Abandon Contest</Button>
                 )}
             </div>
-        </div>
+            <StrifeRoll strife={strife} />
+            <Tags tags={harmTags} />
+            {isStrifePlayer && status === 'complete' && (
+                <Button onClick={createContestHandler(dispatch, gameId)}>Create New Contest</Button>
+            )}
+        </Box>
     )
 }

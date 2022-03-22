@@ -2,6 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
+import { Box } from '../../components/Box'
+import { Button } from '../../components/Button'
 import { selectReadyContestantCount } from '../../slices/contestantSlice'
 import { rollContestResultAsync, selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
@@ -28,17 +30,22 @@ export const EnterContest = () => {
     }
 
     return (
-        <div>
-            <h2>Enter the Contest</h2>
+        <Box>
+            <h2 className="text-3xl mb-6">Enter the Contest</h2>
             {players.map((playa) => (
                 <EditContestant key={`enter-contest-player-${playa.id}`} player={playa} />
             ))}
             <ReadySummary />
             {isStifePlayer && (
-                <button disabled={isLoading || !all} onClick={rollResultsHandler(dispatch, gameId, contestId)}>
+                <Button
+                    highlight={true}
+                    disabled={isLoading || !all}
+                    onClick={rollResultsHandler(dispatch, gameId, contestId)}
+                    className="mt-4"
+                >
                     Roll Player Results
-                </button>
+                </Button>
             )}
-        </div>
+        </Box>
     )
 }

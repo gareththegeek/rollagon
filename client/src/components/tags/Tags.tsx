@@ -10,5 +10,12 @@ export const Tags = ({ tags }: TagsProps) => {
     if (tags.length === 0) {
         return <></>
     }
-    return <><div>Tags:</div>{tags.map((tag, idx) => <Tag key={`tags-${idx}`} tag={tag} />)}</>
+    return (
+        <>
+            <h3 className="mt-8">Tags</h3>
+            {tags.map((tag, idx) => (
+                <Tag key={`tags-${idx}`} tag={tag} />
+            ))}
+        </>
+    )
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { SmallButton } from '../SmallButton'
 
 export interface DiceEditorProps {
     type: number
@@ -8,33 +9,36 @@ export interface DiceEditorProps {
 }
 
 export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProps) => {
+    const border = enabled ? 'border-y-2' : 'border-2 mr-4 rounded'
     return (
-        <div>
+        <>
             {enabled && (
-                <button
+                <SmallButton
                     disabled={quantity === 0}
+                    className="rounded-r-none mr-0"
                     onClick={() => {
                         const newQuantity = quantity - 1
                         onChange(newQuantity)
                     }}
                 >
                     -
-                </button>
+                </SmallButton>
             )}
-            <div>
+            <div className={`${border} py-1 px-2 ${quantity > 0 ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-stone-300'}`}>
                 {quantity}d{type}
             </div>
             {enabled && (
-                <button
+                <SmallButton
                     disabled={!enabled}
+                    className="rounded-l-none"
                     onClick={() => {
                         const newQuantity = quantity + 1
                         onChange(newQuantity)
                     }}
                 >
                     +
-                </button>
+                </SmallButton>
             )}
-        </div>
+        </>
     )
 }
