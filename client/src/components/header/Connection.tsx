@@ -1,9 +1,16 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router'
 import { selectIsConnected } from '../../slices/statusSlice'
 
 export const Connection = () => {
     const connected = useSelector(selectIsConnected)
+    const location = useLocation()
+    
+    if (location.pathname !== '/game') {
+        return <></>
+    }
+
     if (connected) {
         return <></>
     }
