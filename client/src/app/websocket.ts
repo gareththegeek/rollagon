@@ -15,6 +15,23 @@ if (origin.indexOf('http') >= 0) {
     origin = url.origin
 }
 const socket = io(origin)
+let interval: NodeJS.Timeout | undefined = undefined
+
+socket.on('connect', () => {
+    console.info('Websocket connected')
+    if (interval !== undefined) {
+        clearInterval(interval)
+        interval = undefined
+    }
+})
+
+socket.on('disconnect', () => {
+    console.warn('Lost websocket connection')
+    interval = setInterval(() => {
+        console.info('Attempting to reconnect')
+        socket.connect()
+    }, 2000)
+})
 
 export const join = (gameId: string) => {
     socket.emit('players.join', { gameId })
