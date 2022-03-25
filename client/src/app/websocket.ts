@@ -1,7 +1,6 @@
 import { AsyncThunk } from '@reduxjs/toolkit'
 import { io } from 'socket.io-client'
 import { API_FQDN } from '../api/constants'
-import { joinAsync } from '../slices/playerSlice'
 import { setConnected } from '../slices/statusSlice'
 import { AppDispatch, store } from './store'
 
