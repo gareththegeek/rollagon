@@ -128,8 +128,8 @@ export const updateAsync = createAsyncThunk(
 
 export const removeAsync = createAsyncThunk(
     'contestant/removeAsync',
-    async ({ value }: ws.EventArgs<Contestant>, { dispatch }) => {
-        dispatch(remove(value))
+    async ({ params }: ws.EventArgs<Contestant>, { dispatch }) => {
+        dispatch(remove(params))
     }
 )
 
