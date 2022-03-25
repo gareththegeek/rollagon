@@ -181,7 +181,6 @@ export const playerSlice = createSlice({
         },
         setConnections: (state, { payload }) => {
             state.connected = payload
-            console.log(state.connected)
         }
     }
 })
@@ -197,6 +196,7 @@ export const thunks = [
 export const selectPlayer = (playerId: string) =>
     (state: RootState) => state.player.players.find(x => x.id === playerId)
 export const selectPlayers = (state: RootState) => state.player.players
+export const selectConnections = (state: RootState) => state.player.connected
 export const selectIsStrifePlayer = (state: RootState) => state.player.isStrife
 export const selectPlayerId = (state: RootState) => state.player.current?.id
 
