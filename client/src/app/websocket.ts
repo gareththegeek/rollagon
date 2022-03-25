@@ -1,7 +1,8 @@
 import { AsyncThunk } from '@reduxjs/toolkit'
 import { io } from 'socket.io-client'
 import { API_FQDN } from '../api/constants'
-import { AppDispatch } from './store'
+import { setConnected } from '../slices/statusSlice'
+import { AppDispatch, store } from './store'
 
 export interface EventArgs<T> {
     params?: any | undefined
@@ -15,6 +16,25 @@ if (origin.indexOf('http') >= 0) {
     origin = url.origin
 }
 const socket = io(origin)
+let interval: NodeJS.Timeout | undefined = undefined
+
+socket.on('connect', () => {
+    console.info('Websocket connected')
+    if (interval !== undefined) {
+        clearInterval(interval)
+        interval = undefined
+    }
+    store.dispatch(setConnected(true))
+})
+
+socket.on('disconnect', () => {
+    store.dispatch(setConnected(false))
+    console.warn('Lost websocket connection')
+    interval = setInterval(() => {
+        console.info('Attempting to reconnect')
+        socket.connect()
+    }, 2000)
+})
 
 export const join = (gameId: string) => {
     socket.emit('players.join', { gameId })

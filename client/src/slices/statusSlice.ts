@@ -25,11 +25,13 @@ type Error = {
 
 export interface StatusState {
     loadingCount: number
+    connected: boolean
     errors: Error[]
 }
 
 const initialState: StatusState = {
     loadingCount: 0,
+    connected: false,
     errors: []
 }
 
@@ -49,6 +51,9 @@ export const statusSlice = createSlice({
                 timestamp: new Date().toISOString(),
                 message: payload
             })
+        },
+        setConnected: (state, { payload }) => {
+            state.connected = payload
         },
         dismissError: (state, { payload }) => {
             const idx = state.errors.findIndex(x => x.timestamp === payload)
@@ -70,14 +75,20 @@ const bindThunks = (builder: ActionReducerMapBuilder<StatusState>, thunks: Async
                 statusSlice.caseReducers.setSuccess(state)
             })
             .addCase(thunk.rejected, (state, action) => {
-                statusSlice.caseReducers.setError(state, action)
+                if (!state.connected) {
+                    statusSlice.caseReducers.setSuccess(state)
+                    return
+                }
+                const payload = action.payload ?? `I'm sorry, it looks like something is wrong.`
+                statusSlice.caseReducers.setError(state, { ...action, payload })
             })
     }
 }
 
-export const { setLoading, setSuccess, setError, dismissError } = statusSlice.actions
+export const { setLoading, setSuccess, setError, dismissError, setConnected } = statusSlice.actions
 
 export const selectIsLoading = (state: RootState) => state.status.loadingCount > 0
 export const selectErrors = (state: RootState) => state.status.errors
+export const selectIsConnected = (state: RootState) => state.status.connected
 
 export default statusSlice.reducer
