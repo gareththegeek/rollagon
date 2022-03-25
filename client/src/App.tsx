@@ -14,9 +14,9 @@ function App() {
         <div className="bg-stone-50 h-screen font-sans">
             <Header />
             <div className="container max-w-screen-md mx-auto text-center flex flex-col">
-                <Connection />
-                <Errors />
                 <BrowserRouter>
+                    <Connection />
+                    <Errors />
                     <Routes>
                         <Route path="/about" element={<About />} />
                         <Route path="/game" element={<Game />} />
