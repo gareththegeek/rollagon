@@ -1,7 +1,8 @@
 import { AsyncThunk } from '@reduxjs/toolkit'
 import { io } from 'socket.io-client'
 import { API_FQDN } from '../api/constants'
-import { AppDispatch } from './store'
+import { setConnected } from '../slices/statusSlice'
+import { AppDispatch, store } from './store'
 
 export interface EventArgs<T> {
     params?: any | undefined
@@ -23,9 +24,11 @@ socket.on('connect', () => {
         clearInterval(interval)
         interval = undefined
     }
+    store.dispatch(setConnected(true))
 })
 
 socket.on('disconnect', () => {
+    store.dispatch(setConnected(false))
     console.warn('Lost websocket connection')
     interval = setInterval(() => {
         console.info('Attempting to reconnect')
