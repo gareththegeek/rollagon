@@ -1,6 +1,7 @@
 import { AsyncThunk } from '@reduxjs/toolkit'
 import { io } from 'socket.io-client'
 import { API_FQDN } from '../api/constants'
+import { joinAsync } from '../slices/playerSlice'
 import { setConnected } from '../slices/statusSlice'
 import { AppDispatch, store } from './store'
 
@@ -21,6 +22,11 @@ let interval: NodeJS.Timeout | undefined = undefined
 socket.on('connect', () => {
     console.info('Websocket connected')
     if (interval !== undefined) {
+        const gameId = store.getState().game.gameId
+        const playerId = store.getState().player.current?.id ?? 'strife'
+        if (gameId !== undefined) {
+            join(gameId, playerId)
+        }
         clearInterval(interval)
         interval = undefined
     }
@@ -36,8 +42,8 @@ socket.on('disconnect', () => {
     }, 2000)
 })
 
-export const join = (gameId: string) => {
-    socket.emit('players.join', { gameId })
+export const join = (gameId: string, playerId: string) => {
+    socket.emit('players.join', { gameId, playerId })
 }
 
 export const leave = (gameId: string) => {

@@ -137,14 +137,51 @@ export const remove = async ({ gameId, playerId }: GetOneParams): Promise<Result
     }
 }
 
+const players: Record<string, string[]> = {}
+
 export const socketConnectionHandler = (socket: Socket) => {
-    socket.on('players.join', ({ gameId }: { gameId: string }) => {
+    let currentGameId: string | undefined = undefined
+    let currentPlayerId: string | undefined = undefined
+
+    socket.on('players.join', async ({ gameId, playerId }: { gameId: string, playerId: string }) => {
         console.info(`Player joining ${gameId}`)
-        socket.join(gameId)
+        await socket.join(gameId)
+
+        currentGameId = gameId
+        currentPlayerId = playerId
+
+        const list = players[gameId] ?? []
+        players[gameId] = [...list, playerId]
+        socket.emit('connections.update', { value: players[gameId] })
+        socket.to(gameId).emit('connections.update', { value: players[gameId] })
     })
+
+    const removePlayer = () => {
+        if (currentGameId === undefined) {
+            return
+        }
+        if (currentPlayerId === undefined) {
+            return
+        }
+
+        const list = players[currentGameId] ?? []
+        list.splice(list.indexOf(currentPlayerId), 1)
+        players[currentGameId] = [...list]
+        socket.to(currentGameId).emit('connections.update', { value: players[currentGameId] })
+
+        currentGameId = undefined
+        currentPlayerId = undefined
+    }
 
     socket.on('players.leave', ({ gameId }: { gameId: string }) => {
         console.info(`Player leaving ${gameId}`)
         socket.leave(gameId)
+
+        removePlayer()
+    })
+
+    socket.on('disconnect', () => {
+        console.info(`Player disconnected ${currentGameId}`)
+        removePlayer()
     })
 }

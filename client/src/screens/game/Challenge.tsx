@@ -43,7 +43,7 @@ export const Challenge = () => {
             <StrifeRoll strife={strife} />
             <Tags tags={harmTags} />
             {isStrifePlayer && status === 'complete' && (
-                <Button onClick={createContestHandler(dispatch, gameId)}>Create New Contest</Button>
+                <Button className="mt-8" onClick={createContestHandler(dispatch, gameId)}>Create New Contest</Button>
             )}
         </Box>
     )
