@@ -16,3 +16,18 @@ export const create = async (gameId: string, player: Player): Promise<Player> =>
     const response = await axios.post(`${API_FQDN}/api/games/${gameId}/players`, { ...player, timestamp })
     return response.data
 }
+
+const getAbsolute = (function () {
+    let a: HTMLAnchorElement | undefined = undefined
+
+    return (url: string) => {
+        if (a === undefined) {
+            a = document.createElement('a')
+        }
+        a.href = url
+
+        return a.href
+    };
+})();
+
+export const generateInviteLink = (gameId: string): string => getAbsolute(`/join/${gameId}`)

@@ -1,12 +1,37 @@
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { generateInviteLink } from '../../api/players'
 import { selectGameId } from '../../slices/gameSlice'
 import { selectConnections, selectPlayers } from '../../slices/playerSlice'
 import { Box } from '../Box'
+import { Button } from '../Button'
+
+const inviteLinkHandler =
+    (
+        gameId: string,
+        setOpacity: React.Dispatch<React.SetStateAction<boolean>>,
+        setTransition: React.Dispatch<React.SetStateAction<boolean>>
+    ) =>
+    () => {
+        const url = generateInviteLink(gameId)
+        navigator.clipboard.writeText(url)
+        setOpacity(true)
+        setTimeout(() => {
+            setTransition(true)
+            setOpacity(false)
+            setTimeout(() => {
+                setTransition(false)
+            }, 1000)
+        }, 0)
+    }
 
 export const Players = () => {
     const gameId = useSelector(selectGameId)
     const players = useSelector(selectPlayers)
     const connections = useSelector(selectConnections)
+
+    const [opacity, setOpacity] = useState(false)
+    const [transition, setTransition] = useState(false)
 
     const strifeConnected = connections.includes('strife')
     const strifeColour = strifeConnected ? 'bg-emerald-500' : 'bg-red-500'
@@ -15,9 +40,18 @@ export const Players = () => {
         <Box>
             <div className="flex justify-between">
                 <h2 className="text-lg">Players</h2>
-                <a className="underline" href={`/join/${gameId}`}>
-                    Invite Players with Link
-                </a>
+                <div className="relative">
+                    {gameId !== undefined && (
+                        <Button onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}>Copy Invite Link</Button>
+                    )}
+                    <div
+                        className={`${transition ? 'transition-opacity duration-1000' : ''} ${
+                            opacity ? 'opacity-1' : 'opacity-0'
+                        } absolute w-44 p-2 text-center`}
+                    >
+                        Copied to clipboard!
+                    </div>
+                </div>
             </div>
             <ul>
                 <li>
