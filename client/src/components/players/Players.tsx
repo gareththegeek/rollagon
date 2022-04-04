@@ -40,15 +40,17 @@ export const Players = () => {
         <Box>
             <div className="flex justify-between">
                 <h2 className="text-lg">Players</h2>
-                {gameId !== undefined && (
-                    <Button onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}>Copy Invite Link</Button>
-                )}
-                <div
-                    className={`${transition ? 'transition-opacity duration-1000' : ''} ${
-                        opacity ? 'opacity-1' : 'opacity-0'
-                    }`}
-                >
-                    Copied
+                <div className="relative">
+                    {gameId !== undefined && (
+                        <Button onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}>Copy Invite Link</Button>
+                    )}
+                    <div
+                        className={`${transition ? 'transition-opacity duration-1000' : ''} ${
+                            opacity ? 'opacity-1' : 'opacity-0'
+                        } absolute w-44 p-2 text-center`}
+                    >
+                        Copied to clipboard!
+                    </div>
                 </div>
             </div>
             <ul>
