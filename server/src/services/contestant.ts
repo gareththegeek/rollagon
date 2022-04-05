@@ -28,7 +28,10 @@ interface ContestantBody {
     dicePool: {
         dice: {
             type: DiceType
-        }[]
+        }[],
+        nameDie?: {
+            type: DiceType
+        } | undefined
     }
 }
 
@@ -148,7 +151,7 @@ export const update = async (params: GetOneParams, body: ContestantBody): Promis
             }))
         }
     }
-
+    
     const { gameId, contestId, playerId } = params
     const repo = getRepository(GAME_COLLECTION_NAME)
     const result = await repo.updateNested(

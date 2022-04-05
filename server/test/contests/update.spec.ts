@@ -1,5 +1,5 @@
 import { mockRepo, MockRepository } from '../mock/repo'
-import { mockGetRandom } from '../mock/getRandom'
+import { getRandom } from '../mock/getRandom'
 import { mockSocket, MockServer, MockRoom } from '../mock/socket'
 import { mockGameWithContests, mockGameWithContestsAndPlayers } from '../mock/game'
 import request from 'supertest'
@@ -9,7 +9,7 @@ import { removeOptional } from '../removeOptional'
 
 describe('PUT /api/games/:gameId/contests/:contestId', () => {
     let repo: MockRepository
-    let getRandom: jest.SpyInstance<number, []>
+    //let getRandom: jest.SpyInstance<number, []>
     let socket: MockServer
     let room: MockRoom
 
@@ -23,7 +23,7 @@ describe('PUT /api/games/:gameId/contests/:contestId', () => {
 
     beforeEach(() => {
         repo = mockRepo()
-        getRandom = mockGetRandom()
+        //getRandom = mockGetRandom()
         socket = mockSocket()
         room = { emit: jest.fn() }
         socket.to.mockReturnValue(room)
