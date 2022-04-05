@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../api'
-import { Contestant } from '../api/contestants'
+import { Contestant, DiceType } from '../api/contestants'
 import { Contest } from '../api/contests'
 import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
@@ -87,6 +87,27 @@ export const diceChangeAsync = createAsyncThunk(
     }
 )
 
+export interface SetNameDieArgs extends ContestArgs {
+    contestant: Contestant,
+    value: number
+}
+
+export const setNameDieAsync = createAsyncThunk(
+    'contestant/setNameDie',
+    async ({ gameId, contestId, contestant, value }: SetNameDieArgs, { dispatch, rejectWithValue }) => {
+        try {
+            const next = {
+                type: `d${value}` as DiceType
+            }
+            dispatch(rolling(true))
+            return await api.nameDie.update(gameId, contestId, contestant.playerId, next)
+        } catch (e: any) {
+            await dispatch(update(contestant))
+            return rejectWithValue(e?.response?.data?.message)
+        }
+    }
+)
+
 export const subscribeAsync = createAsyncThunk(
     'contestant/subscribe',
     async (_, { dispatch }) => {
@@ -94,6 +115,9 @@ export const subscribeAsync = createAsyncThunk(
             { name: 'add', handler: addAsync },
             { name: 'update', handler: updateAsync },
             { name: 'remove', handler: removeAsync }
+        ])
+        ws.subscribe(dispatch as AppDispatch, 'nameDie', [
+            { name: 'update', handler: nameDieAsync }
         ])
     }
 )
@@ -126,6 +150,17 @@ export const updateAsync = createAsyncThunk(
     }
 )
 
+export const nameDieAsync = createAsyncThunk(
+    'contestant/nameDieAsync',
+    async ({ value }: ws.EventArgs<Contestant>, { dispatch, getState }) => {
+        const existing = selectContestant(value.playerId)(getState() as RootState)
+        dispatch(rolling(false))
+        if (existing !== undefined) {
+            dispatch(update(value))
+        }
+    }
+)
+
 export const removeAsync = createAsyncThunk(
     'contestant/removeAsync',
     async ({ params }: ws.EventArgs<Contestant>, { dispatch }) => {
@@ -135,10 +170,12 @@ export const removeAsync = createAsyncThunk(
 
 export interface ContestantState {
     contestants: Record<string, Contestant>
+    rollingNameDie: boolean
 }
 
 const initialState: ContestantState = {
-    contestants: {}
+    contestants: {},
+    rollingNameDie: false
 }
 
 export const contestantSlice = createSlice({
@@ -159,16 +196,20 @@ export const contestantSlice = createSlice({
         },
         clear: (state) => {
             state.contestants = {}
+        },
+        rolling: (state, { payload }) => {
+            state.rollingNameDie = payload
         }
     }
 })
 
-export const { set, add, remove, update, clear } = contestantSlice.actions
+export const { set, add, remove, update, clear, rolling } = contestantSlice.actions
 export const thunks = [
     joinContestAsync,
     leaveContestAsync,
     setReadyAsync,
-    diceChangeAsync
+    diceChangeAsync,
+    setNameDieAsync
 ]
 
 export const selectReadyContestantCount = (state: RootState) => {
@@ -187,5 +228,6 @@ export const selectContestant = (playerId: string | undefined) => (state: RootSt
     playerId !== undefined
         ? state.contestant.contestants[playerId]
         : undefined
+export const selectRollingNameDie = (state: RootState) => state.contestant.rollingNameDie
 
 export default contestantSlice.reducer

@@ -15,7 +15,7 @@ export const getOneParamsSchema = Joi.object({
 export const updateSchema = diceSchema
 
 export const controllerConfig: ControllerConfig<Contestant> = {
-    topic: 'contestant',
+    topic: 'nameDie',
     service: service as unknown as Service<Contestant>,
     updateParamsSchema: getOneParamsSchema,
     updateSchema

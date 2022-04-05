@@ -12,6 +12,7 @@ export interface DicePool {
     rolled: boolean
     score: number | undefined
     dice: Dice[]
+    nameDie?: Dice | undefined
 }
 
 export interface Contestant {

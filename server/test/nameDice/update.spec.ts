@@ -120,7 +120,7 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId/n
             .expect(200)
             .expect(() => {
                 expect(socket.to).toHaveBeenCalledWith(gameId)
-                expect(room.emit).toHaveBeenCalledWith('contestant.update', { params: { gameId, contestId, playerId }, value: expected })
+                expect(room.emit).toHaveBeenCalledWith('nameDie.update', { params: { gameId, contestId, playerId }, value: expected })
             })
             .end(done)
     })

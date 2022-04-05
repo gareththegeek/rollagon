@@ -14,7 +14,7 @@ export const Roll = ({ label, value, dropped, className, colour, title }: RollPr
     const colourFinal = droppedDefined ? 'bg-stone-300' : colour
 
     return (
-        <div className={`text-center ${className}`}>
+        <div className={`text-center flex items-center flex-col ${className}`}>
             <div title={title}
                 className={`flex justify-center content-center flex-col rounded-3xl w-12 h-12 ${colourFinal}`}
             >
