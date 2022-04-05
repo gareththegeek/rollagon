@@ -3,7 +3,6 @@ import { Contestant, DiceType } from './Game'
 import { isError, Result } from './Result'
 import * as gameService from './games'
 import * as contestService from './contests'
-import { rollDie } from '../model/rollDie'
 
 const GAME_COLLECTION_NAME = process.env['GAME_COLLECTION_NAME'] ?? ''
 
@@ -152,11 +151,7 @@ export const update = async (params: GetOneParams, body: ContestantBody): Promis
             }))
         }
     }
-
-    if (body.dicePool.nameDie !== undefined) {
-        next.dicePool.nameDie = rollDie(body.dicePool.nameDie.type)
-    }
-
+    
     const { gameId, contestId, playerId } = params
     const repo = getRepository(GAME_COLLECTION_NAME)
     const result = await repo.updateNested(

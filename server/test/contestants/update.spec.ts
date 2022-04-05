@@ -6,12 +6,10 @@ import app from '../../src/server'
 import { removeOptional } from '../removeOptional'
 import { Contestant, DicePool } from '../../src/services/Game'
 import { mockContestant } from '../mock/contestant'
-import { mockGetRandom } from '../mock/getRandom'
 
 describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId', () => {
     let repo: MockRepository
     let socket: MockServer
-    let getRandom: jest.SpyInstance<number, []>
 
     const gameId = '1234567890ABCDEfghijk'
     const contestId = '123123123123123123123'
@@ -21,7 +19,6 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
 
     beforeEach(() => {
         repo = mockRepo()
-        getRandom = mockGetRandom()
         socket = mockSocket()
     })
 
@@ -207,38 +204,5 @@ describe('PUT /api/games/:gameId/contests/:contestId/contestants/:contestantId',
                 .expect(400, { message: 'Cannot set ready unless at least two dice (d6-d12) are included in the dice pool' })
                 .end(done)
         })
-    })
-
-    it('rolls the name dice if specified', (done) => {
-        const game = mockGameWithContestsAndPlayers(gameId, [contestId], [playerId])
-        const existing = mockContestant(playerId)
-        game.contests[contestId]!.contestants[playerId] = existing
-
-        const expected = buildContestantRecord(playerId)
-        const body = buildContestantBody(playerId)
-
-        const roll = 3
-        const d6max = 6
-        getRandom.mockReturnValue((roll - 1) / d6max)
-
-        body.dicePool!.nameDie = {
-            type: 'd6'
-        }
-        expected.dicePool.nameDie = {
-            type: 'd6',
-            roll
-        }
-
-        repo.getById.mockResolvedValue(game)
-        repo.updateNested.mockResolvedValue(true)
-
-        request(app)
-            .put(`/api/games/${encodeURI(gameId)}/contests/${encodeURI(contestId)}/contestants/${encodeURI(playerId)}`)
-            .send(body)
-            .expect(200, removeOptional(expected))
-            .expect(() => {
-                expect(repo.updateNested).toHaveBeenCalledWith(gameId, `contests.${contestId}.contestants.${playerId}`, expected)
-            })
-            .end(done)
     })
 })
