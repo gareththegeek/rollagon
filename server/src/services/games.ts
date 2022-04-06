@@ -34,7 +34,8 @@ export const add = async (): Promise<Result<Game>> => {
         id: generateId(),
         createdOn: getTimestamp(),
         contests: {},
-        players: {}
+        players: {},
+        notes: {}
     }
 
     const repo = getRepository(GAME_COLLECTION_NAME)
