@@ -39,6 +39,12 @@ export interface Contest {
     contestants: { [id: string]: Contestant }
 }
 
+export interface Note {
+    id: string
+    timestamp?: string | undefined
+    text: string
+}
+
 export interface Player {
     id: string
     timestamp?: string | undefined
@@ -50,4 +56,5 @@ export interface Game {
     createdOn: string
     contests: { [id: string]: Contest }
     players: { [id: string]: Player }
+    notes: { [id: string]: Note }
 }

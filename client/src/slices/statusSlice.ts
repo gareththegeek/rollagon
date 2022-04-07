@@ -3,6 +3,7 @@ import { RootState } from '../app/store'
 import * as contestant from './contestantSlice'
 import * as contest from './contestSlice'
 import * as game from './gameSlice'
+import * as note from './notesSlice'
 import * as player from './playerSlice'
 import * as strife from './strifeSlice'
 
@@ -14,6 +15,7 @@ const slices: Slice[] = [
     contestant,
     contest,
     game,
+    note,
     player,
     strife
 ]

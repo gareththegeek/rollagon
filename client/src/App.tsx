@@ -13,7 +13,7 @@ function App() {
     return (
         <div className="bg-stone-50 h-screen font-sans">
             <Header />
-            <div className="container max-w-screen-lg min-w-fit mx-auto text-center flex flex-col">
+            <div className="container max-w-screen-lg mx-auto text-center flex flex-col">
                 <BrowserRouter>
                     <Connection />
                     <Errors />

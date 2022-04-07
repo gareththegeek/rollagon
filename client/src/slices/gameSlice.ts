@@ -3,6 +3,7 @@ import api from '../api'
 import { Game } from '../api/games'
 import { RootState } from '../app/store'
 import * as contest from './contestSlice'
+import * as note from './notesSlice'
 import * as player from './playerSlice'
 
 export interface GameState {
@@ -35,6 +36,7 @@ export const getGameAsync = createAsyncThunk(
             const game = await api.games.get(gameId)
             dispatch(player.setGameAsync(game))
             dispatch(contest.setGameAsync(game))
+            dispatch(note.setGameAsync(game))
             dispatch(update({
                 ...game,
                 players: {},

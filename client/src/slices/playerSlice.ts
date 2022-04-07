@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from '../app/store'
 import * as ws from '../app/websocket'
 import { subscribeAsync as subscribeContestAsync } from './contestSlice'
 import { subscribeAsync as subscribeContestantAsync } from './contestantSlice'
+import { subscribeAsync as subscribeNoteAsync } from './notesSlice'
 import { subscribeAsync as subscribeStrifeAsync } from './strifeSlice'
 import { Game } from '../api/games'
 
@@ -54,6 +55,7 @@ export const joinAsync = createAsyncThunk(
             ws.subscribe(dispatch as AppDispatch, 'connections', [
                 { name: 'update', handler: updateConnectionsAsync }
             ])
+            await dispatch(subscribeNoteAsync())
             await dispatch(subscribeContestAsync())
             await dispatch(subscribeContestantAsync())
             await dispatch(subscribeStrifeAsync())
