@@ -9,6 +9,7 @@ import { Challenge } from './Challenge'
 import { EnterContest } from './EnterContest'
 import { CreateContest } from './CreateContest'
 import { ContestResult } from './ContestResult'
+import { Notes } from '../../components/notes/Notes'
 
 export const Game = () => {
     const dispatch = useAppDispatch()
@@ -34,6 +35,7 @@ export const Game = () => {
             {contestStatus !== 'new' && <Challenge />}
             {contestStatus === 'targetSet' && <EnterContest />}
             {contestStatus === 'complete' && <ContestResult />}
+            <Notes />
             <Players />
         </div>
     )

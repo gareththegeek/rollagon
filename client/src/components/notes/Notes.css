@@ -1,0 +1,24 @@
+.markdown > h1 {
+    font-size: 1.2rem;
+}
+
+.markdown > h2 {
+    font-size: 1.1rem;
+}
+
+.markdown > h3,h4,h5,h6 {
+    font-size: 1.05rem;
+}
+
+.markdown li {
+    list-style-type: square;
+    margin-left: 2rem;
+}
+
+.markdown blockquote {
+    border-left: 0.3rem solid rgb(16 185 129);
+    padding: 0.4rem 0.8rem;
+
+    width: 100%;
+    background-color: rgb(231 229 228);
+}

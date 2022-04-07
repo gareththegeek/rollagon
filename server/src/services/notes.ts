@@ -53,6 +53,7 @@ export const getMany = async ({ gameId }: GetManyParams): Promise<Result<Note[]>
 }
 
 export const add = async ({ gameId }: GetManyParams, { timestamp, text }: NoteBody): Promise<Result<Note>> => {
+    console.log(`add note ${gameId} ${text}`)
     const gameQuery = await gameService.getOne({ gameId })
     if (isError(gameQuery)) {
         return gameQuery

@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import contestReducer from '../slices/contestSlice'
 import contestantReducer from '../slices/contestantSlice'
 import gameReducer from '../slices/gameSlice'
+import noteReducer from '../slices/notesSlice'
 import playerReducer from '../slices/playerSlice'
 import statusReducer from '../slices/statusSlice'
 import strifeReducer from '../slices/strifeSlice'
@@ -11,6 +12,7 @@ export const store = configureStore({
     contest: contestReducer,
     contestant: contestantReducer,
     game: gameReducer,
+    note: noteReducer,
     player: playerReducer,
     status: statusReducer,
     strife: strifeReducer

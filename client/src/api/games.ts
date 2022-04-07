@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { API_FQDN } from './constants'
 import { Contest } from './contests'
+import { Note } from './notes'
 import { Player } from './players'
 
 export interface Game {
@@ -8,6 +9,7 @@ export interface Game {
     createdOn: string
     contests: { [id: string]: Contest }
     players: { [id: string]: Player }
+    notes: { [id: string]: Note }
 }
 
 export const create = async () => {
