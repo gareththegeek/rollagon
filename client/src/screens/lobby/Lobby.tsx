@@ -13,14 +13,14 @@ import { getPlayersAsync, joinHeroAsync, joinStrifeAsync } from '../../slices/pl
 const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) => async () => {
     const result = await dispatch(joinStrifeAsync(gameId))
     if (result.meta.requestStatus === 'fulfilled') {
-        navigate('/game')
+        navigate(`/game/${gameId}`)
     }
 }
 
 const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string, player: Player) => {
     const result = await dispatch(joinHeroAsync({ gameId, player }))
     if (result.meta.requestStatus === 'fulfilled') {
-        navigate('/game')
+        navigate(`/game/${gameId}`)
     }
 }
 

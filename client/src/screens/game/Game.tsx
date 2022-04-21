@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useAppDispatch } from '../../app/hooks'
 import { Players } from '../../components/players/Players'
 import { selectContestStatus } from '../../slices/contestSlice'
@@ -15,11 +15,14 @@ export const Game = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const gameId = useSelector(selectGameId)
+    const params = useParams()
     const contestStatus = useSelector(selectContestStatus)
 
     useEffect(() => {
         if (gameId !== undefined) {
             dispatch(getGameAsync(gameId!))
+        } else if (params.gameId !== undefined) {
+            navigate(`/join/${params.gameId}`)
         } else {
             navigate('/')
         }
