@@ -11,6 +11,7 @@ const app = express()
 
 const CORS_ORIGIN = process.env['CORS_ORIGIN'] ?? '*'
 app.use(cors({ origin: CORS_ORIGIN }))
+app.use(controllers.securityHeaders.handler)
 
 app.use(bodyParser.urlencoded({ extended: true,  }));
 app.use(express.json())
@@ -21,7 +22,6 @@ app.use('/api/*', nocache.middleware)
 routes(app)
 
 app.use(controllers.errors.handler)
-app.use(controllers.securityHeaders.handler)
 
 app.use(express.static('public'))
 app.get('*', function (_, response) {
