@@ -26,7 +26,7 @@ export const Game = () => {
         } else {
             navigate('/')
         }
-    }, [dispatch, navigate, gameId])
+    }, [dispatch, navigate, gameId, params.gameId])
 
     if (gameId === undefined) {
         return <></>
