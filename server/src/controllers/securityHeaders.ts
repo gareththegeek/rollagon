@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from 'express'
 
+const CORS_ORIGIN = process.env['CORS_ORIGIN'] ?? '*'
+
 export const handler = (
     _: Request,
     res: Response,
     next: NextFunction
 ) => {
+    res.setHeader('Access-Control-Allow-Origin', CORS_ORIGIN)
     res.setHeader(
         'Strict-Transport-Security',
         'max-age=31536000; includeSubDomains; preload'
