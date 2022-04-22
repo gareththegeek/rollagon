@@ -21,6 +21,7 @@ app.use('/api/*', nocache.middleware)
 routes(app)
 
 app.use(controllers.errors.handler)
+app.use(controllers.securityHeaders.handler)
 
 app.use(express.static('public'))
 app.get('*', function (_, response) {

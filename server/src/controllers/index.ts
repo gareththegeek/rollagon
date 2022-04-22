@@ -7,9 +7,11 @@ import { controllerConfig as notesConfig } from '../schema/notes'
 import { controllerConfig as playersConfig } from '../schema/player'
 import { controllerConfig as strifeConfig } from '../schema/strife'
 import * as errors from './errors'
+import * as securityHeaders from './securityHeaders'
 
 export default {
     errors,
+    securityHeaders,
     contestants: bind(contestantsConfig),
     contests: bind(contestsConfig),
     games: bind(gamesConfig),
