@@ -19,7 +19,7 @@ function App() {
                     <Errors />
                     <Routes>
                         <Route path="/about" element={<About />} />
-                        <Route path="/game" element={<Game />} />
+                        <Route path="/game/:gameId" element={<Game />} />
                         <Route path="/join/:gameId" element={<Lobby />} />
                         <Route path="/" element={<Splash />} />
                     </Routes>
