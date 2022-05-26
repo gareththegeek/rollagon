@@ -24,7 +24,7 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
                     -
                 </SmallButton>
             )}
-            <div className={`${border} py-1 px-2 ${quantity > 0 ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-stone-300'}`}>
+            <div className={`${border} py-1 px-2 ${quantity > 0 && 'bg-grey-300' }`}>
                 {quantity}d{type}
             </div>
             {enabled && (

@@ -2,10 +2,10 @@ import React from 'react'
 
 export const Button = ({ children, className, highlight, disabled, ...rest }: any) => {
     const style = disabled
-        ? 'border-stone-300 bg-stone-300'
+        ? 'border-grey-500 text-grey-500'
         : highlight
-            ? 'bg-orange-600 border-orange-600 hover:bg-orange-500 text-white'
-            : 'border-emerald-500 hover:bg-emerald-200'
+            ? 'bg-grey-300 hover:bg-grey-200'
+            : 'hover:bg-grey-300'
     return (
         <button
             disabled={disabled}

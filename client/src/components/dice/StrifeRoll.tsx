@@ -13,21 +13,21 @@ export const StrifeRoll = ({ strife }: StrifeRollProps) => {
             <Roll
                 value={strife.targetNumber!}
                 label="Target"
-                colour="bg-orange-500 text-white"
+                colour="bg-grey-300 border-black"
                 className="mr-16"
                 title="This is the target number to beat in this contest"
             />
             <Roll
                 value={strife.strifeLevel}
                 label="Strife"
-                colour="bg-stone-500 text-white"
+                colour="border-grey-300"
                 title="This dice contributed to the score"
             />
             <div className="m-3 text-xl">+</div>
             <Roll
                 value={best.roll!}
                 label={best.type}
-                colour="bg-stone-500 text-white"
+                colour="border-grey-300"
                 title="This dice contributed to the score"
             />
             <div className="ml-8 pr-8 border-l-2 border-stone-500"></div>

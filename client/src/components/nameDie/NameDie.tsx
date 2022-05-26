@@ -59,7 +59,7 @@ export const NameDie = ({ contestant }: NameDieProps) => {
                         <Roll
                             value={nameDie.roll!}
                             label="Name Die"
-                            colour="bg-orange-500 text-white"
+                            colour="bg-grey-300 border-black"
                             title="This is the tie breaking roll"
                             className="ml-4"
                         />

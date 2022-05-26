@@ -20,21 +20,21 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                 <Roll
                     value={contestant.dicePool.score!}
                     label="Result"
-                    colour="bg-orange-500 text-white"
+                    colour="bg-grey-300 border-black"
                     className="mr-16"
                     title="This was the result of your roll"
                 />
                 <Roll
                     value={best0.roll!}
                     label={best0.type}
-                    colour="bg-stone-500 text-white"
+                    colour="border-grey-300"
                     title="This dice contributed to the score"
                 />
                 <div className="m-3 text-xl">+</div>
                 <Roll
                     value={best1.roll!}
                     label={best1.type}
-                    colour="bg-stone-500 text-white"
+                    colour="border-grey-300"
                     title="This dice contributed to the score"
                 />
                 {hasD4 ? (
@@ -43,7 +43,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                         <Roll
                             value={d4!.roll!}
                             label="Bonus"
-                            colour="bg-stone-500 text-white"
+                            colour="border-grey-300"
                             title="This dice contributed to the score"
                         />
                     </>
