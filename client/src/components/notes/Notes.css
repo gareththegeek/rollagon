@@ -16,9 +16,9 @@
 }
 
 .markdown blockquote {
-    border-left: 0.3rem solid rgb(16 185 129);
+    border-left: 0.3rem solid rgb(2 100 105);
     padding: 0.4rem 0.8rem;
 
     width: 100%;
-    background-color: rgb(231 229 228);
+    background-color: rgb(245 247 247);
 }

@@ -3,10 +3,10 @@ import { Loading } from './Loading'
 
 export const Header = () => {
     return (
-        <div className="w-screen bg-emerald-700 h-12">
-            <div className="flex ml-16">
+        <div>
+            <div className="flex items-center">
                 <Loading />
-                <div className="text-3xl text-white leading-10 ml-2">Paragon Dice Roller</div>
+                <div className="text-4xl leading-10 ml-2 py-6">Paragon Dice Roller</div>
             </div>
         </div>
     )

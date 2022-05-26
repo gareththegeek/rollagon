@@ -11,9 +11,9 @@ import { Splash } from './screens/splash/Splash'
 
 function App() {
     return (
-        <div className="bg-stone-50 h-screen font-sans">
-            <Header />
+        <div className="bg-grey-100 h-screen font-sans">
             <div className="container max-w-screen-lg mx-auto text-center flex flex-col">
+                <Header />
                 <BrowserRouter>
                     <Connection />
                     <Errors />

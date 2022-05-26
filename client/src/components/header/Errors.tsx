@@ -11,7 +11,7 @@ export const Errors = () => {
     }
 
     return (
-        <ul className="w-100 bg-red-300 m-4 p-8 rounded">
+        <ul className="w-100 bg-grey-200 m-4 p-8 rounded">
             {errors.map((err) => (
                 <li key={`error-${err.timestamp}`}>
                     <Error error={err} />

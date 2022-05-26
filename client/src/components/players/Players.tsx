@@ -34,7 +34,7 @@ export const Players = () => {
     const [transition, setTransition] = useState(false)
 
     const strifeConnected = connections.includes('strife')
-    const strifeColour = strifeConnected ? 'bg-emerald-500' : 'bg-red-500'
+    const strifeColour = strifeConnected ? 'bg-grey-300' : 'bg-transparent'
 
     return (
         <Box>
@@ -55,14 +55,14 @@ export const Players = () => {
             </div>
             <ul>
                 <li>
-                    <div className={`${strifeColour} h-3 w-3 rounded-xl inline-block`} /> Strife Player
+                    <div className={`${strifeColour} h-4 w-4 rounded-xl border-2 inline-block`} /> Strife Player
                 </li>
                 {players.map((player) => {
                     const isConnected = connections.includes(player.id ?? '')
-                    const colour = isConnected ? 'bg-emerald-500' : 'bg-red-500'
+                    const colour = isConnected ? 'bg-grey-300' : 'bg-transparent'
                     return (
                         <li key={player.id}>
-                            <div className={`${colour} h-3 w-3 rounded-xl inline-block`} /> {player.name}
+                            <div className={`${colour} h-4 w-4 rounded-xl border-2 inline-block`} /> {player.name}
                         </li>
                     )
                 })}

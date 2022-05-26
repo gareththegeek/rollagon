@@ -21,7 +21,7 @@ export const Error = ({ error }: ErrorProps) => {
     return (
         <div className="flex justify-between">
             <div>{Array.isArray(error.message) ? error.message.join(', ') : error.message}</div>
-            <button onClick={dismissHandler(dispatch, error)} className="border-2 border-red-500 rounded px-2" title="Dismiss">X</button>
+            <button onClick={dismissHandler(dispatch, error)} className="border-2 rounded px-2" title="Dismiss">X</button>
         </div>
     )
 }
