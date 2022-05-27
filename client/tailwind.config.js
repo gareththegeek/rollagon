@@ -19,7 +19,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        'calluna': ['calluna', 'serif'],
+        'calluna': ['calluna'],
         'trajan': ['trajan-pro-3', 'serif']
       }
     },
