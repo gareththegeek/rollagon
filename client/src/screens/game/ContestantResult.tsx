@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
 import { Box } from '../../components/Box'
 import { HeroRoll } from '../../components/dice/HeroRoll'
+import { H4 } from '../../components/H4'
 import { selectPlayer } from '../../slices/playerSlice'
 
 export interface ContestantResultProps {
@@ -14,10 +15,10 @@ export const ContestantResult = ({ contestant }: ContestantResultProps) => {
 
     return (
         <Box>
-            <h2 className="text-2xl mb-4">
+            <H4>
                 {player!.name}&nbsp;
                 {contestant.prevail ? 'Prevails' : 'Suffers'}
-            </h2>
+            </H4>
 
             <HeroRoll contestant={contestant} />
         </Box>

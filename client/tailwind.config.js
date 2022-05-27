@@ -17,7 +17,12 @@ module.exports = {
         500: '#8eb2b2'
       }
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        'calluna': ['calluna', 'serif'],
+        'trajan': ['trajan-pro-3', 'serif']
+      }
+    },
   },
   plugins: [],
 }

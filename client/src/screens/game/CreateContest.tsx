@@ -18,6 +18,8 @@ import { selectIsLoading } from '../../slices/statusSlice'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { Box } from '../../components/Box'
 import { Button } from '../../components/Button'
+import { H3 } from '../../components/H3'
+import { H4 } from '../../components/H4'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -56,13 +58,13 @@ export const CreateContest = () => {
 
     return (
         <Box>
-            <h2 className="text-2xl mb-6">Create a Contest</h2>
+            <H3>Create a Contest</H3>
             <div className="my-6">
-                <h3 className="my-2">Strife Level</h3>
+                <H4 className="my-2">Strife Level</H4>
                 <StrifeLevelEditor current={strife.strifeLevel} onChange={strifeLevelChangeHandler(dispatch, gameId, contestId, strife)} />
             </div>
             <div className="my-6">
-                <h3 className="my-2">Dice Pool</h3>
+                <H4 className="my-2">Dice Pool</H4>
                 <DicePoolEditor
                     dice={[6, 8, 10, 12]}
                     dicePool={strife.dicePool}
@@ -71,7 +73,7 @@ export const CreateContest = () => {
                 />
             </div>
             <div className="my-6">
-                <h3 className="my-2">Harm Tags</h3>
+                <H4 className="my-2">Harm Tags</H4>
                 <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
             </div>
             <Button disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)} highlight={true}>

@@ -5,6 +5,7 @@ import { selectRollingNameDie } from '../../slices/contestantSlice'
 import { selectPlayerId } from '../../slices/playerSlice'
 import { Button } from '../Button'
 import { Roll } from '../dice/Roll'
+import { H3 } from '../H3'
 import { SmallButton } from '../SmallButton'
 import { NameDiceSelector } from './NameDiceSelector'
 
@@ -26,7 +27,7 @@ export const NameDie = ({ contestant }: NameDieProps) => {
         <div className="flex">
             {showDiceSelector ? (
                 <div>
-                    <h3>Select Name Die:</h3>
+                    <H3>Select Name Die:</H3>
                     <NameDiceSelector
                         contestant={contestant}
                         onClick={() => {

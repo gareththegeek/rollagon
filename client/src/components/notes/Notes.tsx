@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown'
 import { NoteFrame } from './NoteFrame'
 import './Notes.css'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
+import { H2 } from '../H2'
 
 const addNoteHandler =
     (
@@ -47,7 +48,7 @@ export const Notes = () => {
     return (
         <Box>
             <div className="flex justify-between">
-                <h2 className="text-lg">Notes</h2>
+                <H2 className="text-lg">Notes</H2>
                 {!edit && isStrifePlayer && (
                     <Button disabled={loading} onClick={() => setEdit(true)}>
                         Add Note
