@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Button } from '../../components/Button'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
+import { H4 } from '../../components/H4'
 import { SmallButton } from '../../components/SmallButton'
 import { ToggleButton } from '../../components/ToggleButton'
 import {
@@ -58,7 +59,7 @@ export const EditContestant = ({ player }: EditContestantProps) => {
         if (isCurrentPlayer) {
             return (
                 <div className="mb-4">
-                    <h3 className="text-lg mb-2">{player.name}</h3>
+                    <H4 className="mb-2">{player.name}</H4>
                     <Button highlight={true} onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}>
                         Join the Contest!
                     </Button>
@@ -71,7 +72,7 @@ export const EditContestant = ({ player }: EditContestantProps) => {
 
     return (
         <div className="mb-4">
-            <h3 className="text-lg mb-2">{player.name}</h3>
+            <H4 className="mb-2">{player.name}</H4>
             <div className="flex">
                 <DicePoolEditor
                     enabled={isCurrentPlayer}

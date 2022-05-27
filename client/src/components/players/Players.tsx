@@ -5,6 +5,7 @@ import { selectGameId } from '../../slices/gameSlice'
 import { selectConnections, selectPlayers } from '../../slices/playerSlice'
 import { Box } from '../Box'
 import { Button } from '../Button'
+import { H2 } from '../H2'
 
 const inviteLinkHandler =
     (
@@ -39,7 +40,7 @@ export const Players = () => {
     return (
         <Box>
             <div className="flex justify-between">
-                <h2 className="text-lg">Players</h2>
+                <H2 className="text-lg">Players</H2>
                 <div className="relative">
                     {gameId !== undefined && (
                         <Button onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}>Copy Invite Link</Button>

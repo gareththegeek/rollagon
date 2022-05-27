@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer base {
-    * {
+    html {
         @apply text-black;
         @apply border-black;
+        @apply font-calluna;
+        font-size: 16px;
+        line-height: 24px;
     }
 }

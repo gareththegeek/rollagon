@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Box } from '../../components/Box'
 import { Button } from '../../components/Button'
+import { H3 } from '../../components/H3'
 import { selectReadyContestantCount } from '../../slices/contestantSlice'
 import { rollContestResultAsync, selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
@@ -31,7 +32,7 @@ export const EnterContest = () => {
 
     return (
         <Box>
-            <h2 className="text-3xl mb-6">Enter the Contest</h2>
+            <H3>Enter the Contest</H3>
             {players.map((playa) => (
                 <EditContestant key={`enter-contest-player-${playa.id}`} player={playa} />
             ))}
