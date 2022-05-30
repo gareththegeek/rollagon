@@ -8,7 +8,7 @@ export const LobbyPlayers = ({ onClick }: { onClick?: (player: Player) => void }
 
     return <>
     <ul>
-        {players.map(player => <li key={player.id}><Button className="m-2" onClick={() => {
+        {players.map(player => <li key={player.id}><Button className="my-2" onClick={() => {
             if (onClick === undefined) {
                 return
             }
