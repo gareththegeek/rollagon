@@ -7,27 +7,7 @@
         @apply text-black;
         @apply border-black;
         @apply font-calluna;
-        font-size: 16px;
-        line-height: 24px;
-    }
-
-    .diamond {
-        width: 0;
-        height: 0;
-        border: 10px solid transparent;
-        border-bottom: 10px solid lime;
-        position: relative;
-        top: -10px;
-    }
-
-    .diamond:after {
-        content: "";
-        position: absolute;
-        left: -10px;
-        top: 10px;
-        width: 0;
-        height: 0;
-        border: 10px solid transparent;
-        border-top: 10px solid #05ed08;
+        font-size: 20px;
+        line-height: 30px;
     }
 }

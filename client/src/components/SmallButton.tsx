@@ -11,7 +11,7 @@ export const SmallButton = ({ children, className, selected, disabled, ...rest }
     //const text = selected ? 'text-white' : ''
 
     return (
-        <button disabled={disabled} {...rest} className={(className ?? '') + ` font-extrabold text-lg uppercase mr-2 py-1 px-2 rounded border-2 ${bg} ${border} ${!disabled && hover}`}>
+        <button disabled={disabled} {...rest} className={(className ?? '') + ` font-extrabold text-sm uppercase mr-2 py-1 px-2 rounded border-2 ${bg} ${border} ${!disabled && hover}`}>
             {children}
         </button>
     )

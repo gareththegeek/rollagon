@@ -1,4 +1,5 @@
 import React from 'react'
+import { H4 } from '../H4'
 
 export interface RollProps {
     label: string
@@ -18,9 +19,9 @@ export const Roll = ({ label, value, dropped, className, colour, title }: RollPr
             <div title={title}
                 className={`flex justify-center content-center flex-col rounded-3xl w-12 h-12 border-2 ${colourFinal}`}
             >
-                <div className={`font-trajan font-bold text-xl ${droppedDefined && 'text-grey-500'}`}>{value}</div>
+                <H4 className={`font-bold ${droppedDefined && 'text-grey-500'}`}>{value}</H4>
             </div>
-            <div className={`${colourFinal} font-bold uppercase bg-transparent`}>{label}</div>
+            <div className={`${colourFinal} font-bold font-xs uppercase bg-transparent`}>{label}</div>
         </div>
     )
 }

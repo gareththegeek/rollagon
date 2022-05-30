@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Button } from '../../components/Button'
 import { H1 } from '../../components/H1'
+import { H3 } from '../../components/H3'
 import { Input } from '../../components/Input'
 import { LobbyPlayers } from '../../components/players/LobbyPlayers'
 import { setGameId } from '../../slices/gameSlice'
@@ -40,11 +41,11 @@ export const Lobby = () => {
             <H1>Lobby</H1>
             <h3 className="mb-8 text">Are you the strife player or a hero player?</h3>
             <div className="m-8">
-                <h2 className="mb-2 text-2xl">Strife player</h2>
+                <H3>Strife player</H3>
                 <Button onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
             </div>
             <div className="m-8">
-                <h2 className="mb-2 text-2xl">Hero player</h2>
+                <H3 className="mb-2">Hero player</H3>
                 <Input
                     value={text}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}

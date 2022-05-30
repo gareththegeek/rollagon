@@ -36,7 +36,7 @@ export const Challenge = () => {
     return (
         <Box>
             <div className="flex justify-between">
-                <H3 className="text-2xl mb-6">Challenge</H3>
+                <H3 className="mb-6">Challenge</H3>
                 {isStrifePlayer && status !== 'complete' && (
                     <Button onClick={abandonContestHandler(dispatch, gameId, contestId)}>Abandon Contest</Button>
                 )}

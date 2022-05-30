@@ -48,7 +48,7 @@ export const Notes = () => {
     return (
         <Box>
             <div className="flex justify-between">
-                <H2 className="text-lg">Notes</H2>
+                <H2>Notes</H2>
                 {!edit && isStrifePlayer && (
                     <Button disabled={loading} onClick={() => setEdit(true)}>
                         Add Note

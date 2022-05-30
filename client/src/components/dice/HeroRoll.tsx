@@ -30,7 +30,6 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                     colour="border-grey-300"
                     title="This dice contributed to the score"
                 />
-                <div className="m-3 text-xl">+</div>
                 <Roll
                     value={best1.roll!}
                     label={best1.type}
@@ -39,7 +38,6 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                 />
                 {hasD4 ? (
                     <>
-                        <div className="m-3 text-xl">+</div>
                         <Roll
                             value={d4!.roll!}
                             label="Bonus"

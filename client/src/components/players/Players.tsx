@@ -40,7 +40,7 @@ export const Players = () => {
     return (
         <Box>
             <div className="flex justify-between">
-                <H2 className="text-lg">Players</H2>
+                <H2>Players</H2>
                 <div className="relative">
                     {gameId !== undefined && (
                         <Button onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}>Copy Invite Link</Button>

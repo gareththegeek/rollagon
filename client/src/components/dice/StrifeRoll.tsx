@@ -23,7 +23,6 @@ export const StrifeRoll = ({ strife }: StrifeRollProps) => {
                 colour="border-grey-300"
                 title="This dice contributed to the score"
             />
-            <div className="m-3 text-xl">+</div>
             <Roll
                 value={best.roll!}
                 label={best.type}
