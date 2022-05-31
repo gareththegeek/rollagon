@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { createContestAsync, removeContestAsync, selectContestId, selectContestStatus } from '../../slices/contestSlice'
+import { removeContestAsync, selectContestId, selectContestStatus } from '../../slices/contestSlice'
 import { Tags } from '../../components/tags/Tags'
 import { StrifeRoll } from '../../components/dice/StrifeRoll'
 import { selectGameId } from '../../slices/gameSlice'
@@ -7,16 +7,12 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { selectCurrentStrife } from '../../slices/strifeSlice'
-import { Box } from '../../components/Box'
 import { Button } from '../../components/Button'
+import { H2 } from '../../components/H2'
 import { H3 } from '../../components/H3'
 
 const abandonContestHandler = (dispatch: AppDispatch, gameId: string, contestId: string) => () => {
     dispatch(removeContestAsync({ gameId, contestId }))
-}
-
-const createContestHandler = (dispatch: AppDispatch, gameId: string) => () => {
-    dispatch(createContestAsync(gameId))
 }
 
 export const Challenge = () => {
@@ -34,18 +30,30 @@ export const Challenge = () => {
     const { harmTags } = strife
 
     return (
-        <Box>
-            <div className="flex justify-between">
-                <H3 className="mb-6">Challenge</H3>
-                {isStrifePlayer && status !== 'complete' && (
-                    <Button onClick={abandonContestHandler(dispatch, gameId, contestId)}>Abandon Contest</Button>
-                )}
+        <div className="mb-10">
+            <div>
+                <H2>
+                    <div className="flex place-content-between">
+                        {status === 'complete' 
+                            ? <span>Contest Results</span>
+                            : <span>Join the Contest</span>}
+                        {isStrifePlayer && status !== 'complete' && (
+                            <Button
+                                className="py-2"
+                                primary={false}
+                                onClick={abandonContestHandler(dispatch, gameId, contestId)}>
+                                    Close Contest
+                            </Button>
+                        )}
+                    </div>
+                </H2>
+                {status === 'complete' 
+                    ? <p className="mb-16">A record of how the Heroes fared in the Contest. Heroes should narrate their results in ascending order - the Strife player should respond with the Opponents reactions.</p>
+                    : <p className="mb-16">This is the challenge that the Heroes must strive to overcome.</p>}
             </div>
-            <StrifeRoll strife={strife} />
+            <H3 className="mb-8">The Challenge</H3>
+            <StrifeRoll className="mb-6" strife={strife} />
             <Tags tags={harmTags} />
-            {isStrifePlayer && status === 'complete' && (
-                <Button className="mt-8" onClick={createContestHandler(dispatch, gameId)}>Create New Contest</Button>
-            )}
-        </Box>
+        </div>
     )
 }

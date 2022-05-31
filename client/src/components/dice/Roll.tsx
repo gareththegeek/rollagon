@@ -15,13 +15,13 @@ export const Roll = ({ label, value, dropped, className, colour, title }: RollPr
     const colourFinal = droppedDefined ? 'text-grey-500 border-transparent' : colour
 
     return (
-        <div className={`text-center flex items-center flex-col ${className}`}>
+        <div className={`text-center flex items-center flex-col w-10 ${className}`}>
             <div title={title}
-                className={`flex justify-center content-center flex-col w-12 h-12 border-2 ${colourFinal}`}
+                className={`w-8 h-8 mb-2 border-2 rotate-45 ${colourFinal}`}
             >
-                <H4 className={`font-bold ${droppedDefined && 'text-grey-500'}`}>{value}</H4>
+                <H4 className={`font-bold ${droppedDefined && 'text-grey-500'} -rotate-45 mt-0.5`}>{value}</H4>
             </div>
-            <div className={`${colourFinal} font-bold font-xs uppercase bg-transparent`}>{label}</div>
+            <div className={`${colourFinal} font-bold text-xs uppercase bg-transparent`}>{label}</div>
         </div>
     )
 }

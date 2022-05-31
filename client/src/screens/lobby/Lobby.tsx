@@ -43,12 +43,12 @@ export const Lobby = () => {
             <div>
                 <H3>Strife player</H3>
                 <p className="pb-3">The Strife player challenges the Heroes with worthy Contests.</p>
-                <Button onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
+                <Button className="mb-6" onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
             </div>
             <div>
                 <H3 className="mb-2">Hero player</H3>
                 <p className="pb-3">Hero players contend against the Contests presented by the Strife player.</p>
-                <div className="flex">
+                <div className="flex mb-6">
                     <Input
                         className="flex-grow mr-6"
                         value={text}

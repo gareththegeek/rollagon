@@ -15,25 +15,27 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
     const d4sDropped = d4s.length > 1 ? d4s.slice(1) : []
 
     return (
-        <div className="flex justify-between">
+        <div className="flex pl-4 mb-10">
             <div className="flex">
                 <Roll
                     value={contestant.dicePool.score!}
                     label="Result"
                     colour="bg-grey-300 border-black"
-                    className="mr-16"
+                    className="mr-12"
                     title="This was the result of your roll"
                 />
                 <Roll
                     value={best0.roll!}
                     label={best0.type}
                     colour="border-grey-300"
+                    className="mr-3"
                     title="This dice contributed to the score"
                 />
                 <Roll
                     value={best1.roll!}
                     label={best1.type}
                     colour="border-grey-300"
+                    className="mr-3"
                     title="This dice contributed to the score"
                 />
                 {hasD4 ? (
@@ -42,6 +44,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                             value={d4!.roll!}
                             label="Bonus"
                             colour="border-grey-300"
+                            className="mr-3"
                             title="This dice contributed to the score"
                         />
                     </>

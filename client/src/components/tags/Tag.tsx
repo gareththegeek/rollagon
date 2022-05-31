@@ -1,22 +1,22 @@
 import React from 'react'
 import { HarmTagType } from '../../api/strife'
+import { Diamond } from '../Diamond'
 
 export interface TagProps {
     tag: HarmTagType
 }
 
-const HarmTagsDescription: Record<HarmTagType, string> = {
-    epic: 'Mark Pathos to enter a contest against an Epic foe',
-    mythic: 'Spend Divine Favour to enter a contest against a Mythic foe',
-    perilous: 'Mark Pathos if you suffer against a Perilous foe',
-    sacred: 'Spend Divine Favour if you suffer against a Sacred foe'
+const HarmTagsDescription: Record<HarmTagType, React.ReactElement> = {
+    epic: <>The Contest was&nbsp;<b>Epic</b>&nbsp;- Heroes who entered the contest marked Pathos</>,
+    mythic: <>The Contest was&nbsp;<b>Mythic</b>&nbsp;- Heroes who entered the contest spent Divine Favour</>,
+    perilous: <>The Contest was&nbsp;<b>Perilous</b>&nbsp;- Heroes who suffered marked Pathos</>,
+    sacred: <>The Contest was&nbsp;<b>Sacred</b>&nbsp;- Heroes who suffered spent Divine Favour</>
 }
 
 export const Tag = ({ tag }: TagProps) => {
     return (
-        <div className="my-4">
-            <span className="capitalize bg-grey-300 px-4 py-1 mr-2">{tag}</span>
-            <span>{HarmTagsDescription[tag]}</span>
-        </div>
+        <ul className="mb-4">
+            <li className="flex"><Diamond className="mr-6" width={15} height={15} />{HarmTagsDescription[tag]}</li>
+        </ul>
     )
 }

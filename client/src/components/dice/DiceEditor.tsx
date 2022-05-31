@@ -11,7 +11,7 @@ export interface DiceEditorProps {
 export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProps) => {
     const border = enabled ? 'border-y-2' : 'border-2 mr-4'
     return (
-        <>
+        <div className="my-4 flex">
             {enabled && (
                 <SmallButton
                     disabled={quantity === 0}
@@ -38,6 +38,6 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
                     +
                 </SmallButton>
             )}
-        </>
+        </div>
     )
 }

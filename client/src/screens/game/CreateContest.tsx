@@ -73,21 +73,31 @@ export const CreateContest = () => {
                 title="Build the Opponent's Dice Pool"
                 guidance="Add dice for the Opponent’s Name, Epithets, and any Bonus dice."
             >
-                <DicePoolEditor
-                    dice={[6, 8, 10, 12]}
-                    dicePool={strife.dicePool}
-                    enabled={true}
-                    onChange={diceChangeHandler(dispatch, gameId, contestId, strife)}
-                />
+                <div className="flex flex-row flex-wrap">
+                    <DicePoolEditor
+                        dice={[6, 8, 10, 12]}
+                        dicePool={strife.dicePool}
+                        enabled={true}
+                        onChange={diceChangeHandler(dispatch, gameId, contestId, strife)}
+                    />
+                </div>
             </FieldSet>
             <FieldSet
                 title="Choose Harm Tags"
                 guidance={
                     <ul>
-                        <li><b>Sacred</b> - Heroes spend Divine Favor if they suffer in the Contest.</li>
-                        <li><b>Perilous</b> - Heroes mark Pathos if they suffer in the Contest.</li>
-                        <li><b>Mythic</b> - Heroes spend Divine Favor to enter the Contest.</li>
-                        <li><b>Epic</b> - Heroes mark Pathos to enter the Contest."</li>
+                        <li>
+                            <b>Sacred</b> - Heroes spend Divine Favor if they suffer in the Contest.
+                        </li>
+                        <li>
+                            <b>Perilous</b> - Heroes mark Pathos if they suffer in the Contest.
+                        </li>
+                        <li>
+                            <b>Mythic</b> - Heroes spend Divine Favor to enter the Contest.
+                        </li>
+                        <li>
+                            <b>Epic</b> - Heroes mark Pathos to enter the Contest."
+                        </li>
                     </ul>
                 }
             >
