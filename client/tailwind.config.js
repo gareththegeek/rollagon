@@ -66,6 +66,7 @@ module.exports = {
       'normal': '0em'
     },
     lineHeight: {
+      'none': '1',
       'tight': '1.2',
       'normal': '1.5'
     },

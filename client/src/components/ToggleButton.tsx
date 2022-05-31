@@ -18,7 +18,7 @@ export const ToggleButton = ({ label, enabled, onChange, toggled }: ToggleButton
                 onChange(next)
             }}
         >
-            {label}
+            <input type='checkbox' checked={toggled} className="mr-2" /><span>{label}</span>
         </SmallButton>
     )
 }

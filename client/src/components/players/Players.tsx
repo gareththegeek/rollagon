@@ -56,14 +56,14 @@ export const Players = () => {
             </div>
             <ul>
                 <li>
-                    <div className={`${strifeColour} h-4 w-4 rounded-xl border-2 inline-block`} /> Strife Player
+                    <div className={`${strifeColour} h-4 w-4 border-2 inline-block`} /> Strife Player
                 </li>
                 {players.map((player) => {
                     const isConnected = connections.includes(player.id ?? '')
                     const colour = isConnected ? 'bg-grey-300' : 'bg-transparent'
                     return (
                         <li key={player.id}>
-                            <div className={`${colour} h-4 w-4 rounded-xl border-2 inline-block`} /> {player.name}
+                            <div className={`${colour} h-4 w-4 border-2 inline-block`} /> {player.name}
                         </li>
                     )
                 })}

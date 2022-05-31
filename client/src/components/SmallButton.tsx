@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const SmallButton = ({ children, className, selected, disabled, ...rest }: any) => {
+export const SmallButton = ({ children, collapseRight, className, selected, disabled, ...rest }: any) => {
     const bg = selected ? 'bg-grey-300' : ''
     const border = selected 
         ? ''
@@ -11,7 +11,7 @@ export const SmallButton = ({ children, className, selected, disabled, ...rest }
     //const text = selected ? 'text-white' : ''
 
     return (
-        <button disabled={disabled} {...rest} className={(className ?? '') + ` font-extrabold text-sm uppercase mr-2 py-1 px-2 rounded border-2 ${bg} ${border} ${!disabled && hover}`}>
+        <button disabled={disabled} {...rest} className={`${className ?? ''} ${collapseRight ? '' : 'mr-3'} font-extrabold leading-none text-sm uppercase py-2 px-5 border-2 ${bg} ${border} ${!disabled && hover}`}>
             {children}
         </button>
     )

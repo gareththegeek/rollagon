@@ -15,7 +15,7 @@ const HarmTagsDescription: Record<HarmTagType, string> = {
 export const Tag = ({ tag }: TagProps) => {
     return (
         <div className="my-4">
-            <span className="capitalize bg-grey-300 rounded px-4 py-1 mr-2">{tag}</span>
+            <span className="capitalize bg-grey-300 px-4 py-1 mr-2">{tag}</span>
             <span>{HarmTagsDescription[tag]}</span>
         </div>
     )

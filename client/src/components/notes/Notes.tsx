@@ -60,7 +60,7 @@ export const Notes = () => {
                     <textarea
                         rows={5}
                         value={text}
-                        className="w-full display-inline border-2 leading-7 rounded mr-2 px-1"
+                        className="w-full display-inline border-2 leading-7 mr-2 px-1"
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}
                         placeholder="Enter note here, in #markdown if you like..."
                     ></textarea>

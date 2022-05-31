@@ -17,7 +17,7 @@ export const Roll = ({ label, value, dropped, className, colour, title }: RollPr
     return (
         <div className={`text-center flex items-center flex-col ${className}`}>
             <div title={title}
-                className={`flex justify-center content-center flex-col rounded-3xl w-12 h-12 border-2 ${colourFinal}`}
+                className={`flex justify-center content-center flex-col w-12 h-12 border-2 ${colourFinal}`}
             >
                 <H4 className={`font-bold ${droppedDefined && 'text-grey-500'}`}>{value}</H4>
             </div>

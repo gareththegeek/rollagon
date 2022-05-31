@@ -8,7 +8,7 @@ export const Button = ({ children, className, disabled, ...rest }: any) => {
         <button
             disabled={disabled}
             {...rest}
-            className={`py-1 px-6 mb-6 ${className ?? ''} font-extrabold tracking-tight text-sm uppercase border-2 ${style}`}
+            className={`mb-6 ${className ?? ''} px-6 font-extrabold tracking-tight text-sm uppercase border-2 ${style}`}
         >
             {children}
         </button>
