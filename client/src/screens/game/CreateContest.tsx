@@ -16,7 +16,6 @@ import {
 } from '../../slices/strifeSlice'
 import { selectIsLoading } from '../../slices/statusSlice'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
-import { Box } from '../../components/Box'
 import { H2 } from '../../components/H2'
 import { FieldSet } from '../../components/FieldSet'
 import { BigButton } from '../../components/BigButton'
