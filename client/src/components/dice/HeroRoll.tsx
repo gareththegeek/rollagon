@@ -1,5 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
+import { selectRollingNameDie } from '../../slices/contestantSlice'
+import { selectPlayerId } from '../../slices/playerSlice'
 import { NameDie } from '../nameDie/NameDie'
 import { Roll } from './Roll'
 
@@ -14,9 +17,25 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
     const d4 = hasD4 ? d4s[0] : undefined
     const d4sDropped = d4s.length > 1 ? d4s.slice(1) : []
 
+    const rolling = useSelector(selectRollingNameDie)
+    const playerId = useSelector(selectPlayerId)
+    const isCurrentPlayer = playerId === contestant.playerId
+    const isCurrentPlayerRolling = isCurrentPlayer && rolling
+
+    const nameDie = contestant.dicePool.nameDie
+
     return (
-        <div className="flex pl-4 mb-10">
+        <div className={`flex flex-col pl-4 mb-10`}>
             <div className="flex">
+                {nameDie && !isCurrentPlayerRolling && (
+                    <Roll
+                        value={nameDie.roll!}
+                        label="Tie Breaker"
+                        colour="bg-grey-300 border-black"
+                        title="This is the tie breaking roll"
+                        className="mr-12"
+                    />
+                )}
                 <Roll
                     value={contestant.dicePool.score!}
                     label="Result"

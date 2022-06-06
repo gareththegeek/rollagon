@@ -21,7 +21,7 @@ export const Roll = ({ label, value, dropped, className, colour, title }: RollPr
             >
                 <H4 className={`font-bold ${droppedDefined && 'text-grey-500'} -rotate-45 mt-0.5`}>{value}</H4>
             </div>
-            <div className={`${colourFinal} font-bold text-xs uppercase bg-transparent`}>{label}</div>
+            <div className={`${colourFinal} font-bold text-xs uppercase bg-transparent leading-none mt-2`}>{label}</div>
         </div>
     )
 }

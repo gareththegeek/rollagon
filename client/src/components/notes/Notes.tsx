@@ -13,6 +13,7 @@ import { NoteFrame } from './NoteFrame'
 import './Notes.css'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { H2 } from '../H2'
+import { Placeholder } from '../Placeholder'
 
 const addNoteHandler =
     (
@@ -73,7 +74,7 @@ export const Notes = () => {
                 </NoteFrame>
             )}
             {!edit && notes.length === 0 ? (
-                <div>There are currently no notes..</div>
+                <Placeholder>There are currently no notes</Placeholder>
             ) : (
                 <div>
                     {notes.map((note) => (
