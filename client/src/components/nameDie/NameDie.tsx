@@ -5,7 +5,10 @@ import { selectRollingNameDie } from '../../slices/contestantSlice'
 import { selectPlayerId } from '../../slices/playerSlice'
 import { Button } from '../Button'
 import { Roll } from '../dice/Roll'
+import { FieldSet } from '../FieldSet'
 import { H3 } from '../H3'
+import { H4 } from '../H4'
+import { Placeholder } from '../Placeholder'
 import { SmallButton } from '../SmallButton'
 import { NameDiceSelector } from './NameDiceSelector'
 
@@ -18,16 +21,16 @@ export const NameDie = ({ contestant }: NameDieProps) => {
     const playerId = useSelector(selectPlayerId)
     const isCurrentPlayer = playerId === contestant.playerId
     const isCurrentPlayerRolling = isCurrentPlayer && rolling
-    
+
     const [showDiceSelector, setShowDiceSelector] = useState(false)
 
     const nameDie = contestant.dicePool.nameDie
 
     return (
-        <div className="flex">
+        <div className="flex mt-4">
             {showDiceSelector ? (
-                <div>
-                    <H3>Select Name Die:</H3>
+                <FieldSet title="Select Name Die"
+                    className='-ml-4 mb-0 mt-2'>
                     <NameDiceSelector
                         contestant={contestant}
                         onClick={() => {
@@ -42,10 +45,10 @@ export const NameDie = ({ contestant }: NameDieProps) => {
                     >
                         Cancel
                     </SmallButton>
-                </div>
+                </FieldSet>
             ) : (
                 <>
-                    {isCurrentPlayerRolling && <div className="animate-pulse anim">Rolling Name Die...</div>}
+                    {isCurrentPlayerRolling && <Placeholder className="animate-pulse anim">Rolling Name Die...</Placeholder>}
                     {isCurrentPlayer && !rolling && (
                         <Button
                             className="mt-2"
@@ -55,15 +58,6 @@ export const NameDie = ({ contestant }: NameDieProps) => {
                         >
                             {nameDie ? 'Roll Again' : 'Break Tie'}
                         </Button>
-                    )}
-                    {nameDie && !isCurrentPlayerRolling && (
-                        <Roll
-                            value={nameDie.roll!}
-                            label="Name Die"
-                            colour="bg-grey-300 border-black"
-                            title="This is the tie breaking roll"
-                            className="ml-4"
-                        />
                     )}
                 </>
             )}

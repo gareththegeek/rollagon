@@ -8,7 +8,7 @@ export interface StrifeLevelEditorProps {
 
 export const StrifeLevelEditor = ({ current, onChange }: StrifeLevelEditorProps) => {
     const levels = [
-        { name: 'None', value: 0 },
+        { name: '0', value: 0 },
         { name: '+4', value: 4 },
         { name: '+5', value: 5 },
         { name: '+6', value: 6 }

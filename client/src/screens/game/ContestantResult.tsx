@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
-import { Box } from '../../components/Box'
 import { HeroRoll } from '../../components/dice/HeroRoll'
 import { H4 } from '../../components/H4'
 import { selectPlayer } from '../../slices/playerSlice'
@@ -14,13 +13,13 @@ export const ContestantResult = ({ contestant }: ContestantResultProps) => {
     const player = useSelector(selectPlayer(contestant.playerId))
 
     return (
-        <Box>
-            <H4>
+        <>
+            <H4 className="border-0 border-t-2 pt-4">
                 {player!.name}&nbsp;
                 {contestant.prevail ? 'Prevails' : 'Suffers'}
             </H4>
 
             <HeroRoll contestant={contestant} />
-        </Box>
+        </>
     )
 }

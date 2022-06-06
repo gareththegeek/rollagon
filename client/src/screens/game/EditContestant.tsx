@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Button } from '../../components/Button'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
+import { FieldSet } from '../../components/FieldSet'
 import { H4 } from '../../components/H4'
 import { SmallButton } from '../../components/SmallButton'
 import { ToggleButton } from '../../components/ToggleButton'
@@ -58,12 +59,15 @@ export const EditContestant = ({ player }: EditContestantProps) => {
     if (contestant === undefined) {
         if (isCurrentPlayer) {
             return (
-                <div className="mb-4">
-                    <H4 className="mb-2">{player.name}</H4>
+                <FieldSet
+                    title={player.name}
+                    guidance="Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage."
+                    className="mb-4"
+                >
                     <Button highlight={true} onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}>
                         Join the Contest!
                     </Button>
-                </div>
+                </FieldSet>
             )
         } else {
             return <></>
@@ -71,9 +75,12 @@ export const EditContestant = ({ player }: EditContestantProps) => {
     }
 
     return (
-        <div className="mb-4">
-            <H4 className="mb-2">{player.name}</H4>
-            <div className="flex">
+        <FieldSet
+            title={player.name}
+            guidance={isCurrentPlayer ? "Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage." : undefined}
+            className="mb-4"
+        >
+            <div className="flex flex-row flex-wrap">
                 <DicePoolEditor
                     enabled={isCurrentPlayer}
                     dicePool={contestant.dicePool}
@@ -84,14 +91,18 @@ export const EditContestant = ({ player }: EditContestantProps) => {
                     enabled={isCurrentPlayer}
                     toggled={contestant.ready}
                     label="Ready"
+                    className="my-4"
                     onChange={readyHandler(dispatch, gameId, contestId, contestant)}
                 />
                 {isCurrentPlayer && (
-                    <SmallButton onClick={leaveContestHandler(dispatch, gameId, contestId, player.id!)}>
+                    <SmallButton
+                        className="my-4"
+                        onClick={leaveContestHandler(dispatch, gameId, contestId, player.id!)}
+                    >
                         Leave
                     </SmallButton>
                 )}
             </div>
-        </div>
+        </FieldSet>
     )
 }

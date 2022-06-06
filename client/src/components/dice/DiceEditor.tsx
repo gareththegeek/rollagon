@@ -9,13 +9,13 @@ export interface DiceEditorProps {
 }
 
 export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProps) => {
-    const border = enabled ? 'border-y-2' : 'border-2 mr-4 rounded'
+    const border = enabled ? 'border-y-2' : 'border-2 mr-4'
     return (
-        <>
+        <div className="my-4 flex">
             {enabled && (
                 <SmallButton
                     disabled={quantity === 0}
-                    className="rounded-r-none mr-0"
+                    collapseRight={true}
                     onClick={() => {
                         const newQuantity = quantity - 1
                         onChange(newQuantity)
@@ -30,7 +30,6 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
             {enabled && (
                 <SmallButton
                     disabled={!enabled}
-                    className="rounded-l-none"
                     onClick={() => {
                         const newQuantity = quantity + 1
                         onChange(newQuantity)
@@ -39,6 +38,6 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
                     +
                 </SmallButton>
             )}
-        </>
+        </div>
     )
 }

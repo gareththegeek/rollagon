@@ -17,9 +17,10 @@ import {
 import { selectIsLoading } from '../../slices/statusSlice'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { Box } from '../../components/Box'
-import { Button } from '../../components/Button'
-import { H3 } from '../../components/H3'
-import { H4 } from '../../components/H4'
+import { H2 } from '../../components/H2'
+import { FieldSet } from '../../components/FieldSet'
+import { BigButton } from '../../components/BigButton'
+import { Placeholder } from '../../components/Placeholder'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -53,32 +54,65 @@ export const CreateContest = () => {
     }
 
     if (!isStrifePlayer) {
-        return <Box className="text-center">Waiting for next Contest...</Box>
+        return (
+            <>
+                <H2>Between Contests</H2>
+                <p className="mb-16">You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can accomplish it without need for a Contest.</p>
+                <Placeholder>Waiting for the next Glorious Contest</Placeholder>
+            </>
+        )
     }
 
     return (
-        <Box>
-            <H3>Create a Contest</H3>
-            <div className="my-6">
-                <H4 className="my-2">Strife Level</H4>
-                <StrifeLevelEditor current={strife.strifeLevel} onChange={strifeLevelChangeHandler(dispatch, gameId, contestId, strife)} />
-            </div>
-            <div className="my-6">
-                <H4 className="my-2">Dice Pool</H4>
-                <DicePoolEditor
-                    dice={[6, 8, 10, 12]}
-                    dicePool={strife.dicePool}
-                    enabled={true}
-                    onChange={diceChangeHandler(dispatch, gameId, contestId, strife)}
+        <>
+            <H2>Create a Contest</H2>
+            <p className="pb-6">Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
+            <FieldSet
+                title="Set the Strife Level"
+                guidance="Adjust the strife level for permanent or temporary advantages or disadvantages."
+            >
+                <StrifeLevelEditor
+                    current={strife.strifeLevel}
+                    onChange={strifeLevelChangeHandler(dispatch, gameId, contestId, strife)}
                 />
-            </div>
-            <div className="my-6">
-                <H4 className="my-2">Harm Tags</H4>
+            </FieldSet>
+            <FieldSet
+                title="Build the Opponent's Dice Pool"
+                guidance="Add dice for the Opponent’s Name, Epithets, and any Bonus dice."
+            >
+                <div className="flex flex-row flex-wrap">
+                    <DicePoolEditor
+                        dice={[6, 8, 10, 12]}
+                        dicePool={strife.dicePool}
+                        enabled={true}
+                        onChange={diceChangeHandler(dispatch, gameId, contestId, strife)}
+                    />
+                </div>
+            </FieldSet>
+            <FieldSet
+                title="Choose Harm Tags"
+                guidance={
+                    <ul>
+                        <li>
+                            <b>Sacred</b> - Heroes spend Divine Favor if they suffer in the Contest.
+                        </li>
+                        <li>
+                            <b>Perilous</b> - Heroes mark Pathos if they suffer in the Contest.
+                        </li>
+                        <li>
+                            <b>Mythic</b> - Heroes spend Divine Favor to enter the Contest.
+                        </li>
+                        <li>
+                            <b>Epic</b> - Heroes mark Pathos to enter the Contest."
+                        </li>
+                    </ul>
+                }
+            >
                 <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
-            </div>
-            <Button disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)} highlight={true}>
+            </FieldSet>
+            <BigButton className="mt-10" disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
                 Roll the Contest
-            </Button>
-        </Box>
+            </BigButton>
+        </>
     )
 }

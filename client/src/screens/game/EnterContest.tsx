@@ -2,10 +2,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
-import { Box } from '../../components/Box'
-import { Button } from '../../components/Button'
+import { BigButton } from '../../components/BigButton'
 import { H3 } from '../../components/H3'
-import { selectReadyContestantCount } from '../../slices/contestantSlice'
+import { Placeholder } from '../../components/Placeholder'
+import { selectContestants, selectReadyContestantCount } from '../../slices/contestantSlice'
 import { rollContestResultAsync, selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
 import { selectIsStrifePlayer, selectPlayers } from '../../slices/playerSlice'
@@ -20,33 +20,36 @@ const rollResultsHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 export const EnterContest = () => {
     const dispatch = useAppDispatch()
     const isLoading = useSelector(selectIsLoading)
-    const isStifePlayer = useSelector(selectIsStrifePlayer)
+    const isStrifePlayer = useSelector(selectIsStrifePlayer)
     const gameId = useSelector(selectGameId)
     const contestId = useSelector(selectContestId)
     const players = useSelector(selectPlayers)
     const { all } = useSelector(selectReadyContestantCount)
+    const contestants = useSelector(selectContestants)
 
     if (gameId === undefined || contestId === undefined) {
         return <></>
     }
 
     return (
-        <Box>
-            <H3>Enter the Contest</H3>
+        <>
+            <H3>Who Will Join the Contest?</H3>
+            <p className="mb-6">Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
+            {contestants.length === 0 && isStrifePlayer
+                && <Placeholder className="mb-2">No one has joined</Placeholder>}
             {players.map((playa) => (
                 <EditContestant key={`enter-contest-player-${playa.id}`} player={playa} />
             ))}
-            <ReadySummary />
-            {isStifePlayer && (
-                <Button
-                    highlight={true}
+            {contestants.length > 0 && <ReadySummary />}
+            {isStrifePlayer && (
+                <BigButton
                     disabled={isLoading || !all}
                     onClick={rollResultsHandler(dispatch, gameId, contestId)}
-                    className="mt-4"
+                    className="mt-8"
                 >
-                    Roll Player Results
-                </Button>
+                    Roll the Contest Results
+                </BigButton>
             )}
-        </Box>
+        </>
     )
 }

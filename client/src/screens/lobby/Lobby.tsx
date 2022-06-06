@@ -4,7 +4,8 @@ import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Button } from '../../components/Button'
-import { H1 } from '../../components/H1'
+import { H2 } from '../../components/H2'
+import { H3 } from '../../components/H3'
 import { Input } from '../../components/Input'
 import { LobbyPlayers } from '../../components/players/LobbyPlayers'
 import { setGameId } from '../../slices/gameSlice'
@@ -37,24 +38,29 @@ export const Lobby = () => {
 
     return (
         <>
-            <H1>Lobby</H1>
-            <h3 className="mb-8 text">Are you the strife player or a hero player?</h3>
-            <div className="m-8">
-                <h2 className="mb-2 text-2xl">Strife player</h2>
-                <Button onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
+            <H2>Are you Strife or a Hero?</H2>
+            <p className="pb-6">Every game of AGON needs one Strife player and at least two Hero Players.</p>
+            <div>
+                <H3>Strife player</H3>
+                <p className="pb-3">The Strife player challenges the Heroes with worthy Contests.</p>
+                <Button className="mb-6" onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
             </div>
-            <div className="m-8">
-                <h2 className="mb-2 text-2xl">Hero player</h2>
-                <Input
-                    value={text}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-                    placeholder="Hero's name..."
-                />
-                <Button onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>
-                    Join as new Hero
-                </Button>
-                <LobbyPlayers onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
+            <div>
+                <H3 className="mb-2">Hero player</H3>
+                <p className="pb-3">Hero players contend against the Contests presented by the Strife player.</p>
+                <div className="flex mb-6">
+                    <Input
+                        className="flex-grow mr-6"
+                        value={text}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
+                        placeholder="Enter your Hero's Name"
+                    />
+                    <Button onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>
+                        Join as new Hero
+                    </Button>
+                </div>
             </div>
+            <LobbyPlayers onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
         </>
     )
 }

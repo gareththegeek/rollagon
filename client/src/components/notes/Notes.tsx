@@ -13,6 +13,7 @@ import { NoteFrame } from './NoteFrame'
 import './Notes.css'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { H2 } from '../H2'
+import { Placeholder } from '../Placeholder'
 
 const addNoteHandler =
     (
@@ -46,21 +47,23 @@ export const Notes = () => {
     }
 
     return (
-        <Box>
-            <div className="flex justify-between">
-                <H2 className="text-lg">Notes</H2>
-                {!edit && isStrifePlayer && (
-                    <Button disabled={loading} onClick={() => setEdit(true)}>
-                        Add Note
-                    </Button>
-                )}
-            </div>
+        <div className="my-16">
+            <H2>
+                <div className="flex place-content-between">
+                    <span>Notes</span>
+                    {!edit && isStrifePlayer && (
+                        <Button className="py-2" disabled={loading} onClick={() => setEdit(true)}>
+                            Add Note
+                        </Button>
+                    )}
+                </div>
+            </H2>
             {edit && (
                 <NoteFrame>
                     <textarea
                         rows={5}
                         value={text}
-                        className="w-full display-inline border-2 leading-7 rounded mr-2 px-1"
+                        className="w-full display-inline border-2 leading-7 mr-2 px-1"
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}
                         placeholder="Enter note here, in #markdown if you like..."
                     ></textarea>
@@ -71,21 +74,29 @@ export const Notes = () => {
                 </NoteFrame>
             )}
             {!edit && notes.length === 0 ? (
-                <div>There are currently no notes..</div>
+                <Placeholder>There are currently no notes</Placeholder>
             ) : (
                 <div>
                     {notes.map((note) => (
                         <NoteFrame className="flex justify-between">
                             <div>
-                                <ReactMarkdown className="markdown break-words" key={note.id}>{note.text}</ReactMarkdown>
+                                <ReactMarkdown className="markdown break-words" key={note.id}>
+                                    {note.text}
+                                </ReactMarkdown>
                             </div>
-                            {isStrifePlayer && <SmallButton onClick={deleteNoteHandler(dispatch, gameId, note.id)} className="h-9" title="Delete note">
-                                X
-                            </SmallButton>}
+                            {isStrifePlayer && (
+                                <SmallButton
+                                    onClick={deleteNoteHandler(dispatch, gameId, note.id)}
+                                    className="h-9"
+                                    title="Delete note"
+                                >
+                                    X
+                                </SmallButton>
+                            )}
                         </NoteFrame>
                     ))}
                 </div>
             )}
-        </Box>
+        </div>
     )
 }

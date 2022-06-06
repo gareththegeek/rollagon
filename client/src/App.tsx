@@ -11,8 +11,8 @@ import { Splash } from './screens/splash/Splash'
 
 function App() {
     return (
-        <div className="bg-grey-100 h-screen">
-            <div className="container max-w-screen-lg mx-auto text-center flex flex-col">
+        <div className="bg-grey-100 h-full min-h-screen">
+            <div className="container max-w-screen-md mx-auto flex flex-col">
                 <Header />
                 <BrowserRouter>
                     <Connection />

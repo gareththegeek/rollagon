@@ -33,7 +33,7 @@ export const Game = () => {
     }
     
     return (
-        <div>
+        <div className="flex flex-col">
             {contestStatus === 'new' && <CreateContest />}
             {contestStatus !== 'new' && <Challenge />}
             {contestStatus === 'targetSet' && <EnterContest />}
