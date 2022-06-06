@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { BigButton } from '../../components/BigButton'
 import { H3 } from '../../components/H3'
+import { Placeholder } from '../../components/Placeholder'
 import { selectContestants, selectReadyContestantCount } from '../../slices/contestantSlice'
 import { rollContestResultAsync, selectContestId } from '../../slices/contestSlice'
 import { selectGameId } from '../../slices/gameSlice'
@@ -33,9 +34,9 @@ export const EnterContest = () => {
     return (
         <>
             <H3>Who Will Join the Contest?</H3>
-            <p className="mb-3">Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
+            <p className="mb-6">Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
             {contestants.length === 0 && isStrifePlayer
-                && <div className="px-6 py-1 border-2 border-dashed border-grey font-calluna uppercase tracking-tight text-sm font-extrabold">No one has joined</div>}
+                && <Placeholder className="mb-2">No one has joined</Placeholder>}
             {players.map((playa) => (
                 <EditContestant key={`enter-contest-player-${playa.id}`} player={playa} />
             ))}

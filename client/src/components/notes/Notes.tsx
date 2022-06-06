@@ -46,15 +46,17 @@ export const Notes = () => {
     }
 
     return (
-        <Box>
-            <div className="flex justify-between">
-                <H2>Notes</H2>
-                {!edit && isStrifePlayer && (
-                    <Button disabled={loading} onClick={() => setEdit(true)}>
-                        Add Note
-                    </Button>
-                )}
-            </div>
+        <div className="my-16">
+            <H2>
+                <div className="flex place-content-between">
+                    <span>Notes</span>
+                    {!edit && isStrifePlayer && (
+                        <Button className="py-2" disabled={loading} onClick={() => setEdit(true)}>
+                            Add Note
+                        </Button>
+                    )}
+                </div>
+            </H2>
             {edit && (
                 <NoteFrame>
                     <textarea
@@ -77,15 +79,23 @@ export const Notes = () => {
                     {notes.map((note) => (
                         <NoteFrame className="flex justify-between">
                             <div>
-                                <ReactMarkdown className="markdown break-words" key={note.id}>{note.text}</ReactMarkdown>
+                                <ReactMarkdown className="markdown break-words" key={note.id}>
+                                    {note.text}
+                                </ReactMarkdown>
                             </div>
-                            {isStrifePlayer && <SmallButton onClick={deleteNoteHandler(dispatch, gameId, note.id)} className="h-9" title="Delete note">
-                                X
-                            </SmallButton>}
+                            {isStrifePlayer && (
+                                <SmallButton
+                                    onClick={deleteNoteHandler(dispatch, gameId, note.id)}
+                                    className="h-9"
+                                    title="Delete note"
+                                >
+                                    X
+                                </SmallButton>
+                            )}
                         </NoteFrame>
                     ))}
                 </div>
             )}
-        </Box>
+        </div>
     )
 }

@@ -20,6 +20,7 @@ import { Box } from '../../components/Box'
 import { H2 } from '../../components/H2'
 import { FieldSet } from '../../components/FieldSet'
 import { BigButton } from '../../components/BigButton'
+import { Placeholder } from '../../components/Placeholder'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -53,7 +54,13 @@ export const CreateContest = () => {
     }
 
     if (!isStrifePlayer) {
-        return <Box className="text-center">Waiting for next Contest...</Box>
+        return (
+            <>
+                <H2>Between Contests</H2>
+                <p className="mb-16">You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can accomplish it without need for a Contest.</p>
+                <Placeholder>Waiting for the next Glorious Contest</Placeholder>
+            </>
+        )
     }
 
     return (

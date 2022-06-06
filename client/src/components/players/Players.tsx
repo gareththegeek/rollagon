@@ -38,22 +38,26 @@ export const Players = () => {
     const strifeColour = strifeConnected ? 'bg-grey-300' : 'bg-transparent'
 
     return (
-        <Box>
-            <div className="flex justify-between">
-                <H2>Players</H2>
-                <div className="relative">
-                    {gameId !== undefined && (
-                        <Button onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}>Copy Invite Link</Button>
-                    )}
-                    <div
-                        className={`${transition ? 'transition-opacity duration-1000' : ''} ${
-                            opacity ? 'opacity-1' : 'opacity-0'
-                        } absolute w-44 p-2 text-center`}
-                    >
-                        Copied to clipboard!
+        <div className="mb-72">
+            <H2>
+                <div className="flex place-content-between">
+                    <span>Players</span>
+                    <div className="relative">
+                        {gameId !== undefined && (
+                            <Button className="py-2" onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}>
+                                Copy Invite Link
+                            </Button>
+                        )}
+                        <div
+                            className={`${transition ? 'transition-opacity duration-1000' : ''} ${
+                                opacity ? 'opacity-1' : 'opacity-0'
+                            } absolute p-2 text-center text-base`}
+                        >
+                            Copied to clipboard!
+                        </div>
                     </div>
                 </div>
-            </div>
+            </H2>
             <ul>
                 <li>
                     <div className={`${strifeColour} h-4 w-4 border-2 inline-block`} /> Strife Player
@@ -68,6 +72,6 @@ export const Players = () => {
                     )
                 })}
             </ul>
-        </Box>
+        </div>
     )
 }
