@@ -7,7 +7,6 @@ import { AppDispatch } from '../../app/store'
 import { Button } from '../../components/Button'
 import { DicePoolEditor } from '../../components/dice/DicePoolEditor'
 import { FieldSet } from '../../components/FieldSet'
-import { H4 } from '../../components/H4'
 import { SmallButton } from '../../components/SmallButton'
 import { ToggleButton } from '../../components/ToggleButton'
 import {

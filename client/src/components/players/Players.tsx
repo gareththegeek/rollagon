@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { generateInviteLink } from '../../api/players'
 import { selectGameId } from '../../slices/gameSlice'
 import { selectConnections, selectPlayers } from '../../slices/playerSlice'
-import { Box } from '../Box'
 import { Button } from '../Button'
 import { H2 } from '../H2'
 
