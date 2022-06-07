@@ -10,6 +10,7 @@ import { EnterContest } from './EnterContest'
 import { CreateContest } from './CreateContest'
 import { ContestResult } from './ContestResult'
 import { Notes } from '../../components/notes/Notes'
+import { Header } from '../../components/header/Header'
 
 export const Game = () => {
     const dispatch = useAppDispatch()
@@ -31,15 +32,16 @@ export const Game = () => {
     if (gameId === undefined) {
         return <></>
     }
-    
+
     return (
-        <div className="flex flex-col">
-            {contestStatus === 'new' && <CreateContest />}
-            {contestStatus !== 'new' && <Challenge />}
-            {contestStatus === 'targetSet' && <EnterContest />}
-            {contestStatus === 'complete' && <ContestResult />}
-            <Notes />
-            <Players />
+        <div className="flex items-stretch container max-w-screen-xl mx-auto">
+            <Header />
+            <div className="container py-16">
+                {contestStatus === 'new' && <CreateContest />}
+                {contestStatus !== 'new' && <Challenge />}
+                {contestStatus === 'targetSet' && <EnterContest />}
+                {contestStatus === 'complete' && <ContestResult />}
+            </div>
         </div>
     )
 }
