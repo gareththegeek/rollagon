@@ -7,7 +7,6 @@ import { Players } from '../players/Players'
 import { useSelector } from 'react-redux'
 import {
     selectGameId,
-    selectIsAboutTab,
     selectIsContestsTab,
     selectIsNotesTab,
     setTab,
