@@ -46,7 +46,7 @@ export const Header = () => {
 
     const isContestsTab = useSelector(selectIsContestsTab)
     const isNotesTab = useSelector(selectIsNotesTab)
-    const isAboutTab = useSelector(selectIsAboutTab)
+    //const isAboutTab = useSelector(selectIsAboutTab)
 
     const [opacity, setOpacity] = useState(false)
     const [transition, setTransition] = useState(false)
