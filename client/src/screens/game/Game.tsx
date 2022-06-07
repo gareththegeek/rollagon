@@ -19,7 +19,6 @@ export const Game = () => {
     const params = useParams()
     const contestStatus = useSelector(selectContestStatus)
     const tab = useSelector(selectTab)
-    console.log(tab)
 
     useEffect(() => {
         if (gameId !== undefined) {
