@@ -14,7 +14,7 @@ export const handler = (
     )
     res.setHeader(
         'Content-Security-Policy',
-        "default-src 'self'; connect-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self' https://use.typekit.net/ https://p.typekit.net/; frame-src 'self';"
+        "default-src 'self'; connect-src 'self'; font-src 'self' https://use.typekit.net/; img-src 'self'; script-src 'self'; style-src 'self' https://use.typekit.net/ https://p.typekit.net/; frame-src 'self';"
     )
     res.setHeader(
         'Permissions-Policy',
