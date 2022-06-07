@@ -91,7 +91,8 @@ export const Header = () => {
                     )}
                 </div>
                 <Players />
-                <div className="flex w-full mt-5">
+                {/* TODO Implement About Page */}
+                {/* <div className="flex w-full mt-5">
                     <Divider />
                 </div>
                 <SmallButton
@@ -100,7 +101,7 @@ export const Header = () => {
                     onClick={setTabHandler(dispatch, TabType.About)}
                 >
                     About This App
-                </SmallButton>
+                </SmallButton> */}
             </div>
         </div>
     )
