@@ -6,14 +6,22 @@ import * as contest from './contestSlice'
 import * as note from './notesSlice'
 import * as player from './playerSlice'
 
+export enum TabType {
+    Contests = 'contests',
+    Notes = 'notes',
+    About = 'about'
+}
+
 export interface GameState {
     gameId: string | undefined
-    current: Game | undefined
+    current: Game | undefined,
+    tab: TabType
 }
 
 const initialState: GameState = {
     gameId: undefined,
-    current: undefined
+    current: undefined,
+    tab: TabType.Contests
 }
 
 export const createGameAsync = createAsyncThunk(
@@ -65,11 +73,14 @@ export const gameSlice = createSlice({
         },
         update: (state, { payload }) => {
             state.current = payload
+        },
+        setTab: (state, { payload }) => {
+            state.tab = payload
         }
     }
 })
 
-export const { setGameId, update } = gameSlice.actions
+export const { setGameId, update, setTab } = gameSlice.actions
 export const thunks = [
     createGameAsync,
     getGameAsync
@@ -77,5 +88,9 @@ export const thunks = [
 
 export const selectGameId = (state: RootState) => state.game.gameId
 export const selectGame = (state: RootState) => state.game.current
+export const selectTab = (state: RootState) => state.game.tab
+export const selectIsContestsTab = (state: RootState) => state.game.tab === TabType.Contests
+export const selectIsNotesTab = (state: RootState) => state.game.tab === TabType.Notes
+export const selectIsAboutTab = (state: RootState) => state.game.tab === TabType.About
 
 export default gameSlice.reducer

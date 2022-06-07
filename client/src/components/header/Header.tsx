@@ -5,8 +5,17 @@ import { Loading } from './Loading'
 import { Divider } from '../Divider'
 import { Players } from '../players/Players'
 import { useSelector } from 'react-redux'
-import { selectGameId } from '../../slices/gameSlice'
+import {
+    selectGameId,
+    selectIsAboutTab,
+    selectIsContestsTab,
+    selectIsNotesTab,
+    setTab,
+    TabType
+} from '../../slices/gameSlice'
 import { generateInviteLink } from '../../api/players'
+import { AppDispatch } from '../../app/store'
+import { useAppDispatch } from '../../app/hooks'
 
 const inviteLinkHandler =
     (
@@ -27,19 +36,40 @@ const inviteLinkHandler =
         }, 0)
     }
 
+const setTabHandler = (dispatch: AppDispatch, tab: string) => () => {
+    dispatch(setTab(tab))
+}
+
 export const Header = () => {
     const gameId = useSelector(selectGameId)
+    const dispatch = useAppDispatch()
+
+    const isContestsTab = useSelector(selectIsContestsTab)
+    const isNotesTab = useSelector(selectIsNotesTab)
+    const isAboutTab = useSelector(selectIsAboutTab)
 
     const [opacity, setOpacity] = useState(false)
     const [transition, setTransition] = useState(false)
 
     return (
-        <div className="border-r-2 mr-32 pr-6 box-content w-96">
+        <div className="border-r-2 mr-32 pr-6 box-content">
             <div className="flex flex-col items-end sticky top-16">
                 <Loading />
-                <H3 className="text-right border-b-0 mt-2">Agon Roller</H3>
-                <SmallButton className="mr-0 mb-4">Contests</SmallButton>
-                <SmallButton className="mr-0 mb-5">Notes</SmallButton>
+                <H3 className="w-64 text-right border-b-0 mt-2">Agon Roller</H3>
+                <SmallButton
+                    className="mr-0 mb-4"
+                    selected={isContestsTab}
+                    onClick={setTabHandler(dispatch, TabType.Contests)}
+                >
+                    Contests
+                </SmallButton>
+                <SmallButton
+                    className="mr-0 mb-5"
+                    selected={isNotesTab}
+                    onClick={setTabHandler(dispatch, TabType.Notes)}
+                >
+                    Notes
+                </SmallButton>
                 <div className="flex w-full">
                     <Divider />
                 </div>
@@ -64,7 +94,13 @@ export const Header = () => {
                 <div className="flex w-full mt-5">
                     <Divider />
                 </div>
-                <SmallButton className="mr-0 mt-8">About This App</SmallButton>
+                <SmallButton
+                    className="mr-0 mt-8"
+                    selected={isAboutTab}
+                    onClick={setTabHandler(dispatch, TabType.About)}
+                >
+                    About This App
+                </SmallButton>
             </div>
         </div>
     )
