@@ -2,14 +2,15 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import { useAppDispatch } from '../../app/hooks'
-import { Players } from '../../components/players/Players'
 import { selectContestStatus } from '../../slices/contestSlice'
-import { getGameAsync, selectGameId } from '../../slices/gameSlice'
+import { getGameAsync, selectGameId, selectTab, TabType } from '../../slices/gameSlice'
 import { Challenge } from './Challenge'
 import { EnterContest } from './EnterContest'
 import { CreateContest } from './CreateContest'
 import { ContestResult } from './ContestResult'
 import { Notes } from '../../components/notes/Notes'
+import { Header } from '../../components/header/Header'
+import { About } from '../about/About'
 
 export const Game = () => {
     const dispatch = useAppDispatch()
@@ -17,6 +18,8 @@ export const Game = () => {
     const gameId = useSelector(selectGameId)
     const params = useParams()
     const contestStatus = useSelector(selectContestStatus)
+    const tab = useSelector(selectTab)
+    console.log(tab)
 
     useEffect(() => {
         if (gameId !== undefined) {
@@ -31,15 +34,22 @@ export const Game = () => {
     if (gameId === undefined) {
         return <></>
     }
-    
+
     return (
-        <div className="flex flex-col">
-            {contestStatus === 'new' && <CreateContest />}
-            {contestStatus !== 'new' && <Challenge />}
-            {contestStatus === 'targetSet' && <EnterContest />}
-            {contestStatus === 'complete' && <ContestResult />}
-            <Notes />
-            <Players />
+        <div className="flex items-stretch max-w-screen-xl mx-auto">
+            <Header />
+            <div className="w-screen min-h-screen">
+                {tab === TabType.Contests && (
+                    <div className="container py-16">
+                        {contestStatus === 'new' && <CreateContest />}
+                        {contestStatus !== 'new' && <Challenge />}
+                        {contestStatus === 'targetSet' && <EnterContest />}
+                        {contestStatus === 'complete' && <ContestResult />}
+                    </div>
+                )}
+                {tab === TabType.Notes && <Notes />}
+                {tab === TabType.About && <About />}
+            </div>
         </div>
     )
 }

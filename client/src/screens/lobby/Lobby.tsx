@@ -37,7 +37,7 @@ export const Lobby = () => {
     }, [dispatch, gameId])
 
     return (
-        <>
+        <div className="container max-w-screen-md mx-auto flex flex-col pt-16">
             <H2>Are you Strife or a Hero?</H2>
             <p className="pb-6">Every game of AGON needs one Strife player and at least two Hero Players.</p>
             <div>
@@ -61,6 +61,6 @@ export const Lobby = () => {
                 </div>
             </div>
             <LobbyPlayers onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
-        </>
+        </div>
     )
 }
