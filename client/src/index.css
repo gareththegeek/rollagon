@@ -26,6 +26,6 @@
     }
 
     input[type='checkbox']:checked {
-        background-image: url('/images/tick.svg');
+        background-image: url('images/tick.svg');
     }
 }
