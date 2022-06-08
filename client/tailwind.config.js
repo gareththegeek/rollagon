@@ -7,7 +7,7 @@ module.exports = {
       'transparent': 'transparent',
       'black': '#001819',
       'white': '#e5e5e5',
-      'teal': '#026469',
+      'teal': '#004c48',
       'grey': {
         100: '#f5f7f7',
         200: '#dbe5e5',

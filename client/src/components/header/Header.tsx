@@ -54,7 +54,7 @@ export const Header = () => {
         <div className="border-r-2 mr-32 pr-6 box-content">
             <div className="flex flex-col items-end sticky top-16">
                 <Loading />
-                <H3 className="w-64 text-right border-b-0 mt-2">Agon Roller</H3>
+                <H3 className="w-64 text-right border-b-0 mt-2 text-black">Agon Roller</H3>
                 <SmallButton
                     className="mr-0 mb-4"
                     selected={isContestsTab}
