@@ -13,13 +13,13 @@ export const ContestantResult = ({ contestant }: ContestantResultProps) => {
     const player = useSelector(selectPlayer(contestant.playerId))
 
     return (
-        <>
+        <section>
             <H4 className="border-0 border-t-2 pt-4">
                 {player!.name}&nbsp;
                 {contestant.prevail ? 'Prevails' : 'Suffers'}
             </H4>
 
             <HeroRoll contestant={contestant} />
-        </>
+        </section>
     )
 }

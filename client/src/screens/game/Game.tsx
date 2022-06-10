@@ -37,7 +37,7 @@ export const Game = () => {
     return (
         <div className="flex items-stretch max-w-screen-xl mx-auto">
             <Header />
-            <div className="w-screen min-h-screen">
+            <main className="w-screen min-h-screen">
                 {tab === TabType.Contests && (
                     <div className="container py-16">
                         {contestStatus === 'new' && <CreateContest />}
@@ -48,7 +48,7 @@ export const Game = () => {
                 )}
                 {tab === TabType.Notes && <Notes />}
                 {tab === TabType.About && <About />}
-            </div>
+            </main>
         </div>
     )
 }

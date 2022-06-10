@@ -32,7 +32,7 @@ export const EnterContest = () => {
     }
 
     return (
-        <>
+        <section>
             <H3>Who Will Join the Contest?</H3>
             <p className="mb-6">Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
             {contestants.length === 0 && isStrifePlayer
@@ -50,6 +50,6 @@ export const EnterContest = () => {
                     Roll the Contest Results
                 </BigButton>
             )}
-        </>
+        </section>
     )
 }

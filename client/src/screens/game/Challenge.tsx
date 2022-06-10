@@ -31,29 +31,35 @@ export const Challenge = () => {
 
     return (
         <div className="mb-10">
-            <div>
+            <section>
                 <H2>
                     <div className="flex place-content-between">
-                        {status === 'complete' 
-                            ? <span>Contest Results</span>
-                            : <span>Join the Contest</span>}
+                        {status === 'complete' ? <span>Contest Results</span> : <span>Join the Contest</span>}
                         {isStrifePlayer && status !== 'complete' && (
                             <Button
                                 className="py-2"
                                 primary={false}
-                                onClick={abandonContestHandler(dispatch, gameId, contestId)}>
-                                    Close Contest
+                                onClick={abandonContestHandler(dispatch, gameId, contestId)}
+                            >
+                                Close Contest
                             </Button>
                         )}
                     </div>
                 </H2>
-                {status === 'complete' 
-                    ? <p className="mb-16">A record of how the Heroes fared in the Contest. Heroes should narrate their results in ascending order - the Strife player should respond with the Opponents reactions.</p>
-                    : <p className="mb-16">This is the challenge that the Heroes must strive to overcome.</p>}
-            </div>
-            <H3 className="mb-8">The Challenge</H3>
-            <StrifeRoll className="mb-6" strife={strife} />
-            <Tags tags={harmTags} />
+                {status === 'complete' ? (
+                    <p className="mb-16">
+                        A record of how the Heroes fared in the Contest. Heroes should narrate their results in
+                        ascending order - the Strife player should respond with the Opponents reactions.
+                    </p>
+                ) : (
+                    <p className="mb-16">This is the challenge that the Heroes must strive to overcome.</p>
+                )}
+            </section>
+            <section>
+                <H3 className="mb-8">The Challenge</H3>
+                <StrifeRoll className="mb-6" strife={strife} />
+                <Tags tags={harmTags} />
+            </section>
         </div>
     )
 }

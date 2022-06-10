@@ -27,7 +27,7 @@ export const NameDie = ({ contestant }: NameDieProps) => {
         <div className="flex mt-4">
             {showDiceSelector ? (
                 <FieldSet title="Select Name Die"
-                    className='-ml-4 mb-0 mt-2'>
+                    className='-ml-4 mb-0 mt-2' role="radiogroup" aria-label="Name Dice">
                     <NameDiceSelector
                         contestant={contestant}
                         onClick={() => {

@@ -30,25 +30,29 @@ export const Splash = () => {
                     Heroes who face trials from the Gods in an ancient world of myth and legend. Learn more about it,
                     and the Paragon system, at <A href="http://agon-rpg.com">agon-rpg.com</A>
                 </p>
-                <H3>Start a New Session</H3>
-                <p className="text-base pb-6">
-                    Start a new session. You'll be able to invite other players with a unique URL.
-                </p>
-                <BigButton className="mb-6" onClick={createGameClick(dispatch, navigate)}>
-                    Start New Game
-                </BigButton>
-                <H3>Have an Invite Link?</H3>
-                <p className="text-base pb-6">Paste it below or in your browser and click Join Game.</p>
-                <Input
-                    className="mb-6"
-                    aria-label="Existing game id"
-                    value={text}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-                    placeholder="Existing game id"
-                />
-                <BigButton className="mb-6" onClick={() => navigate(`/join/${text}`)}>
-                    Join Game
-                </BigButton>
+                <section>
+                    <H3>Start a New Session</H3>
+                    <p className="text-base pb-6">
+                        Start a new session. You'll be able to invite other players with a unique URL.
+                    </p>
+                    <BigButton className="mb-6" onClick={createGameClick(dispatch, navigate)}>
+                        Start New Game
+                    </BigButton>
+                </section>
+                <section>
+                    <H3>Have an Invite Link?</H3>
+                    <p className="text-base pb-6">Paste it below or in your browser and click Join Game.</p>
+                    <Input
+                        className="mb-6"
+                        aria-label="Existing game id"
+                        value={text}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
+                        placeholder="Existing game id"
+                    />
+                    <BigButton className="mb-6" onClick={() => navigate(`/join/${text}`)}>
+                        Join Game
+                    </BigButton>
+                </section>
             </main>
             <aside role="complementary" className="flex flex-col">
                 <H3>About this App</H3>

@@ -46,7 +46,7 @@ export const Notes = () => {
     }
 
     return (
-        <div className="my-16">
+        <section className="my-16">
             <H2>
                 <div className="flex place-content-between">
                     <span>Notes</span>
@@ -60,6 +60,7 @@ export const Notes = () => {
             {edit && (
                 <NoteFrame>
                     <textarea
+                        aria-label='Enter note here'
                         rows={5}
                         value={text}
                         className="w-full display-inline border-2 leading-7 mr-2 px-1"
@@ -96,6 +97,6 @@ export const Notes = () => {
                     ))}
                 </div>
             )}
-        </div>
+        </section>
     )
 }
