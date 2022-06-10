@@ -10,7 +10,7 @@ export const Button = ({ children, className, disabled, primary, ...rest }: any)
         <button
             disabled={disabled}
             {...rest}
-            className={`${className ?? ''} px-6 font-extrabold font-calluna tracking-tight text-sm uppercase border-2 ${style}`}
+            className={`${className ?? ''} px-6 font-extrabold font-calluna tracking-tight text-sm uppercase border-2 lining-nums ${style}`}
         >
             {children}
         </button>
