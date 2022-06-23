@@ -12,11 +12,11 @@ export const Tags = ({ tags }: TagsProps) => {
         return <></>
     }
     return (
-        <>
+        <section>
             <H4>Harms</H4>
             {tags.map((tag, idx) => (
                 <Tag key={`tags-${idx}`} tag={tag} />
             ))}
-        </>
+        </section>
     )
 }

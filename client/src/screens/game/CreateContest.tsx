@@ -54,16 +54,16 @@ export const CreateContest = () => {
 
     if (!isStrifePlayer) {
         return (
-            <>
+            <section>
                 <H2>Between Contests</H2>
                 <p className="mb-16">You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can accomplish it without need for a Contest.</p>
                 <Placeholder>Waiting for the next Glorious Contest</Placeholder>
-            </>
+            </section>
         )
     }
 
     return (
-        <>
+        <section>
             <H2>Create a Contest</H2>
             <p className="pb-6">Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
             <FieldSet
@@ -112,6 +112,6 @@ export const CreateContest = () => {
             <BigButton className="mt-10" disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
                 Roll the Contest
             </BigButton>
-        </>
+        </section>
     )
 }

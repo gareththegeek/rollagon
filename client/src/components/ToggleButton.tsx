@@ -20,7 +20,7 @@ export const ToggleButton = ({ className, label, enabled, onChange, toggled }: T
                 onChange(next)
             }}
         >
-            <input type='checkbox' checked={toggled} className="mr-2" /><span>{label}</span>
+            <input type='checkbox' aria-label={label} checked={toggled} className="mr-2" /><span>{label}</span>
         </SmallButton>
     )
 }

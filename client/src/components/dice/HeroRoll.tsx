@@ -25,7 +25,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
     const nameDie = contestant.dicePool.nameDie
 
     return (
-        <div className={`flex flex-col pl-4 mb-10`}>
+        <ol className={`flex flex-col pl-4 mb-10`}>
             <div className="flex">
                 {nameDie && !isCurrentPlayerRolling && (
                     <Roll
@@ -99,6 +99,6 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
             <div>
                 <NameDie contestant={contestant} />
             </div>
-        </div>
+        </ol>
     )
 }

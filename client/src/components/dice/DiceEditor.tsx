@@ -16,6 +16,7 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
                 <SmallButton
                     disabled={quantity === 0}
                     collapseRight={true}
+                    aria-label={`Remove d${type}`}
                     onClick={() => {
                         const newQuantity = quantity - 1
                         onChange(newQuantity)
@@ -24,12 +25,20 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
                     -
                 </SmallButton>
             )}
-            <div className={`${border} py-1 px-2 ${quantity > 0 && 'bg-grey-300' }`}>
+            <div
+                className={`${border} py-1 px-2 ${quantity > 0 && 'bg-grey-300'}`}
+                role="spinbutton"
+                aria-label={`d${type}`}
+                aria-valuenow={quantity}
+                aria-valuetext={`${quantity}d${type}`}
+                aria-valuemin={0}
+            >
                 {quantity}d{type}
             </div>
             {enabled && (
                 <SmallButton
                     disabled={!enabled}
+                    aria-label={`Add d${type}`}
                     onClick={() => {
                         const newQuantity = quantity + 1
                         onChange(newQuantity)

@@ -14,9 +14,8 @@ export const StrifeLevelEditor = ({ current, onChange }: StrifeLevelEditorProps)
         { name: '+6', value: 6 }
     ]
 
-    //TODO highlight button if value === current
     return (
-        <>
+        <div role="radiogroup" aria-label="Strife Level">
             {levels.map(({ name, value }, idx) => (
                 <SmallButton
                     key={`strife-level-${idx}`}
@@ -29,6 +28,6 @@ export const StrifeLevelEditor = ({ current, onChange }: StrifeLevelEditorProps)
                     {name}
                 </SmallButton>
             ))}
-        </>
+        </div>
     )
 }

@@ -10,7 +10,7 @@ export interface StrifeRollProps {
 export const StrifeRoll: React.FC<StrifeRollProps> = ({ className, strife }) => {
     const [best, ...rest] = strife.dicePool.dice
     return (
-        <div className={`${className} flex pl-4`}>
+        <ol className={`${className} flex pl-4`}>
             <Roll
                 value={strife.targetNumber!}
                 label="Target"
@@ -47,6 +47,6 @@ export const StrifeRoll: React.FC<StrifeRollProps> = ({ className, strife }) => 
                     ))}
                 </>
             )}
-        </div>
+        </ol>
     )
 }
