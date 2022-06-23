@@ -8,8 +8,6 @@ import { AppDispatch } from '../../app/store'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { selectCurrentStrife } from '../../slices/strifeSlice'
 import { Button } from '../../components/Button'
-import { H2 } from '../../components/H2'
-import { H3 } from '../../components/H3'
 
 const abandonContestHandler = (dispatch: AppDispatch, gameId: string, contestId: string) => () => {
     dispatch(removeContestAsync({ gameId, contestId }))
@@ -32,7 +30,7 @@ export const Challenge = () => {
     return (
         <div className="mb-10">
             <section>
-                <H2>
+                <h2>
                     <div className="flex place-content-between">
                         {status === 'complete' ? <span>Contest Results</span> : <span>Join the Contest</span>}
                         {isStrifePlayer && status !== 'complete' && (
@@ -45,7 +43,7 @@ export const Challenge = () => {
                             </Button>
                         )}
                     </div>
-                </H2>
+                </h2>
                 {status === 'complete' ? (
                     <p className="mb-16">
                         A record of how the Heroes fared in the Contest. Heroes should narrate their results in
@@ -56,7 +54,7 @@ export const Challenge = () => {
                 )}
             </section>
             <section>
-                <H3 className="mb-8">The Challenge</H3>
+                <h3 className="mb-8">The Challenge</h3>
                 <StrifeRoll className="mb-6" strife={strife} />
                 <Tags tags={harmTags} />
             </section>

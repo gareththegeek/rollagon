@@ -11,7 +11,6 @@ import ReactMarkdown from 'react-markdown'
 import { NoteFrame } from './NoteFrame'
 import './Notes.css'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
-import { H2 } from '../H2'
 import { Placeholder } from '../Placeholder'
 
 const addNoteHandler =
@@ -47,7 +46,7 @@ export const Notes = () => {
 
     return (
         <section className="my-16">
-            <H2>
+            <h2>
                 <div className="flex place-content-between">
                     <span>Notes</span>
                     {!edit && isStrifePlayer && (
@@ -56,7 +55,7 @@ export const Notes = () => {
                         </Button>
                     )}
                 </div>
-            </H2>
+            </h2>
             {edit && (
                 <NoteFrame>
                     <textarea

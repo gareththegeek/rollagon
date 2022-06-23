@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { BigButton } from '../../components/BigButton'
-import { H3 } from '../../components/H3'
 import { Placeholder } from '../../components/Placeholder'
 import { selectContestants, selectReadyContestantCount } from '../../slices/contestantSlice'
 import { rollContestResultAsync, selectContestId } from '../../slices/contestSlice'
@@ -33,7 +32,7 @@ export const EnterContest = () => {
 
     return (
         <section>
-            <H3>Who Will Join the Contest?</H3>
+            <h3>Who Will Join the Contest?</h3>
             <p className="mb-6">Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
             {contestants.length === 0 && isStrifePlayer
                 && <Placeholder className="mb-2">No one has joined</Placeholder>}

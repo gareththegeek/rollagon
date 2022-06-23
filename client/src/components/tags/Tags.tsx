@@ -1,6 +1,5 @@
 import React from 'react'
 import { HarmTagType } from '../../api/strife'
-import { H4 } from '../H4'
 import { Tag } from './Tag'
 
 export interface TagsProps {
@@ -13,7 +12,7 @@ export const Tags = ({ tags }: TagsProps) => {
     }
     return (
         <section>
-            <H4>Harms</H4>
+            <h4>Harms</h4>
             {tags.map((tag, idx) => (
                 <Tag key={`tags-${idx}`} tag={tag} />
             ))}

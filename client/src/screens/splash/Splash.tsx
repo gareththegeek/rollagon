@@ -4,8 +4,6 @@ import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { A } from '../../components/A'
 import { BigButton } from '../../components/BigButton'
-import { H1 } from '../../components/H1'
-import { H3 } from '../../components/H3'
 import { Input } from '../../components/Input'
 import { createGameAsync } from '../../slices/gameSlice'
 
@@ -24,14 +22,14 @@ export const Splash = () => {
     return (
         <div className="md:container max-w-screen-md mx-3 md:mx-auto md:pt-16">
             <main className="flex flex-col">
-                <H1>Agon Dice Roller</H1>
+                <h1>Agon Dice Roller</h1>
                 <p className="pb-6">
                     This is a fan-made dice-rolling app for AGON. AGON is an action-packed roleplaying game about epic
                     Heroes who face trials from the Gods in an ancient world of myth and legend. Learn more about it,
                     and the Paragon system, at <A href="http://agon-rpg.com">agon-rpg.com</A>
                 </p>
                 <section>
-                    <H3>Start a New Session</H3>
+                    <h3>Start a New Session</h3>
                     <p className="pb-6">
                         Start a new session. You'll be able to invite other players with a unique URL.
                     </p>
@@ -40,7 +38,7 @@ export const Splash = () => {
                     </BigButton>
                 </section>
                 <section>
-                    <H3>Have an Invite Link?</H3>
+                    <h3>Have an Invite Link?</h3>
                     <p className="pb-6">Paste it below or in your browser and click Join Game.</p>
                     <Input
                         className="mb-6 w-full"
@@ -55,7 +53,7 @@ export const Splash = () => {
                 </section>
             </main>
             <aside className="flex flex-col">
-                <H3>About this App</H3>
+                <h3>About this App</h3>
                 <p className="pb-3">At least one person playing should be familiar with the AGON rulebook.</p>
                 <p className="pb-3">
                     This app is a lightweight dicerolling app, focused on resolving and narrating AGON Contests. It is

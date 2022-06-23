@@ -16,7 +16,6 @@ import {
 } from '../../slices/strifeSlice'
 import { selectIsLoading } from '../../slices/statusSlice'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
-import { H2 } from '../../components/H2'
 import { FieldSet } from '../../components/FieldSet'
 import { BigButton } from '../../components/BigButton'
 import { Placeholder } from '../../components/Placeholder'
@@ -55,7 +54,7 @@ export const CreateContest = () => {
     if (!isStrifePlayer) {
         return (
             <section>
-                <H2>Between Contests</H2>
+                <h2>Between Contests</h2>
                 <p className="mb-16">You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can accomplish it without need for a Contest.</p>
                 <Placeholder>Waiting for the next Glorious Contest</Placeholder>
             </section>
@@ -64,7 +63,7 @@ export const CreateContest = () => {
 
     return (
         <section>
-            <H2>Create a Contest</H2>
+            <h2>Create a Contest</h2>
             <p className="pb-6">Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
             <FieldSet
                 title="Set the Strife Level"

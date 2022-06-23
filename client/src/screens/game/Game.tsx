@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import { useAppDispatch } from '../../app/hooks'
@@ -11,6 +11,8 @@ import { ContestResult } from './ContestResult'
 import { Notes } from '../../components/notes/Notes'
 import { Header } from '../../components/header/Header'
 import { About } from '../about/About'
+import { BurgerMenu } from '../../components/header/BurgerMenu'
+import { BurgerButton } from '../../components/header/BurgerButton'
 
 export const Game = () => {
     const dispatch = useAppDispatch()
@@ -19,6 +21,12 @@ export const Game = () => {
     const params = useParams()
     const contestStatus = useSelector(selectContestStatus)
     const tab = useSelector(selectTab)
+
+    const [menuOpen, setMenuOpen] = useState(false)
+
+    const handleMenuClick = () => {
+        setMenuOpen(!menuOpen)
+    }
 
     useEffect(() => {
         if (gameId !== undefined) {
@@ -35,20 +43,30 @@ export const Game = () => {
     }
 
     return (
-        <div className="flex items-stretch max-w-screen-xl mx-auto">
-            <Header />
-            <main className="w-screen min-h-screen">
-                {tab === TabType.Contests && (
-                    <div className="container py-16">
-                        {contestStatus === 'new' && <CreateContest />}
-                        {contestStatus !== 'new' && <Challenge />}
-                        {contestStatus === 'targetSet' && <EnterContest />}
-                        {contestStatus === 'complete' && <ContestResult />}
-                    </div>
-                )}
-                {tab === TabType.Notes && <Notes />}
-                {tab === TabType.About && <About />}
-            </main>
+        <div className="md:flex md:items-stretch max-w-screen-xl mx-3 md:mx-auto">
+            <h4 className="flex md:hidden border-b-2 -mx-3 py-3">
+                <BurgerButton onClick={handleMenuClick} isOpen={menuOpen} />
+                Agon Dice Roller
+            </h4>
+            {menuOpen ? (
+                <BurgerMenu />
+            ) : (
+                <>
+                    <Header />
+                    <main className="w-full min-h-screen">
+                        {tab === TabType.Contests && (
+                            <div className="md:container md:py-16">
+                                {contestStatus === 'new' && <CreateContest />}
+                                {contestStatus !== 'new' && <Challenge />}
+                                {contestStatus === 'targetSet' && <EnterContest />}
+                                {contestStatus === 'complete' && <ContestResult />}
+                            </div>
+                        )}
+                        {tab === TabType.Notes && <Notes />}
+                        {tab === TabType.About && <About />}
+                    </main>
+                </>
+            )}
         </div>
     )
 }
