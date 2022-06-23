@@ -12,14 +12,14 @@ export interface RollProps {
 
 export const Roll = ({ label, value, dropped, className, colour, title }: RollProps) => {
     const droppedDefined = dropped ?? false
-    const colourFinal = droppedDefined ? 'text-grey-500 border-transparent' : colour
+    const colourFinal = droppedDefined ? 'text-teal border-transparent' : colour
 
     return (
         <li className={`text-center flex items-center flex-col w-10 ${className}`}>
             <div title={title} className={`w-8 h-8 mb-2 border-2 rotate-45 ${colourFinal}`}>
                 <div
                     className={`font-bold ${
-                        droppedDefined && 'text-grey-500'
+                        droppedDefined && 'text-teal'
                     } -rotate-45 mt-0.5 mb-6 text-base leading-tight tracking-tight font-trajan font-bold uppercase lining-nums`}
                 >
                     {value}
