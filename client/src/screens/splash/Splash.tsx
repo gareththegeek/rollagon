@@ -54,7 +54,7 @@ export const Splash = () => {
                     </BigButton>
                 </section>
             </main>
-            <aside role="complementary" className="flex flex-col">
+            <aside className="flex flex-col">
                 <H3>About this App</H3>
                 <p className="text-base pb-3">At least one person playing should be familiar with the AGON rulebook.</p>
                 <p className="text-base pb-3">
