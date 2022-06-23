@@ -31,6 +31,6 @@
     }
 
     p {
-        @apply text-teal;
+        @apply text-xs leading-normal md:text-base text-teal;
     }
 }

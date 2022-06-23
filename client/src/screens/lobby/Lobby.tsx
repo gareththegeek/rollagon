@@ -37,7 +37,7 @@ export const Lobby = () => {
     }, [dispatch, gameId])
 
     return (
-        <main className="container max-w-screen-md mx-auto flex flex-col pt-16">
+        <main className="md:container max-w-screen-md mx-3 md:mx-auto flex flex-col md:pt-16">
             <H2>Are you Strife or a Hero?</H2>
             <p className="pb-6">Every game of AGON needs one Strife player and at least two Hero Players.</p>
             <section>
@@ -48,9 +48,9 @@ export const Lobby = () => {
             <section>
                 <H3 className="mb-2">Hero player</H3>
                 <p className="pb-3">Hero players contend against the Contests presented by the Strife player.</p>
-                <div className="flex mb-6">
+                <div className="flex flex-col sm:flex-row mb-6">
                     <Input
-                        className="flex-grow mr-6"
+                        className="flex-grow mr-6 mb-4 sm:mb-0"
                         value={text}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
                         placeholder="Enter your Hero's Name"
