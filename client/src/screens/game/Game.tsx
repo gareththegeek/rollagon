@@ -44,7 +44,7 @@ export const Game = () => {
 
     return (
         <div className="md:flex md:items-stretch max-w-screen-xl mx-3 md:mx-auto">
-            <h4 className="flex md:hidden border-b-2 -mx-3 py-3">
+            <h4 className="flex md:hidden border-b-2 -mx-3 py-3 fixed top-0 w-full bg-grey-100 z-10">
                 <BurgerButton onClick={handleMenuClick} isOpen={menuOpen} />
                 Agon Dice Roller
             </h4>
@@ -53,9 +53,9 @@ export const Game = () => {
             ) : (
                 <>
                     <Header />
-                    <main className="w-full min-h-screen">
+                    <main className="mt-16 w-full min-h-screen">
                         {tab === TabType.Contests && (
-                            <div className="md:py-16">
+                            <div>
                                 {contestStatus === 'new' && <CreateContest />}
                                 {contestStatus !== 'new' && <Challenge />}
                                 {contestStatus === 'targetSet' && <EnterContest />}

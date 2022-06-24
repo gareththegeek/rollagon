@@ -45,7 +45,7 @@ export const Notes = () => {
     }
 
     return (
-        <section className="my-16">
+        <section>
             <h2>
                 <div className="flex place-content-between">
                     <span>Notes</span>

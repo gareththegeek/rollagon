@@ -34,7 +34,6 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const gameId = useSelector(selectGameId)
     const dispatch = useAppDispatch()
 
-    const currentTab = useSelector(selectTab)
     const isContestsTab = useSelector(selectIsContestsTab)
     const isNotesTab = useSelector(selectIsNotesTab)
     //const isAboutTab = useSelector(selectIsAboutTab)
@@ -43,9 +42,6 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const [transition, setTransition] = useState(false)
 
     const setTabHandler = (tab: string) => {
-        if (tab === currentTab) {
-            return
-        }
         dispatch(setTab(tab))
         if (onTabChange !== undefined) {
             onTabChange(tab)

@@ -13,6 +13,10 @@
         line-height: 30px;
     }
 
+    body {
+        @apply bg-grey-100;
+    }
+
     input[type='checkbox'] {
         -webkit-appearance: none;
         appearance: none;

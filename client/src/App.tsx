@@ -10,7 +10,7 @@ import { Splash } from './screens/splash/Splash'
 
 function App() {
     return (
-        <div className="bg-grey-100 h-full min-h-screen">
+        <div className="h-full min-h-screen">
             <BrowserRouter>
                 <Connection />
                 <Errors />

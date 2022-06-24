@@ -7,10 +7,10 @@ export interface BurgerMenuProps {
 }
 
 export const BurgerMenu: FC<BurgerMenuProps> = ({ onTabChange }) => (
-    <>
+    <div className="mt-16">
         <Menu onTabChange={onTabChange} />
         <div className="w-full mt-4">
             <Loading />
         </div>
-    </>
+    </div>
 )
