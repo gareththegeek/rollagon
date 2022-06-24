@@ -14,7 +14,7 @@ export const ToggleButton = ({ className, label, enabled, onChange, toggled }: T
         <SmallButton
             disabled={!enabled}
             selected={toggled}
-            className={`${className}`}
+            className={`${className} w-40 text-left xl:w-auto`}
             onClick={() => {
                 const next = !toggled
                 onChange(next)

@@ -26,7 +26,7 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
                 </SmallButton>
             )}
             <div
-                className={`${border} py-1 px-2 ${quantity > 0 && 'bg-grey-300'}`}
+                className={`${border} w-14 py-1 px-2 text-center ${quantity > 0 && 'bg-grey-300'}`}
                 role="spinbutton"
                 aria-label={`d${type}`}
                 aria-valuenow={quantity}

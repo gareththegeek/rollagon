@@ -78,7 +78,7 @@ export const CreateContest = () => {
                 title="Build the Opponent's Dice Pool"
                 guidance="Add dice for the Opponent’s Name, Epithets, and any Bonus dice."
             >
-                <div className="flex flex-row flex-wrap">
+                <div className="flex flex-col xl:flex-row flex-wrap">
                     <DicePoolEditor
                         dice={[6, 8, 10, 12]}
                         dicePool={strife.dicePool}
