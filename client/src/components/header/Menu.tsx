@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { generateInviteLink } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
-import { AppDispatch } from '../../app/store'
-import { selectGameId, selectIsContestsTab, selectIsNotesTab, setTab, TabType } from '../../slices/gameSlice'
+import { selectGameId, selectIsContestsTab, selectIsNotesTab, selectTab, setTab, TabType } from '../../slices/gameSlice'
 import { Divider } from '../Divider'
 import { Players } from '../players/Players'
 import { SmallButton } from '../SmallButton'
+
+export interface MenuProps {
+    onTabChange?: (tab: string) => void | undefined
+}
 
 const inviteLinkHandler =
     (
@@ -27,14 +30,11 @@ const inviteLinkHandler =
         }, 0)
     }
 
-const setTabHandler = (dispatch: AppDispatch, tab: string) => () => {
-    dispatch(setTab(tab))
-}
-
-export const Menu = () => {
+export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const gameId = useSelector(selectGameId)
     const dispatch = useAppDispatch()
 
+    const currentTab = useSelector(selectTab)
     const isContestsTab = useSelector(selectIsContestsTab)
     const isNotesTab = useSelector(selectIsNotesTab)
     //const isAboutTab = useSelector(selectIsAboutTab)
@@ -42,20 +42,30 @@ export const Menu = () => {
     const [opacity, setOpacity] = useState(false)
     const [transition, setTransition] = useState(false)
 
+    const setTabHandler = (tab: string) => {
+        if (tab === currentTab) {
+            return
+        }
+        dispatch(setTab(tab))
+        if (onTabChange !== undefined) {
+            onTabChange(tab)
+        }
+    }
+
     return (
         <>
             <nav className="flex flex-col items-stretch md:items-end relative">
                 <SmallButton
                     className="md:w-auto mr-0 mb-4"
                     selected={isContestsTab}
-                    onClick={setTabHandler(dispatch, TabType.Contests)}
+                    onClick={() => setTabHandler(TabType.Contests)}
                 >
                     Contests
                 </SmallButton>
                 <SmallButton
                     className="md:w-auto mr-0 mb-5"
                     selected={isNotesTab}
-                    onClick={setTabHandler(dispatch, TabType.Notes)}
+                    onClick={() => setTabHandler(TabType.Notes)}
                 >
                     Notes
                 </SmallButton>
@@ -86,7 +96,7 @@ export const Menu = () => {
                 <SmallButton
                     className="mr-0 mt-8"
                     selected={isAboutTab}
-                    onClick={setTabHandler(dispatch, TabType.About)}
+                    onClick={() => setTabHandler(TabType.About)}
                 >
                     About This App
                 </SmallButton> */}

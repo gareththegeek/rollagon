@@ -35,7 +35,7 @@ export const Lobby = () => {
     }, [dispatch, gameId])
 
     return (
-        <main className="md:container max-w-screen-md mx-3 md:mx-auto flex flex-col md:pt-16">
+        <main className="max-w-screen-md mx-3 md:mx-auto flex flex-col md:pt-16">
             <h2>Are you Strife or a Hero?</h2>
             <p className="pb-6">Every game of AGON needs one Strife player and at least two Hero Players.</p>
             <section>

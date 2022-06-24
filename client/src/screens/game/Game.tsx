@@ -49,13 +49,13 @@ export const Game = () => {
                 Agon Dice Roller
             </h4>
             {menuOpen ? (
-                <BurgerMenu />
+                <BurgerMenu onTabChange={() => setMenuOpen(false)} />
             ) : (
                 <>
                     <Header />
                     <main className="w-full min-h-screen">
                         {tab === TabType.Contests && (
-                            <div className="md:container md:py-16">
+                            <div className="md:py-16">
                                 {contestStatus === 'new' && <CreateContest />}
                                 {contestStatus !== 'new' && <Challenge />}
                                 {contestStatus === 'targetSet' && <EnterContest />}
