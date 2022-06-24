@@ -8,6 +8,7 @@ import { AppDispatch } from '../../app/store'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { selectCurrentStrife } from '../../slices/strifeSlice'
 import { Button } from '../../components/Button'
+import { StrifeTarget } from '../../components/dice/StrifeTarget'
 
 const abandonContestHandler = (dispatch: AppDispatch, gameId: string, contestId: string) => () => {
     dispatch(removeContestAsync({ gameId, contestId }))
@@ -27,23 +28,32 @@ export const Challenge = () => {
 
     const { harmTags } = strife
 
+    const cancelButton = (mobile: boolean) => {
+        if (!isStrifePlayer || status === 'complete') {
+            return <></>
+        }
+
+        return (
+            <Button
+                className={`py-2 ${mobile ? 'w-full lg:hidden mb-3' : 'hidden lg:flex'}`}
+                primary={false}
+                onClick={abandonContestHandler(dispatch, gameId, contestId)}
+            >
+                Close Contest
+            </Button>
+        )
+    }
+
     return (
         <div className="mb-10">
             <section>
                 <h2>
-                    <div className="flex place-content-between">
+                    <div className="flex flex-col lg:flex-row lg:place-content-between">
                         {status === 'complete' ? <span>Contest Results</span> : <span>Join the Contest</span>}
-                        {isStrifePlayer && status !== 'complete' && (
-                            <Button
-                                className="py-2"
-                                primary={false}
-                                onClick={abandonContestHandler(dispatch, gameId, contestId)}
-                            >
-                                Close Contest
-                            </Button>
-                        )}
+                        {cancelButton(false)}
                     </div>
                 </h2>
+                {cancelButton(true)}
                 {status === 'complete' ? (
                     <p className="mb-16">
                         A record of how the Heroes fared in the Contest. Heroes should narrate their results in
@@ -54,7 +64,10 @@ export const Challenge = () => {
                 )}
             </section>
             <section>
-                <h3 className="mb-8">The Challenge</h3>
+                <div className="mb-4 md:mt-12 flex items-center gap-3">
+                    <StrifeTarget strife={strife} />
+                    <h3 className="flex-grow mt-0">The Challenge</h3>
+                </div>
                 <StrifeRoll className="mb-6" strife={strife} />
                 <Tags tags={harmTags} />
             </section>

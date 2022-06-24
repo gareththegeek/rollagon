@@ -46,7 +46,7 @@ export const EnterContest = () => {
                     onClick={rollResultsHandler(dispatch, gameId, contestId)}
                     className="mt-8"
                 >
-                    Roll the Contest Results
+                    Roll Results
                 </BigButton>
             )}
         </section>

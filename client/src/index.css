@@ -81,6 +81,7 @@
         @apply font-bold;
         @apply uppercase;
         @apply lining-nums;
+        @apply text-teal;
     }
 
     p {
