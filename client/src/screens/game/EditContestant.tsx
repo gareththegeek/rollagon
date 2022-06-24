@@ -63,7 +63,10 @@ export const EditContestant = ({ player }: EditContestantProps) => {
                     guidance="Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage."
                     className="mb-4"
                 >
-                    <Button highlight={true} onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}>
+                    <Button
+                        className="w-full md:w-auto"
+                        onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}
+                    >
                         Join the Contest!
                     </Button>
                 </FieldSet>
@@ -76,10 +79,14 @@ export const EditContestant = ({ player }: EditContestantProps) => {
     return (
         <FieldSet
             title={player.name}
-            guidance={isCurrentPlayer ? "Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage." : undefined}
+            guidance={
+                isCurrentPlayer
+                    ? "Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage."
+                    : undefined
+            }
             className="mb-4"
         >
-            <div className="flex flex-row flex-wrap">
+            <div className={`flex ${isCurrentPlayer && 'flex-col xl:flex-row'} flex-wrap`}>
                 <DicePoolEditor
                     enabled={isCurrentPlayer}
                     dicePool={contestant.dicePool}

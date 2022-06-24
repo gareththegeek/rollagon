@@ -4,8 +4,6 @@ import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { Button } from '../../components/Button'
-import { H2 } from '../../components/H2'
-import { H3 } from '../../components/H3'
 import { Input } from '../../components/Input'
 import { LobbyPlayers } from '../../components/players/LobbyPlayers'
 import { setGameId } from '../../slices/gameSlice'
@@ -37,20 +35,20 @@ export const Lobby = () => {
     }, [dispatch, gameId])
 
     return (
-        <main className="container max-w-screen-md mx-auto flex flex-col pt-16">
-            <H2>Are you Strife or a Hero?</H2>
+        <main className="max-w-screen-md mx-3 md:mx-auto flex flex-col md:pt-16">
+            <h2>Are you Strife or a Hero?</h2>
             <p className="pb-6">Every game of AGON needs one Strife player and at least two Hero Players.</p>
             <section>
-                <H3>Strife player</H3>
+                <h3>Strife player</h3>
                 <p className="pb-3">The Strife player challenges the Heroes with worthy Contests.</p>
-                <Button className="mb-6" onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
+                <Button className="w-full md:w-auto mb-6" onClick={joinStrifeClick(dispatch, navigate, gameId!)}>Join as Strife Player</Button>
             </section>
             <section>
-                <H3 className="mb-2">Hero player</H3>
+                <h3 className="mb-2">Hero player</h3>
                 <p className="pb-3">Hero players contend against the Contests presented by the Strife player.</p>
-                <div className="flex mb-6">
+                <div className="flex flex-col sm:flex-row mb-6">
                     <Input
-                        className="flex-grow mr-6"
+                        className="flex-grow md:mr-6 mb-4 sm:mb-0"
                         value={text}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
                         placeholder="Enter your Hero's Name"

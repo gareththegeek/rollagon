@@ -1,5 +1,5 @@
 import React from 'react'
 
 export const About = () => {
-    return <div className="container max-w-screen-md mx-auto flex flex-col pt-16">About Screen</div>
+    return <div className="max-w-screen-md mx-3 md:mx-auto md:pt-16">About Screen</div>
 }

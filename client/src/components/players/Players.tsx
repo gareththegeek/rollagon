@@ -10,7 +10,7 @@ export const Players = () => {
     const strifeColour = strifeConnected ? 'bg-grey-300' : 'bg-transparent'
 
     return (
-        <ul className="flex flex-col items-end">
+        <ul className="flex flex-col items-center md:items-end">
             <li className="flex items-center">
                 Strife Player
                 <div className={`${strifeColour} h-4 w-4 border-2 rounded-lg ml-2 inline-block`} />

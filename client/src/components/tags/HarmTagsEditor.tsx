@@ -16,7 +16,7 @@ export const HarmTagsEditor = ({ onChange }: HarmTagsEditorProps) => {
 
     const [selectedTags, setSelectedTags] = useState([] as HarmTagType[])
 
-    return <>
+    return <div className="flex flex-col gap-3 xl:flex-row">
         {tags.map(({ name, value }) =>
             <ToggleButton
                 key={`tag-editor-${value}`}
@@ -35,5 +35,5 @@ export const HarmTagsEditor = ({ onChange }: HarmTagsEditorProps) => {
                     onChange(next)
                 }}
             />)}
-    </>
+    </div>
 }

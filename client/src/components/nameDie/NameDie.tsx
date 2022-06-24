@@ -24,31 +24,34 @@ export const NameDie = ({ contestant }: NameDieProps) => {
     const nameDie = contestant.dicePool.nameDie
 
     return (
-        <div className="flex mt-4">
+        <div className="flex">
             {showDiceSelector ? (
-                <FieldSet title="Select Name Die"
-                    className='-ml-4 mb-0 mt-2' role="radiogroup" aria-label="Name Dice">
-                    <NameDiceSelector
-                        contestant={contestant}
-                        onClick={() => {
-                            setShowDiceSelector(false)
-                        }}
-                    />
-                    <SmallButton
-                        onClick={() => {
-                            setShowDiceSelector(false)
-                        }}
-                        title="Cancel Tie Break Roll"
-                    >
-                        Cancel
-                    </SmallButton>
+                <FieldSet title="Select Name Die" className="-ml-4 mb-0 mt-2 w-full" role="radiogroup" aria-label="Name Dice">
+                    <div className="flex flex-col md:flex-row gap-3">
+                        <NameDiceSelector
+                            contestant={contestant}
+                            onClick={() => {
+                                setShowDiceSelector(false)
+                            }}
+                        />
+                        <SmallButton
+                            onClick={() => {
+                                setShowDiceSelector(false)
+                            }}
+                            title="Cancel Tie Break Roll"
+                        >
+                            Cancel
+                        </SmallButton>
+                    </div>
                 </FieldSet>
             ) : (
                 <>
-                    {isCurrentPlayerRolling && <Placeholder className="animate-pulse anim">Rolling Name Die...</Placeholder>}
+                    {isCurrentPlayerRolling && (
+                        <Placeholder className="animate-pulse anim w-full md:w-auto">Rolling Name Die...</Placeholder>
+                    )}
                     {isCurrentPlayer && !rolling && (
                         <Button
-                            className="mt-2"
+                            className="w-full md:w-auto"
                             onClick={() => {
                                 setShowDiceSelector(true)
                             }}
