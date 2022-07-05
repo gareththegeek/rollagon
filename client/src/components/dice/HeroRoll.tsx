@@ -26,7 +26,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
 
     return (
         <>
-            <ol className={`flex flex-col md:flex-row gap-6`}>
+            <div className={`flex flex-col md:flex-row gap-6`}>
                 <div className="flex">
                     {nameDie && !isCurrentPlayerRolling && (
                         <Roll
@@ -90,7 +90,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                         ))}
                     </div>
                 )}
-            </ol>
+            </div>
             <NameDie contestant={contestant} />
         </>
     )

@@ -14,7 +14,7 @@ export const Roll = ({ label, value, dropped, className, colour, title }: RollPr
     const colourFinal = droppedDefined ? 'text-teal border-transparent' : colour
 
     return (
-        <li className={`text-center flex items-center flex-col w-12 ${!droppedDefined && 'my-2'} ${className ?? ''}`}>
+        <div className={`text-center flex items-center flex-col w-12 ${!droppedDefined && 'my-2'} ${className ?? ''}`}>
             <div title={title} className={`w-8 h-8 border-2 rotate-45 ${colourFinal}`}>
                 <div
                     className={`font-bold ${
@@ -25,6 +25,6 @@ export const Roll = ({ label, value, dropped, className, colour, title }: RollPr
                 </div>
             </div>
             <div className={`${colourFinal} font-bold text-xs uppercase bg-transparent leading-none mt-2`}>{label}</div>
-        </li>
+        </div>
     )
 }
