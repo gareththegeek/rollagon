@@ -53,7 +53,7 @@ export const Game = () => {
             ) : (
                 <>
                     <Header />
-                    <main className="mt-16 w-full min-h-screen flex flex-col gap-10 md:gap-16">
+                    <main className="mt-16 w-full min-h-screen">
                         {tab === TabType.Contests && (
                             <>
                                 {contestStatus === 'new' && <CreateContest />}

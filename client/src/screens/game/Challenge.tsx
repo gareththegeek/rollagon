@@ -35,7 +35,8 @@ export const Challenge = () => {
 
         return (
             <Button
-                className={`py-2 ${mobile ? 'w-full lg:hidden mb-3' : 'hidden lg:flex'}`}
+                padding="py-0.5 lg:py-1 px-4"
+                className={mobile ? 'lg:hidden' : 'hidden lg:flex'}
                 primary={false}
                 onClick={abandonContestHandler(dispatch, gameId, contestId)}
             >
@@ -46,29 +47,29 @@ export const Challenge = () => {
 
     return (
         <>
-            <section>
+            <section className="gap-3">
                 <h2>
-                    <div className="flex flex-col lg:flex-row lg:place-content-between">
+                    <div className="flex flex-col lg:flex-row lg:place-content-between lg:items-center">
                         {status === 'complete' ? <span>Contest Results</span> : <span>Join the Contest</span>}
                         {cancelButton(false)}
                     </div>
                 </h2>
                 {cancelButton(true)}
                 {status === 'complete' ? (
-                    <p className="">
+                    <p>
                         A record of how the Heroes fared in the Contest. Heroes should narrate their results in
                         ascending order - the Strife player should respond with the Opponents reactions.
                     </p>
                 ) : (
-                    <p className="">This is the challenge that the Heroes must strive to overcome.</p>
+                    <p>This is the challenge that the Heroes must strive to overcome.</p>
                 )}
             </section>
             <section>
-                <div className="flex items-center gap-3">
+                <div className="flex gap-3 items-center">
                     <StrifeTarget strife={strife} />
-                    <h3 className="flex-grow mt-0">The Challenge</h3>
+                    <div className="flex-grow"><h3 className="pb-2">The Challenge</h3></div>
                 </div>
-                <StrifeRoll className="" strife={strife} />
+                <StrifeRoll strife={strife} />
                 <Tags tags={harmTags} />
             </section>
         </>

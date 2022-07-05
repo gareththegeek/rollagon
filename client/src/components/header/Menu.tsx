@@ -72,7 +72,7 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
             <div
                 className={`${transition ? 'transition-opacity duration-1000' : ''} ${
                     opacity ? 'opacity-1' : 'opacity-0'
-                } absolute mb-2 text-center text-base`}
+                } absolute -l-10 mb-2 text-center text-base`}
             >
                 Copied to clipboard!
             </div>

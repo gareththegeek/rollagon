@@ -10,7 +10,7 @@ export interface StrifeRollProps {
 export const StrifeRoll: React.FC<StrifeRollProps> = ({ className, strife }) => {
     const [best, ...rest] = strife.dicePool.dice
     return (
-        <ol className={`${className} flex flex-col md:flex-row gap-6`}>
+        <ol className={`${className ?? ''} flex flex-col md:flex-row gap-6`}>
             <div className="flex">
                 <Roll
                     value={strife.strifeLevel}

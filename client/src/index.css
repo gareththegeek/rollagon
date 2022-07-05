@@ -17,6 +17,15 @@
         @apply bg-grey-100;
     }
 
+    main {
+        @apply flex flex-col gap-10 md:gap-16 mb-40 items-stretch;
+    }
+
+    section,
+    aside {
+        @apply flex flex-col gap-4;
+    }
+
     input[type='checkbox'] {
         -webkit-appearance: none;
         appearance: none;
@@ -83,6 +92,6 @@
     }
 
     p {
-        @apply text-xs leading-normal md:text-base text-teal;
+        @apply text-xs leading-normal md:text-base;
     }
 }

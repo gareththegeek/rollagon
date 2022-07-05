@@ -55,7 +55,7 @@ export const CreateContest = () => {
         return (
             <section>
                 <h2>Between Contests</h2>
-                <p className="">
+                <p>
                     You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can
                     accomplish it without need for a Contest.
                 </p>
@@ -68,7 +68,7 @@ export const CreateContest = () => {
         <>
             <section>
                 <h2>Create a Contest</h2>
-                <p className="">Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
+                <p>Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
             </section>
             <FieldSet
                 title="Set the Strife Level"
@@ -83,7 +83,7 @@ export const CreateContest = () => {
                 title="Build the Opponent's Dice Pool"
                 guidance="Add dice for the Opponent’s Name, Epithets, and any Bonus dice."
             >
-                <div className="flex flex-col xl:flex-row flex-wrap">
+                <div className="flex flex-col xl:flex-row flex-wrap gap-2 md:gap-4">
                     <DicePoolEditor
                         dice={[6, 8, 10, 12]}
                         dicePool={strife.dicePool}
@@ -113,7 +113,7 @@ export const CreateContest = () => {
             >
                 <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
             </FieldSet>
-            <BigButton className="" disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
+            <BigButton disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
                 Roll the Contest
             </BigButton>
         </>

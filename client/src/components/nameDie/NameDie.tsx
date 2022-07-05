@@ -22,6 +22,10 @@ export const NameDie = ({ contestant }: NameDieProps) => {
     const [showDiceSelector, setShowDiceSelector] = useState(false)
 
     const nameDie = contestant.dicePool.nameDie
+    
+    if (!isCurrentPlayer) {
+        return <></>
+    }
 
     return (
         <div className="flex">

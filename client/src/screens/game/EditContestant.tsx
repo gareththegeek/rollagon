@@ -63,12 +63,14 @@ export const EditContestant = ({ player }: EditContestantProps) => {
                     guidance="Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage."
                     className="mb-4"
                 >
-                    <Button
-                        className="w-full md:w-auto"
-                        onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}
-                    >
-                        Join the Contest!
-                    </Button>
+                    <div>
+                        <Button
+                            className="w-full md:w-auto"
+                            onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}
+                        >
+                            Join the Contest!
+                        </Button>
+                    </div>
                 </FieldSet>
             )
         } else {
@@ -86,7 +88,7 @@ export const EditContestant = ({ player }: EditContestantProps) => {
             }
             className="mb-4"
         >
-            <div className={`flex ${isCurrentPlayer && 'flex-col xl:flex-row'} flex-wrap`}>
+            <div className={`flex ${isCurrentPlayer && 'flex-col xl:flex-row'} flex-wrap gap-2`}>
                 <DicePoolEditor
                     enabled={isCurrentPlayer}
                     dicePool={contestant.dicePool}
@@ -97,12 +99,10 @@ export const EditContestant = ({ player }: EditContestantProps) => {
                     enabled={isCurrentPlayer}
                     toggled={contestant.ready}
                     label="Ready"
-                    className="my-4"
                     onChange={readyHandler(dispatch, gameId, contestId, contestant)}
                 />
                 {isCurrentPlayer && (
-                    <SmallButton
-                        className="my-4"
+                    <SmallButton className="w-40 md:w-30"
                         onClick={leaveContestHandler(dispatch, gameId, contestId, player.id!)}
                     >
                         Leave

@@ -15,7 +15,7 @@ export const StrifeLevelEditor = ({ current, onChange }: StrifeLevelEditorProps)
     ]
 
     return (
-        <div role="radiogroup" aria-label="Strife Level">
+        <div role="radiogroup" aria-label="Strife Level" className="flex gap-2 md:gap-4">
             {levels.map(({ name, value }, idx) => (
                 <SmallButton
                     key={`strife-level-${idx}`}
