@@ -29,7 +29,7 @@ export const ContestResult = () => {
                 <ContestantResult key={`result-${x.playerId}`} contestant={x} />
             ))}
             {isStrifePlayer && (
-                <BigButton className="mt-12" onClick={createContestHandler(dispatch, gameId)}>New Contest</BigButton>
+                <BigButton className="" onClick={createContestHandler(dispatch, gameId)}>New Contest</BigButton>
             )}
         </>
     )

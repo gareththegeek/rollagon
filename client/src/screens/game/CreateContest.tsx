@@ -55,16 +55,21 @@ export const CreateContest = () => {
         return (
             <section>
                 <h2>Between Contests</h2>
-                <p className="mb-16">You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can accomplish it without need for a Contest.</p>
+                <p className="">
+                    You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can
+                    accomplish it without need for a Contest.
+                </p>
                 <Placeholder>Waiting for the next Glorious Contest</Placeholder>
             </section>
         )
     }
 
     return (
-        <section>
-            <h2>Create a Contest</h2>
-            <p className="pb-6">Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
+        <>
+            <section>
+                <h2>Create a Contest</h2>
+                <p className="">Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
+            </section>
             <FieldSet
                 title="Set the Strife Level"
                 guidance="Adjust the strife level for permanent or temporary advantages or disadvantages."
@@ -108,9 +113,9 @@ export const CreateContest = () => {
             >
                 <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
             </FieldSet>
-            <BigButton className="mt-10" disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
+            <BigButton className="" disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
                 Roll the Contest
             </BigButton>
-        </section>
+        </>
     )
 }

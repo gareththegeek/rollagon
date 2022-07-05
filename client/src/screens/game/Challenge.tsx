@@ -45,7 +45,7 @@ export const Challenge = () => {
     }
 
     return (
-        <div className="mb-10">
+        <>
             <section>
                 <h2>
                     <div className="flex flex-col lg:flex-row lg:place-content-between">
@@ -55,22 +55,22 @@ export const Challenge = () => {
                 </h2>
                 {cancelButton(true)}
                 {status === 'complete' ? (
-                    <p className="mb-16">
+                    <p className="">
                         A record of how the Heroes fared in the Contest. Heroes should narrate their results in
                         ascending order - the Strife player should respond with the Opponents reactions.
                     </p>
                 ) : (
-                    <p className="mb-16">This is the challenge that the Heroes must strive to overcome.</p>
+                    <p className="">This is the challenge that the Heroes must strive to overcome.</p>
                 )}
             </section>
             <section>
-                <div className="mb-4 md:mt-12 flex items-center gap-3">
+                <div className="flex items-center gap-3">
                     <StrifeTarget strife={strife} />
                     <h3 className="flex-grow mt-0">The Challenge</h3>
                 </div>
-                <StrifeRoll className="mb-6" strife={strife} />
+                <StrifeRoll className="" strife={strife} />
                 <Tags tags={harmTags} />
             </section>
-        </div>
+        </>
     )
 }

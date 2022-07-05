@@ -36,8 +36,6 @@
 
     h1 {
         @apply border-b-2;
-        @apply mt-10 md:mt-0;
-        @apply mb-4;
         @apply pb-3 md:pb-4 md:pt-4;
         @apply text-xl md:text-4xl;
         @apply leading-tight;
@@ -50,8 +48,6 @@
 
     h2 {
         @apply border-b-2;
-        @apply mt-10 md:mt-0;
-        @apply mb-4;
         @apply pb-3 md:pb-2 md:pt-2;
         @apply text-xl md:text-2xl;
         @apply leading-tight;
@@ -64,7 +60,6 @@
 
     h3 {
         @apply border-b-2;
-        @apply mb-6 md:mt-10 md:mb-4;
         @apply pb-0 md:pb-3;
         @apply text-base md:text-xl;
         @apply font-bold md:font-semibold;
@@ -77,7 +72,6 @@
     }
 
     h4 {
-        @apply mb-6;
         @apply text-base;
         @apply leading-tight;
         @apply tracking-tight;
