@@ -15,7 +15,7 @@ const HarmTagsDescription: Record<HarmTagType, React.ReactElement> = {
 
 export const Tag = ({ tag }: TagProps) => {
     return (
-        <ul className="mb-4">
+        <ul className="flex flex-col gap-3">
             <li className="flex"><Diamond className="mr-6 w-4 h-4 min-w-[0.8rem] min-h-[0.8rem]" />{HarmTagsDescription[tag]}</li>
         </ul>
     )

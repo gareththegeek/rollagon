@@ -14,13 +14,13 @@ export const ToggleButton = ({ className, label, enabled, onChange, toggled }: T
         <SmallButton
             disabled={!enabled}
             selected={toggled}
-            className={`${className} w-40 text-left xl:w-auto`}
+            className={`${className ?? ''} w-40 text-left xl:w-auto`}
             onClick={() => {
                 const next = !toggled
                 onChange(next)
             }}
         >
-            <input type='checkbox' aria-label={label} checked={toggled} className="mr-2" /><span>{label}</span>
+            <input type='checkbox' aria-label={label} readOnly={true} checked={toggled} className="mr-2" /><span>{label}</span>
         </SmallButton>
     )
 }

@@ -26,7 +26,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
 
     return (
         <>
-            <ol className={`flex flex-col md:flex-row gap-6`}>
+            <div className={`flex flex-col md:flex-row gap-6`}>
                 <div className="flex">
                     {nameDie && !isCurrentPlayerRolling && (
                         <Roll
@@ -65,37 +65,33 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                         <></>
                     )}
                 </div>
-                <div className="flex">
-                    {(rest.length > 0 || d4sDropped.length > 0) && (
-                        <>
-                            <div className="hidden md:block ml-8 pr-8 border-l-2 border-stone-500"></div>
-                            {rest.map((x, i) => (
-                                <Roll
-                                    key={`dropped-${contestant.playerId}-${i}`}
-                                    value={x.roll!}
-                                    label={x.type}
-                                    dropped={true}
-                                    className="mr-2"
-                                    title="This dice was dropped and did not contribute to the final score"
-                                />
-                            ))}
-                            {d4sDropped.map((x, i) => (
-                                <Roll
-                                    key={`dropped-d4-${contestant.playerId}-${i}`}
-                                    value={x.roll!}
-                                    label={x.type}
-                                    dropped={true}
-                                    className="mr-2"
-                                    title="This dice was dropped and did not contribute to the final score"
-                                />
-                            ))}
-                        </>
-                    )}
-                </div>
-            </ol>
-            <div>
-                <NameDie contestant={contestant} />
+                {(rest.length > 0 || d4sDropped.length > 0) && (
+                    <div className="flex">
+                        <div className="hidden md:block ml-8 pr-8 border-l-2 border-stone-500"></div>
+                        {rest.map((x, i) => (
+                            <Roll
+                                key={`dropped-${contestant.playerId}-${i}`}
+                                value={x.roll!}
+                                label={x.type}
+                                dropped={true}
+                                className="mr-2"
+                                title="This dice was dropped and did not contribute to the final score"
+                            />
+                        ))}
+                        {d4sDropped.map((x, i) => (
+                            <Roll
+                                key={`dropped-d4-${contestant.playerId}-${i}`}
+                                value={x.roll!}
+                                label={x.type}
+                                dropped={true}
+                                className="mr-2"
+                                title="This dice was dropped and did not contribute to the final score"
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
+            <NameDie contestant={contestant} />
         </>
     )
 }

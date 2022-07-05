@@ -33,9 +33,9 @@ export const EnterContest = () => {
     return (
         <section>
             <h3>Who Will Join the Contest?</h3>
-            <p className="mb-6">Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
+            <p>Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
             {contestants.length === 0 && isStrifePlayer
-                && <Placeholder className="mb-2">No one has joined</Placeholder>}
+                && <Placeholder>No one has joined</Placeholder>}
             {players.map((playa) => (
                 <EditContestant key={`enter-contest-player-${playa.id}`} player={playa} />
             ))}
@@ -44,7 +44,7 @@ export const EnterContest = () => {
                 <BigButton
                     disabled={isLoading || !all}
                     onClick={rollResultsHandler(dispatch, gameId, contestId)}
-                    className="mt-8"
+                   
                 >
                     Roll Results
                 </BigButton>

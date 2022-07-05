@@ -55,12 +55,12 @@ export const Game = () => {
                     <Header />
                     <main className="mt-16 w-full min-h-screen">
                         {tab === TabType.Contests && (
-                            <div>
+                            <>
                                 {contestStatus === 'new' && <CreateContest />}
                                 {contestStatus !== 'new' && <Challenge />}
                                 {contestStatus === 'targetSet' && <EnterContest />}
                                 {contestStatus === 'complete' && <ContestResult />}
-                            </div>
+                            </>
                         )}
                         {tab === TabType.Notes && <Notes />}
                         {tab === TabType.About && <About />}

@@ -55,16 +55,21 @@ export const CreateContest = () => {
         return (
             <section>
                 <h2>Between Contests</h2>
-                <p className="mb-16">You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can accomplish it without need for a Contest.</p>
+                <p>
+                    You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can
+                    accomplish it without need for a Contest.
+                </p>
                 <Placeholder>Waiting for the next Glorious Contest</Placeholder>
             </section>
         )
     }
 
     return (
-        <section>
-            <h2>Create a Contest</h2>
-            <p className="pb-6">Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
+        <>
+            <section>
+                <h2>Create a Contest</h2>
+                <p>Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
+            </section>
             <FieldSet
                 title="Set the Strife Level"
                 guidance="Adjust the strife level for permanent or temporary advantages or disadvantages."
@@ -78,7 +83,7 @@ export const CreateContest = () => {
                 title="Build the Opponent's Dice Pool"
                 guidance="Add dice for the Opponent’s Name, Epithets, and any Bonus dice."
             >
-                <div className="flex flex-col xl:flex-row flex-wrap">
+                <div className="flex flex-col xl:flex-row flex-wrap gap-2 md:gap-4">
                     <DicePoolEditor
                         dice={[6, 8, 10, 12]}
                         dicePool={strife.dicePool}
@@ -108,9 +113,9 @@ export const CreateContest = () => {
             >
                 <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
             </FieldSet>
-            <BigButton className="mt-10" disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
+            <BigButton disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
                 Roll the Contest
             </BigButton>
-        </section>
+        </>
     )
 }

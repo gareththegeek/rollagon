@@ -50,7 +50,7 @@ export const Notes = () => {
                 <div className="flex place-content-between">
                     <span>Notes</span>
                     {!edit && isStrifePlayer && (
-                        <Button className="py-2" disabled={loading} onClick={() => setEdit(true)}>
+                        <Button padding="py-0.5 lg:py-1 px-4" disabled={loading} onClick={() => setEdit(true)}>
                             Add Note
                         </Button>
                     )}
@@ -59,7 +59,7 @@ export const Notes = () => {
             {edit && (
                 <NoteFrame>
                     <textarea
-                        aria-label='Enter note here'
+                        aria-label="Enter note here"
                         rows={5}
                         value={text}
                         className="w-full display-inline border-2 leading-7 mr-2 px-1"
@@ -76,8 +76,8 @@ export const Notes = () => {
                 <Placeholder>There are currently no notes</Placeholder>
             ) : (
                 <div>
-                    {notes.map((note) => (
-                        <NoteFrame className="flex justify-between">
+                    {notes.map((note, i) => (
+                        <NoteFrame key={`note-${i}`} className="flex justify-between">
                             <div>
                                 <ReactMarkdown className="markdown break-words" key={note.id}>
                                     {note.text}

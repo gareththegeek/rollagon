@@ -14,7 +14,7 @@ export const ContestantResult = ({ contestant }: ContestantResultProps) => {
 
     return (
         <section>
-            <div className="mb-4 md:mt-12 flex items-center gap-3 border-t-2 pt-4">
+            <div className="flex items-center gap-3 border-t-2 pt-4">
                 <HeroRollResult contestant={contestant} />
                 <h4>
                     {player!.name}&nbsp;
