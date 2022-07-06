@@ -10,7 +10,7 @@ import { Splash } from './screens/splash/Splash'
 
 function App() {
     return (
-        <div className="h-full min-h-screen">
+        <div className="h-full min-h-screen mx-3">
             <BrowserRouter>
                 <Connection />
                 <Errors />
