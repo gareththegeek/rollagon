@@ -20,7 +20,7 @@ export const Splash = () => {
     const [text, setText] = useState('')
 
     return (
-        <div className="max-w-screen-md mx-3 md:mx-auto mt-8 md:mt-16">
+        <div className="max-w-screen-md md:mx-auto mt-8 md:mt-16">
             <main>
                 <section>
                     <h1>Agon Dice Roller</h1>
