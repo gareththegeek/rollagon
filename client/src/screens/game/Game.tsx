@@ -44,7 +44,7 @@ export const Game = () => {
 
     return (
         <div className="md:flex md:items-stretch max-w-screen-xl md:mx-auto">
-            <h4 className="flex md:hidden border-b-2 py-3 fixed top-0 w-full bg-grey-100 z-10">
+            <h4 className="flex md:hidden -mx-3 border-b-2 py-3 fixed top-0 w-full bg-grey-100 z-10">
                 <BurgerButton onClick={handleMenuClick} isOpen={menuOpen} />
                 Agon Dice Roller
             </h4>
