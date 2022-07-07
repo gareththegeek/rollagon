@@ -2,7 +2,14 @@ import { FC, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { generateInviteLink } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
-import { selectGameId, selectIsContestsTab, selectIsNotesTab, setTab, TabType } from '../../slices/gameSlice'
+import {
+    selectGameId,
+    selectIsAboutTab,
+    selectIsContestsTab,
+    selectIsNotesTab,
+    setTab,
+    TabType
+} from '../../slices/gameSlice'
 import { Divider } from '../Divider'
 import { Players } from '../players/Players'
 import { SmallButton } from '../SmallButton'
@@ -36,7 +43,7 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
 
     const isContestsTab = useSelector(selectIsContestsTab)
     const isNotesTab = useSelector(selectIsNotesTab)
-    //const isAboutTab = useSelector(selectIsAboutTab)
+    const isAboutTab = useSelector(selectIsAboutTab)
 
     const [opacity, setOpacity] = useState(false)
     const [transition, setTransition] = useState(false)
@@ -85,17 +92,14 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
                 </SmallButton>
             )}
             <Players />
-            {/* TODO Implement About Page */}
-            {/* <div className="flex mt-5">
-                    <Divider />
-                </div>
-                <SmallButton
-                    className="mr-0 mt-8"
-                    selected={isAboutTab}
-                    onClick={() => setTabHandler(TabType.About)}
-                >
+            <div className="flex mt-5">
+                <Divider />
+            </div>
+            <nav className="flex flex-col items-stretch md:items-end">
+                <SmallButton className="mt-8" selected={isAboutTab} onClick={() => setTabHandler(TabType.About)}>
                     About This App
-                </SmallButton> */}
+                </SmallButton>
+            </nav>
         </>
     )
 }

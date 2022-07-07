@@ -60,7 +60,7 @@ export const Splash = () => {
                     </p>
                     <p>
                         This app was created by <A href="">@gareth</A> and <A href="">@sporgory</A> with the help of the{' '}
-                        <A href="">AGON fan Discord community</A>.
+                        <A href="https://discord.gg/2kWxhJywGq">AGON fan Discord community</A>.
                     </p>
                     <p>
                         If you'd like to give feedback or get involved, check out the{' '}
