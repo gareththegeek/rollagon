@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
@@ -6,6 +7,7 @@ import { A } from '../../components/A'
 import { BigButton } from '../../components/BigButton'
 import { Input } from '../../components/Input'
 import { createGameAsync } from '../../slices/gameSlice'
+import { selectIsLoading } from '../../slices/statusSlice'
 
 const createGameClick = (dispatch: AppDispatch, navigate: NavigateFunction) => async () => {
     const result = await dispatch(createGameAsync())
@@ -17,6 +19,7 @@ const createGameClick = (dispatch: AppDispatch, navigate: NavigateFunction) => a
 export const Splash = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const isLoading = useSelector(selectIsLoading)
     const [text, setText] = useState('')
 
     return (
@@ -33,7 +36,7 @@ export const Splash = () => {
                 <section>
                     <h3>Start a New Session</h3>
                     <p>Start a new session. You'll be able to invite other players with a unique URL.</p>
-                    <BigButton onClick={createGameClick(dispatch, navigate)}>
+                    <BigButton disabled={isLoading} onClick={createGameClick(dispatch, navigate)}>
                         Start New Game
                     </BigButton>
                 </section>
