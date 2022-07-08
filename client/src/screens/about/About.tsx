@@ -10,7 +10,7 @@ export const About = () => {
             <p>This is a fan-made dice-rolling app for AGON. AGON is an action-packed roleplaying game about epic Heroes who face trials from the Gods in an ancient world of myth and legend. Learn more about it, and the Paragon system, at <A href="http://agon-rpg.com">agon-rpg.com</A></p>
             <p>At least one person playing should be familiar with the AGON rulebook.</p>
             <p>This app is a lightweight dicerolling app, focused on  resolving and narrating AGON Contests. It is not a campaign or character tracker - you'll still need to manage that on your own.</p>
-            <img className="mt-20 mx-auto w-1/2 hidden md:block" src="/images/agon-big.png" />
+            <img alt="Stylised greek hoplite helmet" className="mt-20 mx-auto w-1/2 hidden md:block" src="/images/agon-big.png" />
         </section>
     )
 }
