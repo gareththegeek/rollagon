@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { NavigateFunction, useNavigate, useParams } from 'react-router-dom'
 import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
@@ -8,6 +9,7 @@ import { Input } from '../../components/Input'
 import { LobbyPlayers } from '../../components/players/LobbyPlayers'
 import { setGameId } from '../../slices/gameSlice'
 import { getPlayersAsync, joinHeroAsync, joinStrifeAsync } from '../../slices/playerSlice'
+import { selectIsLoading } from '../../slices/statusSlice'
 
 const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) => async () => {
     const result = await dispatch(joinStrifeAsync(gameId))
@@ -26,6 +28,7 @@ const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, 
 export const Lobby = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const isLoading = useSelector(selectIsLoading)
     const [text, setText] = useState('')
     const { gameId } = useParams()
 
@@ -44,7 +47,7 @@ export const Lobby = () => {
                 <h3>Strife player</h3>
                 <p>The Strife player challenges the Heroes with worthy Contests.</p>
                 <div>
-                    <Button className="w-full md:w-auto" onClick={joinStrifeClick(dispatch, navigate, gameId!)}>
+                    <Button disabled={isLoading} className="w-full md:w-auto" onClick={joinStrifeClick(dispatch, navigate, gameId!)}>
                         Join as Strife Player
                     </Button>
                 </div>
@@ -60,11 +63,11 @@ export const Lobby = () => {
                         placeholder="Enter your Hero's Name"
                         aria-label="Enter your Hero's Name"
                     />
-                    <Button onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>
+                    <Button disabled={isLoading} onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>
                         Join as new Hero
                     </Button>
                 </div>
-                <LobbyPlayers onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
+                <LobbyPlayers disabled={isLoading} onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />
             </section>
         </main>
     )
