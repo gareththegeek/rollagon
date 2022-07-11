@@ -18,24 +18,16 @@ export interface MenuProps {
     onTabChange?: (tab: string) => void | undefined
 }
 
-const inviteLinkHandler =
-    (
-        gameId: string,
-        setOpacity: React.Dispatch<React.SetStateAction<boolean>>,
-        setTransition: React.Dispatch<React.SetStateAction<boolean>>
-    ) =>
-    () => {
-        const url = generateInviteLink(gameId)
-        navigator.clipboard.writeText(url)
-        setOpacity(true)
+const inviteLinkHandler = (gameId: string, setTransition: React.Dispatch<React.SetStateAction<boolean>>) => () => {
+    const url = generateInviteLink(gameId)
+    navigator.clipboard.writeText(url)
+    setTimeout(() => {
+        setTransition(true)
         setTimeout(() => {
-            setTransition(true)
-            setOpacity(false)
-            setTimeout(() => {
-                setTransition(false)
-            }, 2500)
-        }, 0)
-    }
+            setTransition(false)
+        }, 2500)
+    }, 0)
+}
 
 export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const gameId = useSelector(selectGameId)
@@ -45,7 +37,6 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const isNotesTab = useSelector(selectIsNotesTab)
     const isAboutTab = useSelector(selectIsAboutTab)
 
-    const [opacity, setOpacity] = useState(false)
     const [transition, setTransition] = useState(false)
 
     const setTabHandler = (tab: string) => {
@@ -73,17 +64,17 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
                     Notes
                 </SmallButton>
             </nav>
-            <Divider />
+            <Divider fullWidth={true} />
             {gameId !== undefined && (
                 <SmallButton
                     className="w-full md:w-auto mr-0 mt-8 mb-4"
-                    onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}
+                    onClick={inviteLinkHandler(gameId, setTransition)}
                 >
                     {transition ? 'Copied to clipboard!' : 'Copy Invite Link'}
                 </SmallButton>
             )}
             <Players />
-            <Divider />
+            <Divider fullWidth={true} />
             <nav className="flex flex-col items-stretch md:items-end">
                 <SmallButton className="mt-8" selected={isAboutTab} onClick={() => setTabHandler(TabType.About)}>
                     About This App

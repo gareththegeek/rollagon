@@ -1,3 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-export const Divider = () => <div className="w-full mt-3 border-b-2" />
+export interface DividerProps {
+    fullWidth?: boolean | undefined
+}
+
+export const Divider: FC<DividerProps> = ({ fullWidth }) => (
+    <div className={`${fullWidth ? 'w-full' : 'flex-grow'} mt-3 border-b-2`} />
+)
