@@ -7,7 +7,7 @@ export const Header = () => (
         <div className="flex flex-col items-end sticky top-16">
             <Loading />
             <h3 className="w-64 text-right border-b-0 mt-2 text-black">Agon Roller</h3>
-            <div className="relative">
+            <div className="w-full flex flex-col items-stretch md:items-end">
                 <Menu />
             </div>
         </div>

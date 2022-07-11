@@ -1,3 +1,3 @@
 import React from 'react'
 
-export const Divider = () => <div className="flex-grow mt-3 border-b-2" />
+export const Divider = () => <div className="w-full mt-3 border-b-2" />

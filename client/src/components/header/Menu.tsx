@@ -33,7 +33,7 @@ const inviteLinkHandler =
             setOpacity(false)
             setTimeout(() => {
                 setTransition(false)
-            }, 1000)
+            }, 2500)
         }, 0)
     }
 
@@ -57,7 +57,7 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
 
     return (
         <>
-            <nav className="flex flex-col items-stretch md:items-end relative">
+            <nav className="flex flex-col items-stretch md:items-end">
                 <SmallButton
                     className="md:w-auto mr-0 mb-4"
                     selected={isContestsTab}
@@ -73,28 +73,17 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
                     Notes
                 </SmallButton>
             </nav>
-            <div className="flex">
-                <Divider />
-            </div>
-            <div
-                className={`${transition ? 'transition-opacity duration-1000' : ''} ${
-                    opacity ? 'opacity-1' : 'opacity-0'
-                } absolute -l-10 mb-2 text-center text-base`}
-            >
-                Copied to clipboard!
-            </div>
+            <Divider />
             {gameId !== undefined && (
                 <SmallButton
                     className="w-full md:w-auto mr-0 mt-8 mb-4"
                     onClick={inviteLinkHandler(gameId, setOpacity, setTransition)}
                 >
-                    Copy Invite Link
+                    {transition ? 'Copied to clipboard!' : 'Copy Invite Link'}
                 </SmallButton>
             )}
             <Players />
-            <div className="flex mt-5">
-                <Divider />
-            </div>
+            <Divider />
             <nav className="flex flex-col items-stretch md:items-end">
                 <SmallButton className="mt-8" selected={isAboutTab} onClick={() => setTabHandler(TabType.About)}>
                     About This App
