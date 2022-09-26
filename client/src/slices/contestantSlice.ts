@@ -223,7 +223,15 @@ export const selectReadyContestantCount = (state: RootState) => {
         all: result.ready === result.total && result.total > 0
     }
 }
-export const selectContestants = (state: RootState) => Object.values(state.contestant.contestants)
+
+const orderContestantsByResult = (a: Contestant, b: Contestant): number => {
+    if (!a.dicePool.rolled || !b.dicePool.rolled) {
+        return 0
+    }
+    return a.dicePool.score! - b.dicePool.score!;
+}
+
+export const selectContestants = (state: RootState) => Object.values(state.contestant.contestants).sort(orderContestantsByResult)
 export const selectContestant = (playerId: string | undefined) => (state: RootState) =>
     playerId !== undefined
         ? state.contestant.contestants[playerId]
