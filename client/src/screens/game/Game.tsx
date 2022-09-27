@@ -13,6 +13,7 @@ import { Header } from '../../components/header/Header'
 import { About } from '../about/About'
 import { BurgerMenu } from '../../components/header/BurgerMenu'
 import { BurgerButton } from '../../components/header/BurgerButton'
+import { Errors } from '../../components/header/Errors'
 
 export const Game = () => {
     const dispatch = useAppDispatch()
@@ -54,6 +55,7 @@ export const Game = () => {
                 <>
                     <Header />
                     <main className="mt-16 w-full min-h-screen">
+                        <Errors />
                         {tab === TabType.Contests && (
                             <>
                                 {contestStatus === 'new' && <CreateContest />}
