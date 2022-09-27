@@ -7,10 +7,10 @@ export interface TagProps {
 }
 
 const HarmTagsDescription: Record<HarmTagType, React.ReactElement> = {
-    epic: <p>The Contest was&nbsp;<b>Epic</b>&nbsp;- Heroes who entered the contest marked Pathos</p>,
-    mythic: <p>The Contest was&nbsp;<b>Mythic</b>&nbsp;- Heroes who entered the contest spent Divine Favour</p>,
-    perilous: <p>The Contest was&nbsp;<b>Perilous</b>&nbsp;- Heroes who suffered marked Pathos</p>,
-    sacred: <p>The Contest was&nbsp;<b>Sacred</b>&nbsp;- Heroes who suffered spent Divine Favour</p>
+    epic: <p>The Contest is&nbsp;<b>Epic</b>&nbsp;- Heroes who enter the contest must mark Pathos</p>,
+    mythic: <p>The Contest is&nbsp;<b>Mythic</b>&nbsp;- Heroes who enter the contest must spend Divine Favour</p>,
+    perilous: <p>The Contest is&nbsp;<b>Perilous</b>&nbsp;- Heroes who suffer must mark Pathos</p>,
+    sacred: <p>The Contest is&nbsp;<b>Sacred</b>&nbsp;- Heroes who suffer must spend Divine Favour</p>
 }
 
 export const Tag = ({ tag }: TagProps) => {
