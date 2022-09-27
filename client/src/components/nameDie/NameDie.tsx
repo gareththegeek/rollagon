@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
-import { selectRollingNameDie } from '../../slices/contestantSlice'
+import { selectContestants, selectRollingNameDie } from '../../slices/contestantSlice'
 import { selectPlayerId } from '../../slices/playerSlice'
 import { Button } from '../Button'
 import { FieldSet } from '../FieldSet'
@@ -18,11 +18,15 @@ export const NameDie = ({ contestant }: NameDieProps) => {
     const playerId = useSelector(selectPlayerId)
     const isCurrentPlayer = playerId === contestant.playerId
     const isCurrentPlayerRolling = isCurrentPlayer && rolling
+    const isTied = Object.values(useSelector(selectContestants))
+        .some(c => c.dicePool.score === contestant.dicePool.score && c.playerId !== contestant.playerId)
+    console.log(Object.values(useSelector(selectContestants)))
+    console.log(isTied)
 
     const [showDiceSelector, setShowDiceSelector] = useState(false)
 
     const nameDie = contestant.dicePool.nameDie
-    
+
     if (!isCurrentPlayer) {
         return <></>
     }
@@ -53,7 +57,7 @@ export const NameDie = ({ contestant }: NameDieProps) => {
                     {isCurrentPlayerRolling && (
                         <Placeholder className="animate-pulse anim w-full md:w-auto">Rolling Name Die...</Placeholder>
                     )}
-                    {isCurrentPlayer && !rolling && (
+                    {isCurrentPlayer && !rolling && isTied && (
                         <Button
                             className="w-full md:w-auto"
                             onClick={() => {
