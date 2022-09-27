@@ -10,7 +10,7 @@ This app was created by [gareththegeek](https://www.reddit.com/user/gareththegee
 
 Build to run on `node v16`
 
-`npm install` to install dependencies.
+`npm install` within server and client directories to install dependencies.
 
 ### Server
 
