@@ -119,6 +119,13 @@ export const updateAsync = createAsyncThunk(
         dispatch(contestant.setContestAsync(value))
         dispatch(strife.setContestAsync(value))
         dispatch(update(value))
+        console.log('wargs21')
+        setTimeout(() => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            })
+        }, 0)
     }
 )
 
