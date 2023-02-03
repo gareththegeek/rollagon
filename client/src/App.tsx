@@ -8,7 +8,7 @@ import { Lobby } from './screens/lobby/Lobby'
 import { Splash } from './screens/splash/Splash'
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import { useTranslation, initReactI18next } from 'react-i18next'
+import { initReactI18next } from 'react-i18next'
 import * as de from './translations/de.json'
 import * as en from './translations/en.json'
 
