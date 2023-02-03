@@ -90,6 +90,8 @@
         "Have an Invite Link?": "Have an Invite Link?",
         "Paste it below or in your browser and click Join Game.": "Paste it below or in your browser and click Join Game.",
         "Existing game id": "Existing game id",
-        "Join Game": "Join Game"
+        "Join Game": "Join Game",
+        "Cannot set ready unless at least two dice (d6-d12) are included in the dice pool": "Cannot set ready unless at least two dice (d6-d12) are included in the dice pool",
+        "All players must be ready before contest can be rolled": "All players must be ready before contest can be rolled"
     }
 }
