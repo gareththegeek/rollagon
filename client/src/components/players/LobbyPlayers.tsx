@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Player } from '../../api/players'
 import { selectPlayers } from '../../slices/playerSlice'
 import { Button } from '../Button'
 
 export const LobbyPlayers = ({ onClick, disabled }: { onClick?: (player: Player) => void, disabled?: boolean }) => {
+    const { t } = useTranslation()
     const players = useSelector(selectPlayers)
 
     return <>
@@ -13,7 +15,7 @@ export const LobbyPlayers = ({ onClick, disabled }: { onClick?: (player: Player)
                 return
             }
             onClick(player)
-        }}>Join as {player.name}</Button></li>)}
+        }}>{t('Join as')} {player.name}</Button></li>)}
     </ul>
     </>
 }

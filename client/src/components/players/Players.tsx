@@ -1,8 +1,10 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { selectConnections, selectPlayers } from '../../slices/playerSlice'
 
 export const Players = () => {
+    const { t } = useTranslation()
     const players = useSelector(selectPlayers)
     const connections = useSelector(selectConnections)
 
@@ -12,7 +14,7 @@ export const Players = () => {
     return (
         <ul className="flex flex-col items-center md:items-end">
             <li className="flex items-center">
-                Strife Player
+                {t('Strife Player')}
                 <div className={`${strifeColour} h-4 w-4 border-2 rounded-lg ml-2 inline-block`} />
             </li>
             {players.map((player) => {

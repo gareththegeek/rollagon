@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
@@ -60,7 +61,7 @@ export const EditContestant = ({ player }: EditContestantProps) => {
             return (
                 <FieldSet
                     title={player.name}
-                    guidance="Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage."
+                    guidance={t('Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero\'s name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage.') ?? ""}
                     className="mb-4"
                 >
                     <div>
@@ -68,7 +69,7 @@ export const EditContestant = ({ player }: EditContestantProps) => {
                             className="w-full md:w-auto"
                             onClick={joinContestHandler(dispatch, gameId, contestId, player.id!)}
                         >
-                            Join the Contest!
+                            {t('Join the Contest!')}
                         </Button>
                     </div>
                 </FieldSet>
@@ -83,7 +84,7 @@ export const EditContestant = ({ player }: EditContestantProps) => {
             title={player.name}
             guidance={
                 isCurrentPlayer
-                    ? "Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero's name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage."
+                    ? t('Each Hero Player indicates their participation in the contest by speaking their name. Start with the leader and go around the table. On your turn, recite your hero\'s name and add dice as you go: If your Epithet applies to the contest, add that die. Add your Name die and the Domain die for the contest when you say your Name and lineage.') ?? ""
                     : undefined
             }
             className="mb-4"
@@ -98,14 +99,14 @@ export const EditContestant = ({ player }: EditContestantProps) => {
                 <ToggleButton
                     enabled={isCurrentPlayer}
                     toggled={contestant.ready}
-                    label="Ready"
+                    label={t('Ready')}
                     onChange={readyHandler(dispatch, gameId, contestId, contestant)}
                 />
                 {isCurrentPlayer && (
                     <SmallButton className="w-40 md:w-30"
                         onClick={leaveContestHandler(dispatch, gameId, contestId, player.id!)}
                     >
-                        Leave
+                        {t('Leave')}
                     </SmallButton>
                 )}
             </div>

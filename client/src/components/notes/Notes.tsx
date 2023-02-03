@@ -12,6 +12,7 @@ import { NoteFrame } from './NoteFrame'
 import './Notes.css'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { Placeholder } from '../Placeholder'
+import { useTranslation } from 'react-i18next'
 
 const addNoteHandler =
     (
@@ -32,6 +33,7 @@ const deleteNoteHandler = (dispatch: AppDispatch, gameId: string, noteId: string
 }
 
 export const Notes = () => {
+    const { t } = useTranslation()
     const dispatch = useAppDispatch()
     const isStrifePlayer = useSelector(selectIsStrifePlayer)
     const loading = useSelector(selectIsLoading)
@@ -48,10 +50,10 @@ export const Notes = () => {
         <section>
             <h2>
                 <div className="flex place-content-between">
-                    <span>Notes</span>
+                    <span>{t('Notes')}</span>
                     {!edit && isStrifePlayer && (
                         <Button padding="py-0.5 lg:py-1 px-4" disabled={loading} onClick={() => setEdit(true)}>
-                            Add Note
+                            {t('Add Note')}
                         </Button>
                     )}
                 </div>
@@ -59,21 +61,21 @@ export const Notes = () => {
             {edit && (
                 <NoteFrame>
                     <textarea
-                        aria-label="Enter note here"
+                        aria-label={t('Enter note here') ?? ""}
                         rows={5}
                         value={text}
                         className="w-full display-inline border-2 leading-7 mr-2 px-1"
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value)}
-                        placeholder="Enter note here, in #markdown if you like..."
+                        placeholder={t('Enter note here, in #markdown if you like...') ?? ""}
                     ></textarea>
                     <SmallButton onClick={addNoteHandler(dispatch, setEdit, setText, gameId, text)} className="mr-2">
-                        Save
+                        {t('Save')}
                     </SmallButton>
-                    <SmallButton onClick={() => setEdit(false)}>Cancel</SmallButton>
+                    <SmallButton onClick={() => setEdit(false)}>{t('Cancel')}</SmallButton>
                 </NoteFrame>
             )}
             {!edit && notes.length === 0 ? (
-                <Placeholder>There are currently no notes</Placeholder>
+                <Placeholder>{t('There are currently no notes')}</Placeholder>
             ) : (
                 <div>
                     {notes.map((note, i) => (
@@ -87,7 +89,7 @@ export const Notes = () => {
                                 <SmallButton
                                     onClick={deleteNoteHandler(dispatch, gameId, note.id)}
                                     className="h-9"
-                                    title="Delete note"
+                                    title={t('Delete note')}
                                 >
                                     X
                                 </SmallButton>
