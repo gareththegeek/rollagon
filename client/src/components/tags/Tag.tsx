@@ -1,4 +1,5 @@
 import React from 'react'
+import { Trans } from 'react-i18next'
 import { HarmTagType } from '../../api/strife'
 import { Diamond } from '../Diamond'
 
@@ -7,10 +8,10 @@ export interface TagProps {
 }
 
 const HarmTagsDescription: Record<HarmTagType, React.ReactElement> = {
-    epic: <p>The Contest is&nbsp;<b>Epic</b>&nbsp;- Heroes who enter the contest must mark Pathos</p>,
-    mythic: <p>The Contest is&nbsp;<b>Mythic</b>&nbsp;- Heroes who enter the contest must spend Divine Favour</p>,
-    perilous: <p>The Contest is&nbsp;<b>Perilous</b>&nbsp;- Heroes who suffer must mark Pathos</p>,
-    sacred: <p>The Contest is&nbsp;<b>Sacred</b>&nbsp;- Heroes who suffer must spend Divine Favour</p>
+    epic: <p><Trans i18nKey="ContestIsEpic">The Contest is <b>Epic</b> - Heroes who enter the contest must mark Pathos</Trans></p>,
+    mythic: <p><Trans i18nKey="ContestIsMythic">The Contest is <b>Mythic</b> - Heroes who enter the contest must spend Divine Favour</Trans></p>,
+    perilous: <p><Trans i18nKey="ContestIsPerilous">The Contest is <b>Perilous</b> - Heroes who suffer must mark Pathos</Trans></p>,
+    sacred: <p><Trans i18nKey="ContestIsSacred">The Contest is <b>Sacred</b> - Heroes who suffer must spend Divine Favour</Trans></p>
 }
 
 export const Tag = ({ tag }: TagProps) => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
 import { selectContestants, selectRollingNameDie } from '../../slices/contestantSlice'
@@ -14,12 +15,14 @@ export interface NameDieProps {
 }
 
 export const NameDie = ({ contestant }: NameDieProps) => {
+    const { t } = useTranslation()
     const rolling = useSelector(selectRollingNameDie)
     const playerId = useSelector(selectPlayerId)
     const isCurrentPlayer = playerId === contestant.playerId
     const isCurrentPlayerRolling = isCurrentPlayer && rolling
-    const isTied = Object.values(useSelector(selectContestants))
-        .some(c => c.dicePool.score === contestant.dicePool.score && c.playerId !== contestant.playerId)
+    const isTied = Object.values(useSelector(selectContestants)).some(
+        (c) => c.dicePool.score === contestant.dicePool.score && c.playerId !== contestant.playerId
+    )
     console.log(Object.values(useSelector(selectContestants)))
     console.log(isTied)
 
@@ -34,7 +37,12 @@ export const NameDie = ({ contestant }: NameDieProps) => {
     return (
         <div className="flex">
             {showDiceSelector ? (
-                <FieldSet title="Select Name Die" className="-ml-4 mb-0 mt-2 w-full" role="radiogroup" aria-label="Name Dice">
+                <FieldSet
+                    title={t('Select Name Die')}
+                    className="-ml-4 mb-0 mt-2 w-full"
+                    role="radiogroup"
+                    aria-label={t('Name Dice')}
+                >
                     <div className="flex flex-col md:flex-row gap-3">
                         <NameDiceSelector
                             contestant={contestant}
@@ -46,16 +54,16 @@ export const NameDie = ({ contestant }: NameDieProps) => {
                             onClick={() => {
                                 setShowDiceSelector(false)
                             }}
-                            title="Cancel Tie Break Roll"
+                            title={t('Cancel Tie Break Roll')}
                         >
-                            Cancel
+                            {t('Cancel')}
                         </SmallButton>
                     </div>
                 </FieldSet>
             ) : (
                 <>
                     {isCurrentPlayerRolling && (
-                        <Placeholder className="animate-pulse anim w-full md:w-auto">Rolling Name Die...</Placeholder>
+                        <Placeholder className="animate-pulse anim w-full md:w-auto">{t('Rolling Name Die...')}</Placeholder>
                     )}
                     {isCurrentPlayer && !rolling && isTied && (
                         <Button
@@ -64,7 +72,7 @@ export const NameDie = ({ contestant }: NameDieProps) => {
                                 setShowDiceSelector(true)
                             }}
                         >
-                            {nameDie ? 'Roll Again' : 'Break Tie'}
+                            {nameDie ? t('Roll Again') : t('Break Tie')}
                         </Button>
                     )}
                 </>

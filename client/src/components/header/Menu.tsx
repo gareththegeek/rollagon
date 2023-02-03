@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { generateInviteLink } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
@@ -32,6 +33,7 @@ const inviteLinkHandler = (gameId: string, setTransition: React.Dispatch<React.S
 export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const gameId = useSelector(selectGameId)
     const dispatch = useAppDispatch()
+    const { t } = useTranslation()
 
     const isContestsTab = useSelector(selectIsContestsTab)
     const isNotesTab = useSelector(selectIsNotesTab)
@@ -70,14 +72,14 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
                     className="w-full md:w-auto mr-0 mt-8 mb-4"
                     onClick={inviteLinkHandler(gameId, setTransition)}
                 >
-                    {transition ? 'Copied to clipboard!' : 'Copy Invite Link'}
+                    {transition ? t('Copied to clipboard!') : t('Copy Invite Link')}
                 </SmallButton>
             )}
             <Players />
             <Divider fullWidth={true} />
             <nav className="flex flex-col items-stretch md:items-end">
                 <SmallButton className="mt-8" selected={isAboutTab} onClick={() => setTabHandler(TabType.About)}>
-                    About This App
+                    {t('About this App')}
                 </SmallButton>
             </nav>
         </>

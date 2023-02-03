@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
@@ -17,6 +18,7 @@ const rollResultsHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 }
 
 export const EnterContest = () => {
+    const { t } = useTranslation()
     const dispatch = useAppDispatch()
     const isLoading = useSelector(selectIsLoading)
     const isStrifePlayer = useSelector(selectIsStrifePlayer)
@@ -32,10 +34,10 @@ export const EnterContest = () => {
 
     return (
         <section>
-            <h3>Who Will Join the Contest?</h3>
-            <p>Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!</p>
+            <h3>{t('Who Will Join the Contest?')}</h3>
+            <p>{t('Heroes join the contest by building their dice pool. Make sure everyone is ready before rolling the final results!')}</p>
             {contestants.length === 0 && isStrifePlayer
-                && <Placeholder>No one has joined</Placeholder>}
+                && <Placeholder>{t('No one has joined')}</Placeholder>}
             {players.map((playa) => (
                 <EditContestant key={`enter-contest-player-${playa.id}`} player={playa} />
             ))}
@@ -46,7 +48,7 @@ export const EnterContest = () => {
                     onClick={rollResultsHandler(dispatch, gameId, contestId)}
                    
                 >
-                    Roll Results
+                    {t('Roll Results')}
                 </BigButton>
             )}
         </section>

@@ -19,6 +19,7 @@ import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { FieldSet } from '../../components/FieldSet'
 import { BigButton } from '../../components/BigButton'
 import { Placeholder } from '../../components/Placeholder'
+import { Trans, useTranslation } from 'react-i18next'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -40,6 +41,7 @@ const rollContestHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 }
 
 export const CreateContest = () => {
+    const { t } = useTranslation()
     const dispatch = useAppDispatch()
     const gameId = useSelector(selectGameId)
     const isStrifePlayer = useSelector(selectIsStrifePlayer)
@@ -54,12 +56,13 @@ export const CreateContest = () => {
     if (!isStrifePlayer) {
         return (
             <section>
-                <h2>Between Contests</h2>
+                <h2>{t('Between Contests')}</h2>
                 <p>
-                    You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can
-                    accomplish it without need for a Contest.
+                    {t(
+                        "You are a glorious Hero - strive to take on worthy opponents. If a challenge isn't glorious, you can accomplish it without need for a Contest."
+                    )}
                 </p>
-                <Placeholder>Waiting for the next Glorious Contest</Placeholder>
+                <Placeholder>{t('Waiting for the next Glorious Contest')}</Placeholder>
             </section>
         )
     }
@@ -67,12 +70,12 @@ export const CreateContest = () => {
     return (
         <>
             <section>
-                <h2>Create a Contest</h2>
-                <p>Create a contest whenever the heroes come into conflict with a worthy opponent.</p>
+                <h2>{t('Create a Contest')}</h2>
+                <p>{t('Create a contest whenever the heroes come into conflict with a worthy opponent.')}</p>
             </section>
             <FieldSet
-                title="Set the Strife Level"
-                guidance="Adjust the strife level for permanent or temporary advantages or disadvantages."
+                title={t('Set the Strife Level')}
+                guidance={t('Adjust the strife level for permanent or temporary advantages or disadvantages.') ?? ''}
             >
                 <StrifeLevelEditor
                     current={strife.strifeLevel}
@@ -80,8 +83,8 @@ export const CreateContest = () => {
                 />
             </FieldSet>
             <FieldSet
-                title="Build the Opponent's Dice Pool"
-                guidance="Add dice for the Opponent’s Name, Epithets, and any Bonus dice."
+                title={t("Build the Opponent's Dice Pool")}
+                guidance={t("Add dice for the Opponent's Name, Epithets, and any Bonus dice.") ?? ''}
             >
                 <div className="flex flex-col xl:flex-row flex-wrap gap-2 md:gap-4">
                     <DicePoolEditor
@@ -93,20 +96,28 @@ export const CreateContest = () => {
                 </div>
             </FieldSet>
             <FieldSet
-                title="Choose Harm Tags"
+                title={t('Choose Harm Tags')}
                 guidance={
                     <ul>
                         <li>
-                            <b>Sacred</b> - Heroes spend Divine Favor if they suffer in the Contest.
+                            <Trans i18nKey="ChooseSacredHarm">
+                                <b>Sacred</b> - Heroes spend Divine Favor if they suffer in the Contest.
+                            </Trans>
                         </li>
                         <li>
-                            <b>Perilous</b> - Heroes mark Pathos if they suffer in the Contest.
+                            <Trans i18nKey="ChoosePerilousHarm">
+                                <b>Perilous</b> - Heroes mark Pathos if they suffer in the Contest.
+                            </Trans>
                         </li>
                         <li>
-                            <b>Mythic</b> - Heroes spend Divine Favor to enter the Contest.
+                            <Trans i18nKey="ChooseMythicHarm">
+                                <b>Mythic</b> - Heroes spend Divine Favor to enter the Contest.
+                            </Trans>
                         </li>
                         <li>
-                            <b>Epic</b> - Heroes mark Pathos to enter the Contest."
+                            <Trans i18nKey="ChooseEpicHarm">
+                                <b>Epic</b> - Heroes mark Pathos to enter the Contest.
+                            </Trans>
                         </li>
                     </ul>
                 }
@@ -114,7 +125,7 @@ export const CreateContest = () => {
                 <HarmTagsEditor onChange={harmTagsChangeHandler(dispatch, gameId, contestId, strife)} />
             </FieldSet>
             <BigButton disabled={isLoading} onClick={rollContestHandler(dispatch, gameId, contestId)}>
-                Roll the Contest
+                {t('Roll the Contest')}
             </BigButton>
         </>
     )

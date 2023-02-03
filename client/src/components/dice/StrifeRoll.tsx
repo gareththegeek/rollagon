@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Strife } from '../../api/strife'
 import { Roll } from './Roll'
 
@@ -9,6 +10,7 @@ export interface StrifeRollProps {
 
 export const StrifeRoll: React.FC<StrifeRollProps> = ({ className, strife }) => {
     const [best, ...rest] = strife.dicePool.dice
+    const { t } = useTranslation()
     return (
         <ol className={`${className ?? ''} flex flex-col md:flex-row gap-6`}>
             <div className="flex">
@@ -17,14 +19,14 @@ export const StrifeRoll: React.FC<StrifeRollProps> = ({ className, strife }) => 
                     label="Strife"
                     colour="border-grey-300"
                     className="mr-3"
-                    title="This dice contributed to the score"
+                    title={t('This dice contributed to the score') ?? ""}
                 />
                 <Roll
                     value={best.roll!}
                     label={best.type}
                     colour="border-grey-300"
                     className="mr-3"
-                    title="This dice contributed to the score"
+                    title={t('This dice contributed to the score') ?? ""}
                 />
                 <div className="hidden md:block ml-8 pr-8 border-l-2 border-stone-500"></div>
             </div>
@@ -38,7 +40,7 @@ export const StrifeRoll: React.FC<StrifeRollProps> = ({ className, strife }) => 
                                 label={x.type}
                                 dropped={true}
                                 className="mr-3"
-                                title="This dice was dropped and did not contribute to the final score"
+                                title={t('This dice was dropped and did not contribute to the final score') ?? ""}
                             />
                         ))}
                     </>

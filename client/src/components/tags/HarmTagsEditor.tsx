@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { HarmTagType } from '../../api/strife'
 import { ToggleButton } from '../ToggleButton'
 
@@ -7,11 +8,12 @@ export interface HarmTagsEditorProps {
 }
 
 export const HarmTagsEditor = ({ onChange }: HarmTagsEditorProps) => {
+    const { t } = useTranslation()
     const tags: { name: string, value: HarmTagType }[] = [
-        { name: 'Sacred', value: 'sacred' },
-        { name: 'Perilous', value: 'perilous' },
-        { name: 'Mythic', value: 'mythic' },
-        { name: 'Epic', value: 'epic' }
+        { name: t('Sacred'), value: 'sacred' },
+        { name: t('Perilous'), value: 'perilous' },
+        { name: t('Mythic'), value: 'mythic' },
+        { name: t('Epic'), value: 'epic' }
     ]
 
     const [selectedTags, setSelectedTags] = useState([] as HarmTagType[])

@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { NavigateFunction, useNavigate, useParams } from 'react-router-dom'
 import { Player } from '../../api/players'
@@ -26,6 +27,7 @@ const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, 
 }
 
 export const Lobby = () => {
+    const { t } = useTranslation()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isLoading = useSelector(selectIsLoading)
@@ -40,31 +42,31 @@ export const Lobby = () => {
     return (
         <main className="max-w-screen-md mx-3 md:mx-auto mt-8 md:mt-16">
             <section>
-                <h2>Are you Strife or a Hero?</h2>
-                <p>Every game of AGON needs one Strife player and at least two Hero Players.</p>
+                <h2>{t('Are you Strife or a Hero?')}</h2>
+                <p>{t('Every game of AGON needs one Strife player and at least two Hero Players.')}</p>
             </section>
             <section>
-                <h3>Strife player</h3>
-                <p>The Strife player challenges the Heroes with worthy Contests.</p>
+                <h3>{t('Strife Player')}</h3>
+                <p>{t('The Strife player challenges the Heroes with worthy Contests.')}</p>
                 <div>
                     <Button disabled={isLoading} className="w-full md:w-auto" onClick={joinStrifeClick(dispatch, navigate, gameId!)}>
-                        Join as Strife Player
+                        {t('Join as Strife Player')}
                     </Button>
                 </div>
             </section>
             <section>
-                <h3>Hero player</h3>
-                <p>Hero players contend against the Contests presented by the Strife player.</p>
+                <h3>{t('Hero Player')}</h3>
+                <p>{t('Hero players contend against the Contests presented by the Strife player.')}</p>
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
                     <Input
                         className="flex-grow"
                         value={text}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-                        placeholder="Enter your Hero's Name"
-                        aria-label="Enter your Hero's Name"
+                        placeholder={t('Enter your Hero\'s Name')}
+                        aria-label={t('Enter your Hero\'s Name')}
                     />
                     <Button disabled={isLoading} onClick={() => joinHeroClick(dispatch, navigate, gameId!, { name: text })}>
-                        Join as new Hero
+                        {t('Join as new Hero')}
                     </Button>
                 </div>
                 <LobbyPlayers disabled={isLoading} onClick={(player: Player) => joinHeroClick(dispatch, navigate, gameId!, player)} />

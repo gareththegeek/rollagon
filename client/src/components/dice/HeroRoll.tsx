@@ -1,4 +1,6 @@
+import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
 import { selectRollingNameDie } from '../../slices/contestantSlice'
@@ -21,6 +23,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
     const playerId = useSelector(selectPlayerId)
     const isCurrentPlayer = playerId === contestant.playerId
     const isCurrentPlayerRolling = isCurrentPlayer && rolling
+    const { t } = useTranslation()
 
     const nameDie = contestant.dicePool.nameDie
 
@@ -31,9 +34,9 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                     {nameDie && !isCurrentPlayerRolling && (
                         <Roll
                             value={nameDie.roll!}
-                            label="Tie Breaker"
+                            label={t('Tie Breaker')}
                             colour="bg-grey-300 border-black"
-                            title="This is the tie breaking roll"
+                            title={t('This is the tie breaking roll') ?? ''}
                             className="mr-12"
                         />
                     )}
@@ -42,14 +45,14 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                         label={best0.type}
                         colour="border-grey-300"
                         className="mr-3"
-                        title="This dice contributed to the score"
+                        title={t('This dice contributed to the score') ?? ''}
                     />
                     <Roll
                         value={best1.roll!}
                         label={best1.type}
                         colour="border-grey-300"
                         className="mr-3"
-                        title="This dice contributed to the score"
+                        title={t('This dice contributed to the score') ?? ''}
                     />
                     {hasD4 ? (
                         <>
@@ -58,7 +61,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                                 label="Bonus"
                                 colour="border-grey-300"
                                 className="mr-3"
-                                title="This dice contributed to the score"
+                                title={t('This dice contributed to the score') ?? ''}
                             />
                         </>
                     ) : (
@@ -75,7 +78,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                                 label={x.type}
                                 dropped={true}
                                 className="mr-2"
-                                title="This dice was dropped and did not contribute to the final score"
+                                title={t('This dice was dropped and did not contribute to the final score') ?? ''}
                             />
                         ))}
                         {d4sDropped.map((x, i) => (
@@ -85,7 +88,7 @@ export const HeroRoll = ({ contestant }: HeroRollProps) => {
                                 label={x.type}
                                 dropped={true}
                                 className="mr-2"
-                                title="This dice was dropped and did not contribute to the final score"
+                                title={t('This dice was dropped and did not contribute to the final score') ?? ''}
                             />
                         ))}
                     </div>

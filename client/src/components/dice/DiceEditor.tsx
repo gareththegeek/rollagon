@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { SmallButton } from '../SmallButton'
 
 export interface DiceEditorProps {
@@ -10,13 +11,14 @@ export interface DiceEditorProps {
 
 export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProps) => {
     const border = enabled ? 'border-y-2' : 'border-2'
+    const { t } = useTranslation()
     return (
         <div className="flex">
             {enabled && (
                 <SmallButton
                     disabled={quantity === 0}
                     extraSmall={true}
-                    aria-label={`Remove d${type}`}
+                    aria-label={`${t('Remove')} d${type}`}
                     onClick={() => {
                         const newQuantity = quantity - 1
                         onChange(newQuantity)
@@ -39,7 +41,7 @@ export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProp
                 <SmallButton
                     disabled={!enabled}
                     extraSmall={true}
-                    aria-label={`Add d${type}`}
+                    aria-label={`${t('Add')} d${type}`}
                     onClick={() => {
                         const newQuantity = quantity + 1
                         onChange(newQuantity)

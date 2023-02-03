@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
 import { HeroRoll } from '../../components/dice/HeroRoll'
@@ -10,6 +11,7 @@ export interface ContestantResultProps {
 }
 
 export const ContestantResult = ({ contestant }: ContestantResultProps) => {
+    const { t } = useTranslation()
     const player = useSelector(selectPlayer(contestant.playerId))
 
     return (
@@ -18,7 +20,7 @@ export const ContestantResult = ({ contestant }: ContestantResultProps) => {
                 <HeroRollResult contestant={contestant} />
                 <h4>
                     {player!.name}&nbsp;
-                    {contestant.prevail ? 'Prevails' : 'Suffers'}
+                    {contestant.prevail ? t('Prevails') : t('Suffers')}
                 </h4>
             </div>
 
