@@ -81,6 +81,12 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
                 <SmallButton className="mt-8" selected={isAboutTab} onClick={() => setTabHandler(TabType.About)}>
                     {t('About this App')}
                 </SmallButton>
+                <a href="https://www.buymeacoffee.com/gareththegeek" target="_blank" rel="noreferrer">
+                    <SmallButton className="mt-8 flex items-center w-full justify-center">
+                        <img src="/images/coffee.svg" alt="Buy Me A Coffee" style={{height: "32px"}} />
+                        Buy me a coffee
+                    </SmallButton>
+                </a>
             </nav>
         </>
     )
