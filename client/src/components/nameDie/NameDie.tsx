@@ -23,8 +23,6 @@ export const NameDie = ({ contestant }: NameDieProps) => {
     const isTied = Object.values(useSelector(selectContestants)).some(
         (c) => c.dicePool.score === contestant.dicePool.score && c.playerId !== contestant.playerId
     )
-    console.log(Object.values(useSelector(selectContestants)))
-    console.log(isTied)
 
     const [showDiceSelector, setShowDiceSelector] = useState(false)
 

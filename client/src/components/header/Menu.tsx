@@ -14,13 +14,14 @@ import {
 import { Divider } from '../Divider'
 import { Players } from '../players/Players'
 import { SmallButton } from '../SmallButton'
+import { selectCurrentTheme } from '../../slices/themeSlice'
 
 export interface MenuProps {
     onTabChange?: (tab: string) => void | undefined
 }
 
-const inviteLinkHandler = (gameId: string, setTransition: React.Dispatch<React.SetStateAction<boolean>>) => () => {
-    const url = generateInviteLink(gameId)
+const inviteLinkHandler = (gameId: string, theme: string | undefined, setTransition: React.Dispatch<React.SetStateAction<boolean>>) => () => {
+    const url = generateInviteLink(gameId, theme)
     navigator.clipboard.writeText(url)
     setTimeout(() => {
         setTransition(true)
@@ -32,6 +33,7 @@ const inviteLinkHandler = (gameId: string, setTransition: React.Dispatch<React.S
 
 export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const gameId = useSelector(selectGameId)
+    const theme = useSelector(selectCurrentTheme)
     const dispatch = useAppDispatch()
     const { t } = useCustomTranslation()
 
@@ -70,7 +72,7 @@ export const Menu: FC<MenuProps> = ({ onTabChange }) => {
             {gameId !== undefined && (
                 <SmallButton
                     className="w-full md:w-auto mr-0 mt-8 mb-4"
-                    onClick={inviteLinkHandler(gameId, setTransition)}
+                    onClick={inviteLinkHandler(gameId, theme, setTransition)}
                 >
                     {transition ? t('Copied to clipboard!') : t('Copy Invite Link')}
                 </SmallButton>

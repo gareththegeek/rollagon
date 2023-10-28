@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect } from 'react'
 import { useAppDispatch } from '../../app/hooks'
-import { fetchThemesAsync, selectThemes, setCurrentThemeAsync } from '../../slices/themeSlice'
+import { fetchThemesAsync, selectCurrentTheme, selectThemes, setCurrentThemeAsync } from '../../slices/themeSlice'
 import { useSelector } from 'react-redux'
 import { Placeholder } from '../Placeholder'
 import { Error } from '../header/Error'
@@ -28,6 +28,7 @@ const handleChangeTheme =
 export const ThemeSelect = (props: ThemeProps) => {
     const dispatch = useAppDispatch()
     const themes = useSelector(selectThemes)
+    const current = useSelector(selectCurrentTheme)
     useEffect(() => {
         dispatch(fetchThemesAsync())
     }, [dispatch])
@@ -42,7 +43,9 @@ export const ThemeSelect = (props: ThemeProps) => {
     return (
         <fieldset className="flex gap-4 w-full justify-end">
             <label>Select game</label>
-            <select onChange={handleChangeTheme(dispatch)}>{themes.themes.map(renderTheme)}</select>
+            <select defaultValue={current} onChange={handleChangeTheme(dispatch)}>
+                {themes.themes.map(renderTheme)}
+            </select>
         </fieldset>
     )
 }

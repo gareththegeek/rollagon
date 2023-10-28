@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router'
+import { useParams } from 'react-router'
+import { useNavigate } from '../../app/useCustomNavigate'
 import { useAppDispatch } from '../../app/hooks'
 import { selectContestStatus } from '../../slices/contestSlice'
 import { getGameAsync, selectGameId, selectTab, TabType } from '../../slices/gameSlice'
@@ -15,9 +16,13 @@ import { About } from '../about/About'
 import { BurgerMenu } from '../../components/header/BurgerMenu'
 import { BurgerButton } from '../../components/header/BurgerButton'
 import { Errors } from '../../components/header/Errors'
+import { useTheme } from '../../app/useTheme'
+import { selectCurrentTheme } from '../../slices/themeSlice'
 
 export const Game = () => {
+    useTheme()
     const dispatch = useAppDispatch()
+    const theme = useSelector(selectCurrentTheme)
     const navigate = useNavigate()
     const gameId = useSelector(selectGameId)
     const params = useParams()
@@ -35,11 +40,11 @@ export const Game = () => {
         if (gameId !== undefined) {
             dispatch(getGameAsync(gameId!))
         } else if (params.gameId !== undefined) {
-            navigate(`/join/${params.gameId}`)
+            navigate(`/join/${params.gameId}?${!!theme ? `?theme=${theme}` : ''}`)
         } else {
             navigate('/')
         }
-    }, [dispatch, navigate, gameId, params.gameId])
+    }, [dispatch, navigate, gameId, params.gameId, theme])
 
     if (gameId === undefined) {
         return <></>

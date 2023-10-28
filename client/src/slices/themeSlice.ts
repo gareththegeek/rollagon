@@ -9,7 +9,7 @@ export interface Theme {
 }
 
 export interface ThemeState {
-    current: Theme | undefined
+    current: string | undefined
     themes: Theme[]
     loading: boolean
     error: string | undefined
@@ -17,7 +17,7 @@ export interface ThemeState {
 
 const addThemeLanguage = (theme: string) => async (language: string) => {
     try {
-        const response = await fetch(`./themes/${theme}/${language}.json`)
+        const response = await fetch(`/themes/${theme}/${language}.json`)
         const translations = await response.json()
 
         i18n.loadNamespaces(theme, (err) => {
@@ -34,7 +34,7 @@ const addThemeLanguage = (theme: string) => async (language: string) => {
 }
 
 const fetchCssVariables = (theme: string) => {
-    const location = `./themes/${theme}/theme.css`
+    const location = `/themes/${theme}/theme.css`
     const head = document.head
     const link = document.createElement('link')
     link.type = 'text/css'
@@ -63,7 +63,7 @@ export const setCurrentThemeAsync = createAsyncThunk(
 export const fetchThemesAsync = createAsyncThunk('themes/fetch', async (_, { dispatch, rejectWithValue, getState }) => {
     try {
         dispatch(beginFetch())
-        const response = await fetch('./themes/index.json')
+        const response = await fetch('/themes/index.json')
         const { themes }: { themes: Theme[] } = await response.json()
         dispatch(success(themes))
         const state = getState() as ThemeState

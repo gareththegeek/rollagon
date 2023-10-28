@@ -1,8 +1,10 @@
 import React from 'react'
 import {Trans, useCustomTranslation } from '../../app/useCustomTranslation'
 import { A } from '../../components/A'
+import { useTheme } from '../../app/useTheme'
 
 export const About = () => {
+    useTheme()
     const { t } = useCustomTranslation()
     
     return (
