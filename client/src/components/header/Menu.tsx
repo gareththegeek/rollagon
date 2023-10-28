@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { generateInviteLink } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
@@ -33,7 +33,7 @@ const inviteLinkHandler = (gameId: string, setTransition: React.Dispatch<React.S
 export const Menu: FC<MenuProps> = ({ onTabChange }) => {
     const gameId = useSelector(selectGameId)
     const dispatch = useAppDispatch()
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
 
     const isContestsTab = useSelector(selectIsContestsTab)
     const isNotesTab = useSelector(selectIsNotesTab)

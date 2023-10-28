@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import { useAppDispatch } from '../../app/hooks'
@@ -22,6 +23,7 @@ export const Game = () => {
     const params = useParams()
     const contestStatus = useSelector(selectContestStatus)
     const tab = useSelector(selectTab)
+    const { t } = useCustomTranslation()
 
     const [menuOpen, setMenuOpen] = useState(false)
 
@@ -47,7 +49,7 @@ export const Game = () => {
         <div className="md:flex md:items-stretch max-w-screen-xl md:mx-auto">
             <h4 className="flex md:hidden -mx-3 border-b-2 py-3 fixed top-0 w-full bg-grey-100 z-10">
                 <BurgerButton onClick={handleMenuClick} isOpen={menuOpen} />
-                Agon Dice Roller
+                {t('Agon Dice Roller')}
             </h4>
             {menuOpen ? (
                 <BurgerMenu onTabChange={() => setMenuOpen(false)} />

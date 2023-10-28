@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { NavigateFunction, useNavigate, useParams } from 'react-router-dom'
 import { Player } from '../../api/players'
@@ -27,7 +27,7 @@ const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, 
 }
 
 export const Lobby = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isLoading = useSelector(selectIsLoading)

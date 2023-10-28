@@ -5,16 +5,16 @@ module.exports = {
   theme: {
     colors: {
       'transparent': 'transparent',
-      'black': '#001819',
-      'white': '#e5e5e5',
-      'teal': '#004c48',
+      'black': 'var(--colour-black)',
+      'white': 'var(--colour-white)',
+      'teal': 'var(--colour-teal)',
       'grey': {
-        100: '#f5f7f7',
-        200: '#dbe5e5',
-        DEFAULT: '#cad8dc',
-        300: '#cad8dc',
-        400: '#a7c3c3',
-        500: '#8eb2b2'
+        100: 'var(--colour-grey-100)',
+        200: 'var(--colour-grey-200)',
+        DEFAULT: 'var(--colour-grey-default)',
+        300: 'var(--colour-grey-300)',
+        400: 'var(--colour-grey-400)',
+        500: 'var(--colour-grey-500)'
       }
     },
     spacing: {
@@ -72,8 +72,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        'calluna': ['calluna'],
-        'trajan': ['trajan-pro-3', 'serif']
+        'calluna': 'var(--font-body)',
+        'trajan': 'var(--font-heading)'
       }
     },
   },

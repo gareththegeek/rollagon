@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
 import { selectContestants, selectRollingNameDie } from '../../slices/contestantSlice'
@@ -15,7 +15,7 @@ export interface NameDieProps {
 }
 
 export const NameDie = ({ contestant }: NameDieProps) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const rolling = useSelector(selectRollingNameDie)
     const playerId = useSelector(selectPlayerId)
     const isCurrentPlayer = playerId === contestant.playerId

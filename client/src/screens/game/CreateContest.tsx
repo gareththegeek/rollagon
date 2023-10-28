@@ -19,7 +19,7 @@ import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { FieldSet } from '../../components/FieldSet'
 import { BigButton } from '../../components/BigButton'
 import { Placeholder } from '../../components/Placeholder'
-import { Trans, useTranslation } from 'react-i18next'
+import {Trans, useCustomTranslation } from '../../app/useCustomTranslation'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -41,7 +41,7 @@ const rollContestHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 }
 
 export const CreateContest = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const gameId = useSelector(selectGameId)
     const isStrifePlayer = useSelector(selectIsStrifePlayer)

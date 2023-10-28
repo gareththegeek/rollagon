@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { SmallButton } from '../SmallButton'
 
 export interface DiceEditorProps {
@@ -11,7 +11,7 @@ export interface DiceEditorProps {
 
 export const DiceEditor = ({ type, quantity, enabled, onChange }: DiceEditorProps) => {
     const border = enabled ? 'border-y-2' : 'border-2'
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     return (
         <div className="flex">
             {enabled && (

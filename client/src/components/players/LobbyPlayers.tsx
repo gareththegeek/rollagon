@@ -1,11 +1,11 @@
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { Player } from '../../api/players'
 import { selectPlayers } from '../../slices/playerSlice'
 import { Button } from '../Button'
 
 export const LobbyPlayers = ({ onClick, disabled }: { onClick?: (player: Player) => void, disabled?: boolean }) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const players = useSelector(selectPlayers)
 
     return <>

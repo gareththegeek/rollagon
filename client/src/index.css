@@ -4,9 +4,6 @@
 
 @layer base {
     html {
-        @apply text-black;
-        @apply border-black;
-        @apply font-calluna;
         @apply overflow-y-scroll;
         @apply lining-nums;
         font-size: 20px;
@@ -14,6 +11,9 @@
     }
 
     body {
+        @apply text-black;
+        @apply border-black;
+        @apply font-calluna;
         @apply bg-grey-100;
     }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { HarmTagType } from '../../api/strife'
 import { Tag } from './Tag'
 
@@ -8,7 +8,7 @@ export interface TagsProps {
 }
 
 export const Tags = ({ tags }: TagsProps) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     
     if (tags.length === 0) {
         return <></>

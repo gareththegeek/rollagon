@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import {Trans, useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
@@ -9,6 +9,7 @@ import { BigButton } from '../../components/BigButton'
 import { Input } from '../../components/Input'
 import { createGameAsync } from '../../slices/gameSlice'
 import { selectIsLoading } from '../../slices/statusSlice'
+import { ThemeSelect } from '../../components/themes/ThemeSelect'
 
 const createGameClick = (dispatch: AppDispatch, navigate: NavigateFunction) => async () => {
     const result = await dispatch(createGameAsync())
@@ -22,13 +23,14 @@ export const Splash = () => {
     const navigate = useNavigate()
     const isLoading = useSelector(selectIsLoading)
     const [text, setText] = useState('')
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
 
     return (
         <div className="max-w-screen-md md:mx-auto mt-8 md:mt-16">
             <main>
                 <section>
-                    <h1>Agon Dice Roller</h1>
+                    <ThemeSelect />
+                    <h1>{t('Agon Dice Roller')}</h1>
                     <p>
                         <Trans i18nKey="AboutAgonDiceRoller">
                             This is a fan-made dice-rolling app for AGON. AGON is an action-packed roleplaying game about epic Heroes who face trials from the Gods in an ancient world of myth and legend. Learn more about it, and the Paragon system, at <A href="http://agon-rpg.com">agon-rpg.com</A>

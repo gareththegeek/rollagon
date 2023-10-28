@@ -9,14 +9,14 @@ import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { selectCurrentStrife } from '../../slices/strifeSlice'
 import { Button } from '../../components/Button'
 import { StrifeTarget } from '../../components/dice/StrifeTarget'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 
 const abandonContestHandler = (dispatch: AppDispatch, gameId: string, contestId: string) => () => {
     dispatch(removeContestAsync({ gameId, contestId }))
 }
 
 export const Challenge = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const gameId = useSelector(selectGameId)
     const contestId = useSelector(selectContestId)

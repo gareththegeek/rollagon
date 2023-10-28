@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { SmallButton } from '../../components/SmallButton'
 
 export interface StrifeLevelEditorProps {
@@ -8,7 +8,7 @@ export interface StrifeLevelEditorProps {
 }
 
 export const StrifeLevelEditor = ({ current, onChange }: StrifeLevelEditorProps) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const levels = [
         { name: '0', value: 0 },
         { name: '+4', value: 4 },

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { Strife } from '../../api/strife'
 import { Roll } from './Roll'
 
@@ -8,7 +8,7 @@ export interface StrifeTargetProps {
 }
 
 export const StrifeTarget: React.FC<StrifeTargetProps> = ({ strife }) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     return (
         <Roll
             value={strife.targetNumber!}

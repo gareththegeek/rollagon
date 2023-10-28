@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
@@ -18,7 +18,7 @@ const rollResultsHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 }
 
 export const EnterContest = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const isLoading = useSelector(selectIsLoading)
     const isStrifePlayer = useSelector(selectIsStrifePlayer)

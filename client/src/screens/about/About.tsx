@@ -1,9 +1,9 @@
 import React from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import {Trans, useCustomTranslation } from '../../app/useCustomTranslation'
 import { A } from '../../components/A'
 
 export const About = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     
     return (
         <section>
