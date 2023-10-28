@@ -29,7 +29,6 @@ export const ThemeSelect = (props: ThemeProps) => {
     const dispatch = useAppDispatch()
     const themes = useSelector(selectThemes)
     useEffect(() => {
-        console.log('dispatch')
         dispatch(fetchThemesAsync())
     }, [dispatch])
 
