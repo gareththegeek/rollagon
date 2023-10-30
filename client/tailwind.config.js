@@ -6,15 +6,13 @@ module.exports = {
     colors: {
       'transparent': 'transparent',
       'black': 'var(--colour-text)',
-      'white': 'var(--colour-background)',
       'teal': 'var(--colour-accent)',
       'grey': {
-        100: 'var(--colour-grey-100)',
-        200: 'var(--colour-grey-200)',
-        DEFAULT: 'var(--colour-grey-default)',
-        300: 'var(--colour-grey-300)',
-        400: 'var(--colour-grey-400)',
-        500: 'var(--colour-grey-500)'
+        100: 'var(--colour-background)',
+        200: 'var(--colour-button-hover)',
+        DEFAULT: 'var(--colour-heading-background)',
+        300: 'var(--colour-button)',
+        500: 'var(--colour-disabled)'
       }
     },
     spacing: {

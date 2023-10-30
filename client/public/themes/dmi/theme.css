@@ -1,14 +1,11 @@
-
 .theme {
   --colour-text: #000;
-  --colour-background: #fff;
   --colour-accent: #f00;
-  --colour-grey-100: #ccc;
-  --colour-grey-200: #aaa;
-  --colour-grey-default: #888;
-  --colour-grey-300: #666;
-  --colour-grey-400: #444;
-  --colour-grey-500: #222;
+  --colour-background: #ccc;
+  --colour-button: #666;
+  --colour-button-hover: #aaa;
+  --colour-heading-background: #888;
+  --colour-disabled: #222;
 
   --font-body: sans-serif;
   --font-heading: "Comic Sans MS";
