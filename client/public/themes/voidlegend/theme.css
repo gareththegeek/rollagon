@@ -1,7 +1,7 @@
 .theme {
-  --colour-black: #FAFAFA;
-  --colour-white: #111B24;
-  --colour-teal: #ff1053;
+  --colour-text: #FAFAFA;
+  --colour-background: #111B24;
+  --colour-accent: #ff1053;
   --colour-grey-100: #ffb600;
   --colour-grey-200: #ffb600;
   --colour-grey-default: #ffb600;

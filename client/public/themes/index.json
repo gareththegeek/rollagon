@@ -1,8 +1,8 @@
 {
   "themes": [
     { "name": "Agon", "folder": "agon", "default": true },
-    { "name": "Test", "folder": "test" }
-    { "name": "Void Legend", "folder": "void legend" }
+    { "name": "Test", "folder": "test" },
+    { "name": "Void Legend", "folder": "voidlegend" },
     { "name": "Deathmatch Island", "folder": "dmi" }
   ]
 }

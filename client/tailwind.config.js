@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     colors: {
       'transparent': 'transparent',
-      'black': 'var(--colour-black)',
-      'white': 'var(--colour-white)',
-      'teal': 'var(--colour-teal)',
+      'black': 'var(--colour-text)',
+      'white': 'var(--colour-background)',
+      'teal': 'var(--colour-accent)',
       'grey': {
         100: 'var(--colour-grey-100)',
         200: 'var(--colour-grey-200)',

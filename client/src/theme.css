@@ -1,7 +1,7 @@
 :root {
-  --colour-black: #001819;
-  --colour-white: #e5e5e5;
-  --colour-teal: #004c48;
+  --colour-text: #001819;
+  --colour-background: #e5e5e5;
+  --colour-accent: #004c48;
   --colour-grey-100: #f5f7f7;
   --colour-grey-200: #dbe5e5;
   --colour-grey-default: #cad8dc;

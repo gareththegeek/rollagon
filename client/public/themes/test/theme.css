@@ -1,7 +1,7 @@
 .theme {
-  --colour-black: #000;
-  --colour-white: #fff;
-  --colour-teal: #f00;
+  --colour-text: #000;
+  --colour-background: #fff;
+  --colour-accent: #f00;
   --colour-grey-100: #ccc;
   --colour-grey-200: #aaa;
   --colour-grey-default: #888;
