@@ -1,12 +1,13 @@
 .theme {
   --colour-text: #000;
-  --colour-accent: #f00;
-  --colour-background: #ccc;
-  --colour-button: #666;
-  --colour-button-hover: #aaa;
-  --colour-heading-background: #888;
-  --colour-disabled: #222;
+  --colour-accent: #f64816 ;
+  --colour-background: #ffffff;
+  --colour-button: #FF8360;
+  --colour-button-hover: #FF8360;
+  --colour-heading-background: #FF997B;
+  --colour-disabled: #FF997B;
 
-  --font-body: sans-serif;
-  --font-heading: "Comic Sans MS";
+
+  --font-body: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+  --font-heading: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
