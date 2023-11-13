@@ -41,9 +41,9 @@ export const ThemeSelect = (props: ThemeProps) => {
     }
 
     return (
-        <fieldset className="flex gap-4 w-full justify-end">
+        <fieldset className="flex gap-4 w-full justify-end items-baseline">
             <label>Select game</label>
-            <select defaultValue={current} onChange={handleChangeTheme(dispatch)}>
+            <select className="px-4 py-2 bg-grey-300" defaultValue={current} onChange={handleChangeTheme(dispatch)}>
                 {themes.themes.map(renderTheme)}
             </select>
         </fieldset>
