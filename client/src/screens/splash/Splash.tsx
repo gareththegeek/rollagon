@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Trans, useCustomTranslation } from '../../app/useCustomTranslation'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
+import { LinkTrans } from '../../components/LinkTrans'
 import { useSelector } from 'react-redux'
 import { NavigateFunction } from 'react-router-dom'
 import { useNavigate } from '../../app/useCustomNavigate'
@@ -35,12 +36,12 @@ export const Splash = () => {
                     <ThemeSelect />
                     <h1>{t('Agon Dice Roller')}</h1>
                     <p>
-                        <Trans i18nKey="AboutAgonDiceRoller">
+                        <LinkTrans i18nKey="AboutAgonDiceRoller">
                             This is a fan-made dice-rolling app for AGON. AGON is an action-packed roleplaying game
                             about epic Heroes who face trials from the Gods in an ancient world of myth and legend.
                             Learn more about it, and the Paragon system, at{' '}
                             <A href="http://agon-rpg.com">agon-rpg.com</A>
-                        </Trans>
+                        </LinkTrans>
                     </p>
                 </section>
                 <section>
@@ -65,28 +66,28 @@ export const Splash = () => {
                 <aside className="flex flex-col">
                     <h3>{t('About this App')}</h3>
                     <p>
-                        <Trans i18nKey="AboutRules">
+                        <LinkTrans i18nKey="AboutRules">
                             At least one person playing should be familiar with the AGON rulebook.
-                        </Trans>
+                        </LinkTrans>
                     </p>
                     <p>
-                        <Trans i18nKey="AboutApp">
+                        <LinkTrans i18nKey="AboutApp">
                             This app is a lightweight dicerolling app, focused on resolving and narrating AGON Contests.
                             It is not a campaign or character tracker - you'll still need to manage that on your own.
-                        </Trans>
+                        </LinkTrans>
                     </p>
                     <p>
-                        <Trans i18nKey="AboutAgon">
+                        <LinkTrans i18nKey="AboutAgon">
                             This app was created by <A href="https://www.reddit.com/user/gareththegeek/">@gareth</A> and{' '}
                             <A href="https://twitter.com/sporgory">@sporgory</A> with the help of the{' '}
                             <A href="https://discord.gg/2kWxhJywGq">AGON fan Discord community</A>.
-                        </Trans>
+                        </LinkTrans>
                     </p>
                     <p>
-                        <Trans i18nKey="AboutFeedback">
+                        <LinkTrans i18nKey="AboutFeedback">
                             If you'd like to give feedback or get involved, check out the{' '}
                             <A href="https://github.com/gareththegeek/rollagon">GitHub repo</A>.
-                        </Trans>
+                        </LinkTrans>
                     </p>
                 </aside>
             </main>
