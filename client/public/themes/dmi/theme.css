@@ -1,10 +1,10 @@
 .theme {
-  --colour-text: #000;
+  --colour-text: #001919;
   --colour-accent: #f64816 ;
-  --colour-background: #ffffff;
-  --colour-button: #FF8360;
-  --colour-button-hover: #FF8360;
-  --colour-heading-background: #FF997B;
+  --colour-background: #f5f7f7;
+  --colour-button: #f5f7f7;
+  --colour-button-hover: #f64816;
+  --colour-heading-background: #001919;
   --colour-disabled: #FF997B;
 
 
