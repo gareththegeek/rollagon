@@ -2,10 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import i18n from 'i18next'
 import { RootState } from '../app/store'
 
+export interface ThemeImages {
+    logoSmall: string
+    logoLarge: string
+}
+
 export interface Theme {
     name: string
     folder: string
     default?: boolean
+    images: ThemeImages
 }
 
 export interface ThemeState {
@@ -43,13 +49,26 @@ const fetchCssVariables = (theme: string) => {
     head.appendChild(link)
 }
 
+export const fetchImageConfigAsync = createAsyncThunk('themes/images', async (theme: Theme, { dispatch }) => {
+    const response = await fetch(`/themes/${theme.folder}/images.json`)
+    const json = await response.json()
+    dispatch(setImages({ theme: theme.name, images: json }))
+})
+
 export const setCurrentThemeAsync = createAsyncThunk(
     'themes/set',
-    async (theme: string | undefined, { dispatch, rejectWithValue }) => {
+    async (theme: string | undefined, { dispatch, rejectWithValue, getState }) => {
         try {
             if (theme) {
                 await Promise.all(i18n.languages.map(addThemeLanguage(theme)))
                 fetchCssVariables(theme)
+
+                const state = getState() as RootState
+                const existing = state.theme.themes.find((x) => x.folder === theme)
+
+                if (existing && !existing.images) {
+                    dispatch(fetchImageConfigAsync(existing))
+                }
             }
 
             dispatch(set(theme))
@@ -66,11 +85,9 @@ export const fetchThemesAsync = createAsyncThunk('themes/fetch', async (_, { dis
         const response = await fetch('/themes/index.json')
         const { themes }: { themes: Theme[] } = await response.json()
         dispatch(success(themes))
-        const state = getState() as ThemeState
-        if (!state.current) {
-            const defaultTheme = themes.find((x: Theme) => x.default)
-            dispatch(setCurrentThemeAsync(defaultTheme?.folder))
-        }
+        const state = getState() as RootState
+        const current = state.theme.current || themes.find((x: Theme) => x.default)?.folder
+        dispatch(setCurrentThemeAsync(current))
     } catch (e: any) {
         dispatch(error(e.message))
         return rejectWithValue(e.message)
@@ -78,7 +95,7 @@ export const fetchThemesAsync = createAsyncThunk('themes/fetch', async (_, { dis
 })
 
 const initialState: ThemeState = {
-    current: undefined,
+    current: 'agon',
     themes: [],
     loading: false,
     error: undefined
@@ -103,14 +120,30 @@ export const themeSlice = createSlice({
         },
         set: (state, { payload }) => {
             state.current = payload
+        },
+        setImages: (state, { payload: { theme, images } }) => {
+            const themeData = state.themes.find((x) => x.name === theme)
+            if (!themeData) {
+                return
+            }
+            themeData.images = images
         }
     }
 })
 
-export const { beginFetch, error, success, set } = themeSlice.actions
+export const { beginFetch, error, success, set, setImages } = themeSlice.actions
 export const thunks = [fetchThemesAsync, setCurrentThemeAsync]
 
 export const selectThemes = ({ theme: { loading, error, themes } }: RootState) => ({ loading, error, themes })
 export const selectCurrentTheme = ({ theme: { current } }: RootState) => current
+export const selectThemeImage =
+    (name: keyof ThemeImages) =>
+    ({ theme: { current, themes } }: RootState) => {
+        const themeData = themes.find((x) => x.folder === current)
+        if (!themeData?.images) {
+            return undefined
+        }
+        return `/themes/${current}/${themeData?.images[name]}`
+    }
 
 export default themeSlice.reducer

@@ -3,10 +3,14 @@ import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { LinkTrans } from '../../components/LinkTrans'
 import { A } from '../../components/A'
 import { useTheme } from '../../app/useTheme'
+import { useSelector } from 'react-redux'
+import { selectThemeImage } from '../../slices/themeSlice'
+import ThemeImage from '../../components/ThemeImage'
 
 export const About = () => {
     useTheme()
     const { t } = useCustomTranslation()
+    const logoSrc = useSelector(selectThemeImage('logoLarge'))
 
     return (
         <section>
@@ -42,10 +46,11 @@ export const About = () => {
                     not a campaign or character tracker - you'll still need to manage that on your own.
                 </LinkTrans>
             </p>
-            <img
+            <ThemeImage
+                image="logoLarge"
                 alt="Stylised greek hoplite helmet"
                 className="mt-20 mx-auto w-1/2 hidden md:block"
-                src="/images/agon-big.png"
+                src={logoSrc}
             />
         </section>
     )

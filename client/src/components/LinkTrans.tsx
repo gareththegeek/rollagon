@@ -3,7 +3,6 @@ import { A } from './A'
 
 export const LinkTrans = (props: any) => {
     const { t } = useCustomTranslation()
-    console.log(t('link5'))
     return (
         <Trans
             {...props}
