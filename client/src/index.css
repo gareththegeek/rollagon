@@ -6,8 +6,8 @@
     html {
         @apply overflow-y-scroll;
         @apply lining-nums;
-        font-size: 20px;
-        line-height: 30px;
+        font-size: var(--font-size);
+        line-height: var(--line-height);
     }
 
     body {

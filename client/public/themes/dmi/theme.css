@@ -7,7 +7,23 @@
   --colour-heading-background: #001919;
   --colour-disabled: #FF997B;
 
-
   --font-body: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
   --font-heading: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+
+  --font-size: 20px;
+  --line-height: 30px;
+
+  --font-size-xs: 0.8rem;
+  --font-size-sm: 0.9rem;
+  --font-size-base: 1rem;
+  --font-size-xl: 1.6rem;
+  --font-size-2xl: 2rem;
+  --font-size-4xl: 3.2rem;
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0em;
+
+  --line-height-none: 1;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
 }
