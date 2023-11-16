@@ -26,4 +26,18 @@
   --line-height-none: 1;
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
+
+  --h1-border-colour: var(--colour-text);
+  --h2-border-colour: var(--colour-text);
+  --h3-border-colour: var(--colour-accent);
+  --h4-border-colour: var(--colour-accent);
+
+  --h1-font-weight: 600;
+  --h1-font-weight-md: 600;
+  --h2-font-weight: 600;
+  --h2-font-weight-md: 400;
+  --h3-font-weight: 700;
+  --h3-font-weight-md: 600;
+  --h4-font-weight: 700;
+  --h4-font-weight-md: 700;
 }

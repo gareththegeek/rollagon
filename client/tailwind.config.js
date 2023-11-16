@@ -13,7 +13,11 @@ module.exports = {
         DEFAULT: 'var(--colour-heading-background)',
         300: 'var(--colour-button)',
         500: 'var(--colour-disabled)'
-      }
+      },
+      'h1-border': 'var(--h1-border-colour)',
+      'h2-border': 'var(--h2-border-colour)',
+      'h3-border': 'var(--h3-border-colour)',
+      'h4-border': 'var(--h4-border-colour)'
     },
     fontSize: {
       'xs': 'var(--font-size-xs)',
