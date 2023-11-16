@@ -1,9 +1,12 @@
 import React, { FC } from 'react'
 
 export interface DividerProps {
-    fullWidth?: boolean | undefined
+    fullWidth?: boolean
+    down?: boolean
 }
 
-export const Divider: FC<DividerProps> = ({ fullWidth }) => (
-    <div className={`${fullWidth ? 'w-full' : 'flex-grow'} mt-3 border-b-2`} />
+export const Divider: FC<DividerProps> = ({ fullWidth, down }) => (
+    <div className={`${fullWidth ? 'w-full' : 'flex-grow'}`}>
+        <div className="border-b-2 mt-3" />
+    </div>
 )
