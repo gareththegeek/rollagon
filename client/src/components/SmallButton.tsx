@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const SmallButton = ({ children, extraSmall, className, selected, disabled, ...rest }: any) => {
-    const bg = selected ? 'bg-grey-300' : ''
+    const bg = selected ? 'bg-button-selected' : ''
     const border = selected 
         ? ''
         : disabled 

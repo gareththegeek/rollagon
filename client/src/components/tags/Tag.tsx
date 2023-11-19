@@ -1,5 +1,5 @@
 import React from 'react'
-import { Trans } from 'react-i18next'
+import { Trans } from '../../app/useCustomTranslation'
 import { HarmTagType } from '../../api/strife'
 import { Diamond } from '../Diamond'
 

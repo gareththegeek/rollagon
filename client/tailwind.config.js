@@ -14,6 +14,7 @@ module.exports = {
         300: 'var(--colour-button)',
         500: 'var(--colour-disabled)'
       },
+      'button-selected': 'var(--colour-button-select)',
       'h1-border': 'var(--h1-border-colour)',
       'h2-border': 'var(--h2-border-colour)',
       'h3-border': 'var(--h3-border-colour)',
