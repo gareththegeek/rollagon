@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { Contestant } from '../../api/contestants'
 import { Roll } from './Roll'
 
@@ -8,7 +8,7 @@ export interface HeroRollResultProps {
 }
 
 export const HeroRollResult = ({ contestant }: HeroRollResultProps) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     return <Roll
         value={contestant.dicePool.score!}
         label=""

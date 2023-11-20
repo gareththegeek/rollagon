@@ -12,7 +12,7 @@ import { NoteFrame } from './NoteFrame'
 import './Notes.css'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { Placeholder } from '../Placeholder'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 
 const addNoteHandler =
     (
@@ -33,7 +33,7 @@ const deleteNoteHandler = (dispatch: AppDispatch, gameId: string, noteId: string
 }
 
 export const Notes = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const isStrifePlayer = useSelector(selectIsStrifePlayer)
     const loading = useSelector(selectIsLoading)

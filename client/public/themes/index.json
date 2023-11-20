@@ -1,0 +1,6 @@
+{
+  "themes": [
+    { "name": "Agon", "folder": "agon", "default": true },
+    { "name": "Deathmatch Island", "folder": "dmi" }
+  ]
+}

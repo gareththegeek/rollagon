@@ -3,17 +3,49 @@
 @tailwind utilities;
 
 @layer base {
+    .h1-font-weight {
+        font-weight: var(--h1-font-weight);
+    }
+
+    .h1-font-weight-md{
+        font-weight: var(--h1-font-weight-md);
+    }
+
+    .h2-font-weight {
+        font-weight: var(--h2-font-weight);
+    }
+
+    .h2-font-weight-md{
+        font-weight: var(--h2-font-weight-md);
+    }
+
+    .h3-font-weight {
+        font-weight: var(--h3-font-weight);
+    }
+
+    .h3-font-weight-md{
+        font-weight: var(--h3-font-weight-md);
+    }
+
+    .h4-font-weight {
+        font-weight: var(--h4-font-weight);
+    }
+
+    .h4-font-weight-md{
+        font-weight: var(--h4-font-weight-md);
+    }
+
     html {
-        @apply text-black;
-        @apply border-black;
-        @apply font-calluna;
         @apply overflow-y-scroll;
         @apply lining-nums;
-        font-size: 20px;
-        line-height: 30px;
+        font-size: var(--font-size);
+        line-height: var(--line-height);
     }
 
     body {
+        @apply text-black;
+        @apply border-black;
+        @apply font-calluna;
         @apply bg-grey-100;
     }
 
@@ -45,33 +77,39 @@
 
     h1 {
         @apply border-b-2;
+        @apply border-h1-border;
         @apply pb-3 md:pb-4 md:pt-4;
         @apply text-xl md:text-4xl;
         @apply leading-tight;
         @apply tracking-tight;
         @apply font-trajan;
-        @apply font-semibold;
+        /*@apply font-semibold;*/
+        @apply h1-font-weight md:h1-font-weight-md;
         @apply uppercase;
         @apply lining-nums;
     }
 
     h2 {
         @apply border-b-2;
+        @apply border-h2-border;
         @apply pb-3 md:pb-2 md:pt-2;
         @apply text-xl md:text-2xl;
         @apply leading-tight;
         @apply tracking-tight;
         @apply font-trajan;
-        @apply font-semibold md:font-normal;
+        /* @apply font-semibold md:font-normal; */
+        @apply h2-font-weight md:h2-font-weight-md;
         @apply uppercase;
         @apply lining-nums;
     }
 
     h3 {
         @apply border-b-2;
+        @apply border-h3-border;
         @apply pb-0 md:pb-3;
         @apply text-base md:text-xl;
-        @apply font-bold md:font-semibold;
+        /* @apply font-bold md:font-semibold; */
+        @apply h3-font-weight md:h3-font-weight-md;
         @apply leading-tight;
         @apply tracking-tight;
         @apply font-trajan;
@@ -82,10 +120,12 @@
 
     h4 {
         @apply text-base;
+        @apply border-h4-border;
         @apply leading-tight;
         @apply tracking-tight;
         @apply font-trajan;
-        @apply font-bold;
+        /* @apply font-bold; */
+        @apply h4-font-weight md:h4-font-weight-md;
         @apply uppercase;
         @apply lining-nums;
         @apply text-teal;

@@ -27,7 +27,8 @@ const getAbsolute = (function () {
         a.href = url
 
         return a.href
-    };
-})();
+    }
+})()
 
-export const generateInviteLink = (gameId: string): string => getAbsolute(`/join/${gameId}`)
+export const generateInviteLink = (gameId: string, theme?: string): string =>
+    getAbsolute(`/join/${gameId}${!!theme ? `?theme=${theme}` : ''}`)

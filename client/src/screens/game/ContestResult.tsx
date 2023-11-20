@@ -8,14 +8,14 @@ import { AppDispatch } from '../../app/store'
 import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { useAppDispatch } from '../../app/hooks'
 import { selectGameId } from '../../slices/gameSlice'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 
 const createContestHandler = (dispatch: AppDispatch, gameId: string) => () => {
     dispatch(createContestAsync(gameId))
 }
 
 export const ContestResult = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const gameId = useSelector(selectGameId)
     const contestants = useSelector(selectContestants)

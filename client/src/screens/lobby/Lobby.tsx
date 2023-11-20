@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
-import { NavigateFunction, useNavigate, useParams } from 'react-router-dom'
+import { NavigateFunction, useParams } from 'react-router-dom'
+import { useNavigate } from '../../app/useCustomNavigate'
 import { Player } from '../../api/players'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
@@ -11,6 +12,7 @@ import { LobbyPlayers } from '../../components/players/LobbyPlayers'
 import { setGameId } from '../../slices/gameSlice'
 import { getPlayersAsync, joinHeroAsync, joinStrifeAsync } from '../../slices/playerSlice'
 import { selectIsLoading } from '../../slices/statusSlice'
+import { useTheme } from '../../app/useTheme'
 
 const joinStrifeClick = (dispatch: AppDispatch, navigate: NavigateFunction, gameId: string) => async () => {
     const result = await dispatch(joinStrifeAsync(gameId))
@@ -27,7 +29,8 @@ const joinHeroClick = async (dispatch: AppDispatch, navigate: NavigateFunction, 
 }
 
 export const Lobby = () => {
-    const { t } = useTranslation()
+    useTheme()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const isLoading = useSelector(selectIsLoading)

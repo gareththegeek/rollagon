@@ -6,6 +6,7 @@ import noteReducer from '../slices/notesSlice'
 import playerReducer from '../slices/playerSlice'
 import statusReducer from '../slices/statusSlice'
 import strifeReducer from '../slices/strifeSlice'
+import themeReducer from '../slices/themeSlice'
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     note: noteReducer,
     player: playerReducer,
     status: statusReducer,
-    strife: strifeReducer
+    strife: strifeReducer,
+    theme: themeReducer
   }
 })
 

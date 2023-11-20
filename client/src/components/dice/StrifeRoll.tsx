@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { Strife } from '../../api/strife'
 import { Roll } from './Roll'
 
@@ -10,7 +10,7 @@ export interface StrifeRollProps {
 
 export const StrifeRoll: React.FC<StrifeRollProps> = ({ className, strife }) => {
     const [best, ...rest] = strife.dicePool.dice
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     return (
         <ol className={`${className ?? ''} flex flex-col md:flex-row gap-6`}>
             <div className="flex">

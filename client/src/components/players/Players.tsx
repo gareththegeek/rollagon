@@ -1,10 +1,10 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { selectConnections, selectPlayers } from '../../slices/playerSlice'
 
 export const Players = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const players = useSelector(selectPlayers)
     const connections = useSelector(selectConnections)
 

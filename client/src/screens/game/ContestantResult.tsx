@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useSelector } from 'react-redux'
 import { Contestant } from '../../api/contestants'
 import { HeroRoll } from '../../components/dice/HeroRoll'
@@ -11,7 +11,7 @@ export interface ContestantResultProps {
 }
 
 export const ContestantResult = ({ contestant }: ContestantResultProps) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const player = useSelector(selectPlayer(contestant.playerId))
 
     return (

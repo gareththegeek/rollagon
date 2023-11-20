@@ -19,7 +19,7 @@ import { selectIsStrifePlayer } from '../../slices/playerSlice'
 import { FieldSet } from '../../components/FieldSet'
 import { BigButton } from '../../components/BigButton'
 import { Placeholder } from '../../components/Placeholder'
-import { Trans, useTranslation } from 'react-i18next'
+import { Trans, useCustomTranslation } from '../../app/useCustomTranslation'
 
 const diceChangeHandler =
     (dispatch: AppDispatch, gameId: string, contestId: string, strife: Strife) => (type: string, quantity: number) => {
@@ -41,7 +41,7 @@ const rollContestHandler = (dispatch: AppDispatch, gameId: string, contestId: st
 }
 
 export const CreateContest = () => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     const gameId = useSelector(selectGameId)
     const isStrifePlayer = useSelector(selectIsStrifePlayer)
@@ -100,22 +100,22 @@ export const CreateContest = () => {
                 guidance={
                     <ul>
                         <li>
-                            <Trans i18nKey="ChooseSacredHarm">
+                            <Trans i18nKey="ChooseSacredHarm" components={{ bold: <b /> }}>
                                 <b>Sacred</b> - Heroes spend Divine Favor if they suffer in the Contest.
                             </Trans>
                         </li>
                         <li>
-                            <Trans i18nKey="ChoosePerilousHarm">
+                            <Trans i18nKey="ChoosePerilousHarm" components={{ bold: <b /> }}>
                                 <b>Perilous</b> - Heroes mark Pathos if they suffer in the Contest.
                             </Trans>
                         </li>
                         <li>
-                            <Trans i18nKey="ChooseMythicHarm">
+                            <Trans i18nKey="ChooseMythicHarm" components={{ bold: <b /> }}>
                                 <b>Mythic</b> - Heroes spend Divine Favor to enter the Contest.
                             </Trans>
                         </li>
                         <li>
-                            <Trans i18nKey="ChooseEpicHarm">
+                            <Trans i18nKey="ChooseEpicHarm" components={{ bold: <b /> }}>
                                 <b>Epic</b> - Heroes mark Pathos to enter the Contest.
                             </Trans>
                         </li>

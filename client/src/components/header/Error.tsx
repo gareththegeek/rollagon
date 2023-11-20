@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useCustomTranslation } from '../../app/useCustomTranslation'
 import { useAppDispatch } from '../../app/hooks'
 import { AppDispatch } from '../../app/store'
 import { dismissError } from '../../slices/statusSlice'
@@ -9,7 +9,7 @@ const dismissHandler = (dispatch: AppDispatch, error: ErrorMessage) => () => {
 }
 
 interface ErrorMessage {
-    timestamp: string
+    timestamp?: string
     message: string | string[]
 }
 
@@ -23,7 +23,7 @@ const messageToString = (t: (key: string) => string, messages: string[] | string
         : t(messages)
 
 export const Error = ({ error }: ErrorProps) => {
-    const { t } = useTranslation()
+    const { t } = useCustomTranslation()
     const dispatch = useAppDispatch()
     return (
         <div className="flex justify-between">

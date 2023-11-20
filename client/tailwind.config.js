@@ -5,75 +5,42 @@ module.exports = {
   theme: {
     colors: {
       'transparent': 'transparent',
-      'black': '#001819',
-      'white': '#e5e5e5',
-      'teal': '#004c48',
+      'black': 'var(--colour-text)',
+      'teal': 'var(--colour-accent)',
       'grey': {
-        100: '#f5f7f7',
-        200: '#dbe5e5',
-        DEFAULT: '#cad8dc',
-        300: '#cad8dc',
-        400: '#a7c3c3',
-        500: '#8eb2b2'
-      }
-    },
-    spacing: {
-      '0': '0',
-      '0.5': '0.1rem', /* 2px */
-      '1': '0.2rem', /* 4px */
-      '1.5': '0.3rem', /* 6px */
-      '2': '0.4rem', /* 8px */
-      '2.5': '0.5rem', /* 10px */
-      '3': '0.6rem', /* 12px */
-      '3.5': '0.7rem', /* 14px */
-      '4': '0.8rem', /* 16px */
-      '5': '1rem', /* 20px */
-      '6': '1.2rem', /* 24px */
-      '7': '1.4rem', /* 28px */
-      '8': '1.6rem', /* 32px */
-      '9': '1.8rem', /* 36px */
-      '10': '2rem', /* 40px */
-      '11': '2.2rem', /* 44px */
-      '12': '2.4rem', /* 48px */
-      '14': '2.8rem', /* 56px */
-      '16': '3.2rem', /* 64px */
-      '20': '4rem', /* 80px */
-      '24': '4.8rem', /* 96px */
-      '28': '5.6rem', /* 112px */
-      '32': '6.4rem', /* 128px */
-      '36': '7.2rem', /* 144px */
-      '40': '8rem', /* 160px */
-      '44': '8.8rem', /* 176px */
-      '48': '9.6rem', /* 192px */
-      '52': '10.4rem', /* 208px */
-      '56': '11.2rem', /* 224px */
-      '60': '12rem', /* 240px */
-      '64': '12.8rem', /* 256px */
-      '72': '14.4rem', /* 288px */
-      '80': '16rem', /* 320px */
-      '96': '19.2rem' /* 384px */
+        100: 'var(--colour-background)',
+        200: 'var(--colour-button-hover)',
+        DEFAULT: 'var(--colour-heading-background)',
+        300: 'var(--colour-button)',
+        500: 'var(--colour-disabled)'
+      },
+      'button-selected': 'var(--colour-button-select)',
+      'h1-border': 'var(--h1-border-colour)',
+      'h2-border': 'var(--h2-border-colour)',
+      'h3-border': 'var(--h3-border-colour)',
+      'h4-border': 'var(--h4-border-colour)'
     },
     fontSize: {
-      'xs': '0.8rem',
-      'sm': '0.9rem',
-      'base': '1rem',
-      'xl': '1.6rem',
-      '2xl': '2rem',
-      '4xl': '3.2rem'
+      'xs': 'var(--font-size-xs)',
+      'sm': 'var(--font-size-sm)',
+      'base': 'var(--font-size-base)',
+      'xl': 'var(--font-size-xl)',
+      '2xl': 'var(--font-size-2xl)',
+      '4xl': 'var(--font-size-4xl)'
     },
     letterSpacing: {
-      'tight': '-0.02em',
-      'normal': '0em'
+      'tight': 'var(--letter-spacing-tight)',
+      'normal': 'var(--letter-spacing-normal)'
     },
     lineHeight: {
-      'none': '1',
-      'tight': '1.2',
-      'normal': '1.5'
+      'none': 'var(--line-height-none)',
+      'tight': 'var(--line-height-tight)',
+      'normal': 'var(--line-height-normal)'
     },
     extend: {
       fontFamily: {
-        'calluna': ['calluna'],
-        'trajan': ['trajan-pro-3', 'serif']
+        'calluna': 'var(--font-body)',
+        'trajan': 'var(--font-heading)'
       }
     },
   },
